@@ -209,6 +209,7 @@ public class Config
     public static class Common
     {
         public final Gameplay gameplay;
+        public final Quality quality;
         public final Network network;
         public final AggroMobs aggroMobs;
         public final Missiles missiles;
@@ -222,6 +223,7 @@ public class Config
             builder.push("common");
             {
                 this.gameplay = new Gameplay(builder);
+                this.quality = new Quality(builder);
                 this.network = new Network(builder);
                 this.aggroMobs = new AggroMobs(builder);
                 this.missiles = new Missiles(builder);
@@ -251,10 +253,10 @@ public class Config
 
         public final ForgeConfigSpec.BooleanValue realisticLowPowerFovHandling;
         public final ForgeConfigSpec.BooleanValue realisticIronSightFovHandling;
-
         public final ForgeConfigSpec.BooleanValue realisticAimedBreathing;
-
         public final ForgeConfigSpec.BooleanValue safetyExistence;
+
+
 
         public Gameplay(ForgeConfigSpec.Builder builder)
         {
@@ -283,7 +285,30 @@ public class Config
         }
     }
 
-    public static class GunHandlingCustomization
+    /**
+     * Gameplay related config options
+     */
+    public static class Quality
+    {
+        public final ForgeConfigSpec.BooleanValue reducedWeaponQuality;
+        public final ForgeConfigSpec.BooleanValue reducedScopeQuality;
+        public final ForgeConfigSpec.BooleanValue reducedAmmunitionQuality;
+        public final ForgeConfigSpec.BooleanValue reducedEffects;
+
+        public Quality(ForgeConfigSpec.Builder builder)
+        {
+            builder.comment("Properties relating to improving graphical performance (Currently unsupported, do not attempt to change these settings until announcements are made about these features!)").push("quality");
+            {
+                this.reducedWeaponQuality = builder.comment("If enabled all main weapons will be unloaded and replaced with lower quality and legacy models, not all guns maybe replaced with this mode!").define("reducedWeaponQuality", false);
+                this.reducedScopeQuality = builder.comment("If enabled all main scopes will be unloaded and replaced with lower quality and legacy models, not all scopes maybe replaced with this mode!").define("reducedScopeQuality", false);
+                this.reducedAmmunitionQuality = builder.comment("If enabled all main ammunition will be unloaded and replaced with lower quality and legacy models, not all ammo types maybe replaced with this mode!").define("reducedAmmunitionQuality", false);
+                this.reducedEffects = builder.comment("If enabled all main effects will be disabled such as muzzle flash / smoke and more!").define("reducedEffects", false);
+            }
+            builder.pop();
+        }
+    }
+
+    /*public static class GunHandlingCustomization
     {
         public ForgeConfigSpec.IntValue M1928_trigMax;
         public ForgeConfigSpec.IntValue AK47_trigMax;
@@ -315,7 +340,7 @@ public class Config
             }
             builder.pop();
         }
-    }
+    }*/
 
     /**
      * Network related config options
@@ -507,7 +532,6 @@ public class Config
         public final ForgeConfigSpec.DoubleValue gunShotMaxDistance;
         public final ForgeConfigSpec.BooleanValue enableCameraRecoil;
 
-        public final GunHandlingCustomization gunHandlingCustomization;
 
         public Server(ForgeConfigSpec.Builder builder)
         {
@@ -520,7 +544,6 @@ public class Config
                     this.soundPercentage = builder.comment("Volume of most game sounds when deafened will play at this percent, before eventually fading back to %100.").defineInRange("soundPercentage", 0.05, 0.0, 1.0);
                     this.soundFadeThreshold = builder.comment("After the duration drops to this many ticks, the ringing volume will gradually fade to 0 and other sound volumes will fade back to %100.").defineInRange("soundFadeThreshold", 90, 0, Integer.MAX_VALUE);
                     this.ringVolume = builder.comment("Volume of the ringing sound when deafened will play at this volume, before eventually fading to 0.").defineInRange("ringVolume", 1.0, 0.0, 1.0);
-                    this.gunHandlingCustomization = new GunHandlingCustomization(builder);
                 }
                 builder.pop();
 
