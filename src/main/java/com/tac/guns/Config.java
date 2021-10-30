@@ -275,7 +275,7 @@ public class Config
                 this.realisticLowPowerFovHandling = builder.comment("Optics with 0 fov modification will not affect the players fov at all").define("realisticLowPowerFovHandling", false);
                 this.realisticIronSightFovHandling = builder.comment("Iron sights fov modification will not affect the players fov at all").define("realisticIronSightFovHandling", false);
 
-                this.realisticAimedBreathing = builder.comment("Aiming will present a breathing animation, moving the weapon over time, crouch to lower it's effects").define("realisticAimedBreathing", true);
+                this.realisticAimedBreathing = builder.comment("Aiming will present a breathing animation, moving the weapon over time, crouch to lower it's effects").define("realisticAimedBreathing", false);
 
 
             }
