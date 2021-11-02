@@ -65,7 +65,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private boolean auto = false;
         @Optional
         private boolean boltAction = false;
-
+        @Optional
         private int rate;
         @Optional
         private int[] rateSelector = new int[]{0,1};
@@ -329,9 +329,13 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private ResourceLocation item = new ResourceLocation(Reference.MOD_ID, "basic_ammo");
         @Optional
         private boolean visible = true;
+        @Optional
         private float damage;
+        @Optional
         private float size;
+        @Optional
         private double speed;
+        @Optional
         private int life;
         @Optional
         private boolean gravity = true;
@@ -340,7 +344,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         private int trailColor = 0xFFD289;
         @Optional
-        private double trailLengthMultiplier = 1.0;
+        private double trailLengthMultiplier = 118.0;
         @Optional
         private boolean ricochet = true;
 
@@ -859,7 +863,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             private float fovModifier;
 
             @Optional
-            private double stabilityOffset = 0.325;
+            private double stabilityOffset = 0.225;
 
             @Override
             public CompoundNBT serializeNBT()

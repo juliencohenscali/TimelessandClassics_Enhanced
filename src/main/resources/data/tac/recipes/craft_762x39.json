@@ -1,13 +1,13 @@
 {
   "type": "tac:workbench",
   "result": {
-    "item": "tac:58x42",
-    "count": 20
+    "item": "tac:762x39",
+    "count": 15
   },
   "materials": [
     {
       "item": "minecraft:iron_nugget",
-      "count": 12
+      "count": 10
     },
     {
       "item": "minecraft:gunpowder",

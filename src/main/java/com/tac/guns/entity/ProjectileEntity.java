@@ -257,7 +257,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             }
             else
             {
-                this.onHit(result, startVec, endVec);
+                this.onHit(result, startVec, endVec); // Issue
             }
         }
 
@@ -420,6 +420,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             BlockState state = this.world.getBlockState(pos);
             Block block = state.getBlock();
 
+            if(block.getRegistryName().getPath().contains("_button"))
+                return;
+
             if(Config.COMMON.gameplay.enableGunGriefing.get() && (block instanceof BreakableBlock || block instanceof PaneBlock) && state.getMaterial() == Material.GLASS)
             {
                 this.world.destroyBlock(blockRayTraceResult.getPos(), false);
@@ -430,10 +433,12 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             //    this.remove();
             //}
 
+/*
             if(block instanceof IDamageable)
             {
-                ((IDamageable) block).onBlockDamaged(this.world, state, pos, this, this.getDamage(), (int) Math.ceil(this.getDamage() / 2.0) + 1);
+                ((IDamageable) block).onBlockDamaged(this.world, state, pos, this, this.getDamage(), (int) Math.ceil(this.getDamage() / 2.0) + 1); // Possibly to help fix button issue and many others, I don't think I can use this for now
             }
+*/
 
             this.onHitBlock(blockRayTraceResult);
             this.onHitBlock(state, pos, blockRayTraceResult.getFace(), hitVec.x, hitVec.y, hitVec.z);
@@ -544,7 +549,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
                 EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
 
-                RayTraceResult result = rayTraceBlocks(this.world, new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this), IGNORE_LEAVES);
+                RayTraceResult result = rayTraceBlocks(this.world, new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this), IGNORE_LEAVES); // Ricochet Raytrace
 
                 if (entityResult != null) {
                     this.tick();

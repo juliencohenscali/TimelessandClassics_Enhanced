@@ -148,5 +148,11 @@
       "sounds": [
          { "name": "tac:item/headshot" }
       ]
+   },
+   "item.pistol.reload": {
+      "subtitle": "subtitle.tac.reload",
+      "sounds": [
+         { "name": "tac:item/reload" }
+      ]
    }
 }

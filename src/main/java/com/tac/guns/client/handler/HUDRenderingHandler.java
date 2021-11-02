@@ -115,13 +115,19 @@ public class HUDRenderingHandler extends AbstractGui {
                 stack.translate(anchorPointX - (fireModeSize*2) / 4F, anchorPointY - (fireModeSize*2) / 5F * 3F, 0);
                 stack.translate(-fireModeSize + (-Config.CLIENT.weaponGUI.weaponFireMode.x.get().floatValue()), -fireModeSize + (-Config.CLIENT.weaponGUI.weaponFireMode.y.get().floatValue()), 0);
 
-                int fireMode = Objects.requireNonNull(player.getHeldItemMainhand().getTag()).getInt("CurrentFireMode");
-                if (player.getHeldItemMainhand().getTag().get("CurrentFireMode") == null)
-                    Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[gun.getGeneral().getRateSelector()[0]]);
-                else if (fireMode > 2 || fireMode < 0) // Weapons with unsupported modes will render as "default"
-                    Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[2]);
+                int fireMode;
+
+                if(player.getHeldItemMainhand().getTag() == null)
+                    fireMode = gun.getGeneral().getRateSelector()[0];
+                else if(player.getHeldItemMainhand().getTag().getInt("CurrentFireMode") == 0)
+                    fireMode = gun.getGeneral().getRateSelector()[0];
+                else
+                    fireMode = Objects.requireNonNull(player.getHeldItemMainhand().getTag()).getInt("CurrentFireMode");
+
+                /*if (fireMode > 2 || fireMode < 0) // Weapons with unsupported modes will render as "default"
+                    Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[2]);*/
                 if (!Config.COMMON.gameplay.safetyExistence.get() && fireMode == 0)
-                    Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[fireMode + 1]); // Render true firemode
+                    Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[0]); // Render true firemode
                 else
                     Minecraft.getInstance().getTextureManager().bindTexture(FIREMODE_ICONS[fireMode]); // Render true firemode
 
@@ -146,9 +152,11 @@ public class HUDRenderingHandler extends AbstractGui {
                         0
                 );
 
-                String text = player.getHeldItemMainhand().getTag().getInt("AmmoCount") + " / " + GunEnchantmentHelper.getAmmoCapacity(heldItem, gun);
-                stack.scale(counterSize, counterSize, counterSize);
-                drawCenteredString(stack, Minecraft.getInstance().fontRenderer, text, 0, 0, 0xffffff);
+                if(player.getHeldItemMainhand().getTag() != null) {
+                    String text = player.getHeldItemMainhand().getTag().getInt("AmmoCount") + " / " + GunEnchantmentHelper.getAmmoCapacity(heldItem, gun);
+                    stack.scale(counterSize, counterSize, counterSize);
+                    drawCenteredString(stack, Minecraft.getInstance().fontRenderer, text, 0, 0, 0xffffff);
+                }
             }
             stack.pop();
         }
