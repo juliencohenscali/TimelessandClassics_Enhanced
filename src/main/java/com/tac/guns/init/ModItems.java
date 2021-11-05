@@ -21,7 +21,7 @@ public class ModItems
 {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    public static final Boolean[] quality = new Boolean[]{ !Config.COMMON.quality.reducedWeaponQuality.get() };
+    public static final Boolean[] quality = new Boolean[]{ !Config.CLIENT.quality.reducedWeaponQuality.get() };
 
     public static final RegistryObject<Item> M1911 = REGISTER.register( (quality[0] ? "m1911" : ""), () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
 

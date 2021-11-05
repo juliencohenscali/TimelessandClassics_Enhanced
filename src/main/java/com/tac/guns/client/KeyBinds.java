@@ -17,6 +17,8 @@ public class KeyBinds
     public static final KeyBinding KEY_INSPECT = new KeyBinding("key.tac.inspect", GLFW.GLFW_KEY_H, "key.categories.tac");
     public static final KeyBinding KEY_SIGHT_SWITCH = new KeyBinding("key.tac.sight_switch", GLFW.GLFW_KEY_V, "key.categories.tac");
 
+    public static final KeyBinding KEY_ADS = new KeyBinding("key.tac.aim_sights", GLFW.GLFW_MOUSE_BUTTON_RIGHT, "key.categories.tac");
+
     public static void register()
     {
         ClientRegistry.registerKeyBinding(KEY_RELOAD);
@@ -25,5 +27,6 @@ public class KeyBinds
         ClientRegistry.registerKeyBinding(KEY_FIRESELECT);
         ClientRegistry.registerKeyBinding(KEY_INSPECT);
         ClientRegistry.registerKeyBinding(KEY_SIGHT_SWITCH);
+        ClientRegistry.registerKeyBinding(KEY_ADS);
     }
 }

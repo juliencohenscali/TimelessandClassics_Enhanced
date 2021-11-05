@@ -2,6 +2,7 @@ package com.tac.guns.client.handler;
 
 import com.tac.guns.Config;
 import com.tac.guns.GunMod;
+import com.tac.guns.client.KeyBinds;
 import com.tac.guns.client.render.crosshair.Crosshair;
 import com.tac.guns.common.Gun;
 import com.tac.guns.init.ModBlocks;
@@ -10,6 +11,7 @@ import com.tac.guns.item.GunItem;
 import com.tac.guns.item.attachment.impl.Scope;
 import com.tac.guns.network.PacketHandler;
 import com.tac.guns.network.message.MessageAim;
+import com.tac.guns.network.message.MessageUnload;
 import com.tac.guns.util.GunEnchantmentHelper;
 import com.tac.guns.util.GunModifierHelper;
 import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
@@ -29,6 +31,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
@@ -62,6 +65,8 @@ public class AimingHandler
     private final Map<PlayerEntity, AimTracker> aimingMap = new WeakHashMap<>();
     private double normalisedAdsProgress;
     private boolean aiming = false;
+    private boolean toggledAim = false;
+    private int toggledAimAwaiter = 0;
 
     private AimingHandler() {}
 
@@ -121,6 +126,9 @@ public class AimingHandler
         PlayerEntity player = Minecraft.getInstance().player;
         if(player == null)
             return;
+
+        if(this.toggledAimAwaiter > 0)
+            this.toggledAimAwaiter--;
 
         if(this.isAiming())
         {
@@ -227,14 +235,82 @@ public class AimingHandler
         if(SyncedPlayerData.instance().get(mc.player, ModSyncedDataKeys.RELOADING))
             return false;
 
-        boolean zooming = GLFW.glfwGetMouseButton(mc.getMainWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) == GLFW.GLFW_PRESS;
-        if(GunMod.controllableLoaded)
+        boolean zooming;
+
+        if(!Config.CLIENT.controls.toggleAim.get())
         {
-            // zooming |= ControllerHandler.isAiming();
+            zooming = GLFW.glfwGetMouseButton(mc.getMainWindow().getHandle(), GLFW.GLFW_MOUSE_BUTTON_RIGHT) == GLFW.GLFW_PRESS;
+
+            if (GunMod.controllableLoaded) {
+                // zooming |= ControllerHandler.isAiming();
+            }
         }
+        else
+            zooming = this.toggledAim;
 
         return zooming;
     }
+
+    @SubscribeEvent
+    public void onKeyPressed(InputEvent.KeyInputEvent event)
+    {
+        if(!Config.CLIENT.controls.toggleAim.get())
+            return;
+        if(this.toggledAimAwaiter > 0)
+            return;
+
+        boolean isLeftClickAim = KeyBinds.KEY_ADS.matchesMouseKey(GLFW.GLFW_MOUSE_BUTTON_LEFT);
+        boolean isRightClickAim = KeyBinds.KEY_ADS.matchesMouseKey(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+
+        if(isLeftClickAim || isRightClickAim)
+            return;
+
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null)
+            return;
+
+        if (KeyBinds.KEY_ADS.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS) {
+            forceToggleAim();
+            this.toggledAimAwaiter = Config.CLIENT.controls.toggleAimDelay.get();
+        }
+    }
+
+    @SubscribeEvent
+    public void onKeyPressed(InputEvent.RawMouseEvent event)
+    {
+        if(!Config.CLIENT.controls.toggleAim.get())
+            return;
+
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null)
+            return;
+
+        if(this.toggledAimAwaiter > 0)
+            return;
+        if(event.getAction() != GLFW.GLFW_PRESS)
+            return;
+
+        if(event.getButton() == KeyBinds.KEY_ADS.getKey().getKeyCode())
+        {
+            forceToggleAim();
+            this.toggledAimAwaiter = Config.CLIENT.controls.toggleAimDelay.get();
+        }
+    }
+
+
+    public boolean isToggledAim()
+    {
+        return this.toggledAim;
+    }
+
+    public void forceToggleAim()
+    {
+        if (this.toggledAim)
+            this.toggledAim = false;
+        else
+            this.toggledAim = true;
+    }
+
 
     public boolean isLookingAtInteractableBlock()
     {

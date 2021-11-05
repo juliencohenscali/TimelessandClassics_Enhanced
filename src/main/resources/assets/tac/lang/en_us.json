@@ -125,17 +125,23 @@
     "death.attack.tac.bullet.executed": "%1$s was executed by %2$s",
     "death.attack.tac.bullet.annihilated": "%1$s was annihilated by %2$s",
     "death.attack.tac.bullet.decimated": "%1$s was decimated by %2$s",
+
     "info.tac.damage": "Damage: %s",
     "info.tac.ignore_ammo": "Infinite Ammo",
     "info.tac.ammo": "Ammo: %s",
     "info.tac.ammo_type": "Ammo Type: %s",
     "info.tac.attachment_help": "Press %s in-game for Attachments",
+
     "key.categories.tac": "Timeless and Classic Guns",
+
     "key.tac.reload": "Reload",
     "key.tac.unload": "Unload",
+
     "key.tac.attachments": "Modify Attachments",
+
     "effect.tac.blinded": "Blinded",
     "effect.tac.deafened": "Deafened",
+
     "subtitle.tac.stun.explosion": "Stun grenade explosion",
     "subtitle.tac.stun.ring": "Ringing",
     "subtitle.tac.fire": "Gunfire",
@@ -143,15 +149,19 @@
     "subtitle.tac.reload": "Reloading",
     "subtitle.tac.grenade.pin": "Grenade Pin",
     "subtitle.tac.attach": "Attachment Attach",
+
     "tac.option_list.no_items": "No Items",
     "tac.options.adsSensitivity": "ADS Sensitivity",
     "tac.options.adsSensitivity.format": "ADS Sensitivity: %s",
     "tac.options.crosshair.format": "Crosshair: %s",
+
     "tac.crosshair.arrow": "Arrow",
     "tac.crosshair.better_default": "Better Default",
     "tac.crosshair.box": "Box",
     "tac.crosshair.circle": "Circle",
+
     "minecraft.crosshair.default": "Default",
+
     "tac.crosshair.dot": "Dot",
     "tac.crosshair.filled_circle": "Filled Circle",
     "tac.crosshair.hit_marker": "Hit Marker",
@@ -162,20 +172,24 @@
     "tac.crosshair.t": "T",
     "tac.crosshair.tech": "Tech",
     "tac.crosshair.dynamic_default": "Dynamic",
+
     "gui.tac.workbench.assemble": "Build",
     "gui.tac.workbench.show_remaining": "Show Needed",
     "gui.tac.workbench.tab.weapons": "Weapons",
     "gui.tac.workbench.tab.attachments": "Attachments",
     "gui.tac.workbench.tab.ammo": "Ammo",
     "gui.tac.workbench.tab.misc": "Miscellaneous",
+
     "container.tac.workbench": "",
     "container.tac.attachments": "Modify Attachments",
     "container.tac.attachments.window_help": "Click to move and rotate",
+
     "slot.tac.attachment.not_applicable": "\u00a7cNot applicable",
     "slot.tac.attachment.scope": "Scope",
     "slot.tac.attachment.barrel": "Barrel",
     "slot.tac.attachment.stock": "Stock",
     "slot.tac.attachment.under_barrel": "Under Barrel",
+
     "enchantment.tac.quick_hands": "Quick Hands",
     "enchantment.tac.trigger_finger": "Trigger Finger",
     "enchantment.tac.lightweight": "Lightweight",
@@ -194,6 +208,7 @@
     "enchantment.tac.accelerator.desc": "Increases the speed of fired projectiles causing them to do more damage",
     "enchantment.tac.puncturing.desc": "Creates a chance that a bullet will deal critical damage",
     "enchantment.tac.fire_starter.desc": "Fired bullets will set blocks and entities on fire upon impact",
+
     "perk.tac.title": "Perks:",
     "perk.tac.entry.positive": "+ %s",
     "perk.tac.entry.negative": "- %s",
@@ -218,9 +233,15 @@
     "perk.tac.ads_speed.negative": "%s",
     "perk.tac.rate.positive": "%s",
     "perk.tac.rate.negative": "%s",
+
+    "perk.tac.vol": "% 枪声",
+
+
     "gui.tac.assemble": "Assemble",
     "gui.tac.show_remaining": "Show Remaining",
+
     "button.categories.tac": "Timeless and Classic Guns",
+
     "tac.button.shoot": "Shoot",
     "tac.button.aim": "Aim Down Sight",
     "tac.button.reload": "Reload / Unload",

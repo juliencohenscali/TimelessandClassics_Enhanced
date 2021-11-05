@@ -18,7 +18,9 @@ public class Config
         public final Display display;
         public final Particle particle;
         public final Controls controls;
+
         public final WeaponGUI weaponGUI;
+        public final Quality quality;
 
         public Client(ForgeConfigSpec.Builder builder)
         {
@@ -28,6 +30,7 @@ public class Config
                 this.display = new Display(builder);
                 this.particle = new Particle(builder);
                 this.controls = new Controls(builder);
+                this.quality = new Quality(builder);
                 this.weaponGUI = new WeaponGUI(builder);
             }
             builder.pop();
@@ -123,6 +126,7 @@ public class Config
             builder.pop();
         }
     }
+
     public static class WeaponAmmoCounter
     {
         public final ForgeConfigSpec.BooleanValue showWeaponAmmoCounter;
@@ -193,11 +197,40 @@ public class Config
     {
         public final ForgeConfigSpec.DoubleValue aimDownSightSensitivity;
 
+        public final ForgeConfigSpec.BooleanValue toggleAim;
+        public final ForgeConfigSpec.IntValue toggleAimDelay;
+
         public Controls(ForgeConfigSpec.Builder builder)
         {
             builder.comment("Properties relating to controls").push("controls");
             {
-                this.aimDownSightSensitivity = builder.comment("A value to multiple the mouse sensitivity by when aiming down weapon sights. Go to (Options > Controls > Mouse Settings > ADS Sensitivity) in game to change this!").defineInRange("aimDownSightSensitivity", 0.75, 0.0, 1.0);
+                this.aimDownSightSensitivity = builder.comment("A value to multiple the mouse sensitivity by when aiming down weapon sights. Go to (Options > Controls > Mouse Settings > ADS Sensitivity) in game to change this!").defineInRange("aimDownSightSensitivity", 0.75, 0.0, 2.0);
+
+                this.toggleAim = builder.comment("Click to toggle aim on and off in game, instead of holding your aim button, the only way to utilize the toggleAim Keybind at this point!").define("toggleAim", false);
+                this.toggleAimDelay = builder.comment("The delay in ticks before being able to activate your toggleAim again, recommended to leave alone or increase past default!").defineInRange("toggleAimDelay", 8, 1, 60);
+            }
+            builder.pop();
+        }
+    }
+
+    /**
+     * Gameplay related config options
+     */
+    public static class Quality
+    {
+        public final ForgeConfigSpec.BooleanValue reducedWeaponQuality;
+        public final ForgeConfigSpec.BooleanValue reducedScopeQuality;
+        public final ForgeConfigSpec.BooleanValue reducedAmmunitionQuality;
+        public final ForgeConfigSpec.BooleanValue reducedEffects;
+
+        public Quality(ForgeConfigSpec.Builder builder)
+        {
+            builder.comment("Properties relating to improving graphical performance (Currently unsupported, do not attempt to change these settings until announcements are made about these features!)").push("quality");
+            {
+                this.reducedWeaponQuality = builder.comment("If enabled all main weapons will be unloaded and replaced with lower quality and legacy models, not all guns maybe replaced with this mode!").define("reducedWeaponQuality", false);
+                this.reducedScopeQuality = builder.comment("If enabled all main scopes will be unloaded and replaced with lower quality and legacy models, not all scopes maybe replaced with this mode!").define("reducedScopeQuality", false);
+                this.reducedAmmunitionQuality = builder.comment("If enabled all main ammunition will be unloaded and replaced with lower quality and legacy models, not all ammo types maybe replaced with this mode!").define("reducedAmmunitionQuality", false);
+                this.reducedEffects = builder.comment("If enabled all main effects will be disabled such as muzzle flash / smoke and more!").define("reducedEffects", false);
             }
             builder.pop();
         }
@@ -209,7 +242,6 @@ public class Config
     public static class Common
     {
         public final Gameplay gameplay;
-        public final Quality quality;
         public final Network network;
         public final AggroMobs aggroMobs;
         public final Missiles missiles;
@@ -223,7 +255,6 @@ public class Config
             builder.push("common");
             {
                 this.gameplay = new Gameplay(builder);
-                this.quality = new Quality(builder);
                 this.network = new Network(builder);
                 this.aggroMobs = new AggroMobs(builder);
                 this.missiles = new Missiles(builder);
@@ -280,29 +311,6 @@ public class Config
                 this.realisticAimedBreathing = builder.comment("Aiming will present a breathing animation, moving the weapon over time, crouch to lower it's effects").define("realisticAimedBreathing", false);
 
 
-            }
-            builder.pop();
-        }
-    }
-
-    /**
-     * Gameplay related config options
-     */
-    public static class Quality
-    {
-        public final ForgeConfigSpec.BooleanValue reducedWeaponQuality;
-        public final ForgeConfigSpec.BooleanValue reducedScopeQuality;
-        public final ForgeConfigSpec.BooleanValue reducedAmmunitionQuality;
-        public final ForgeConfigSpec.BooleanValue reducedEffects;
-
-        public Quality(ForgeConfigSpec.Builder builder)
-        {
-            builder.comment("Properties relating to improving graphical performance (Currently unsupported, do not attempt to change these settings until announcements are made about these features!)").push("quality");
-            {
-                this.reducedWeaponQuality = builder.comment("If enabled all main weapons will be unloaded and replaced with lower quality and legacy models, not all guns maybe replaced with this mode!").define("reducedWeaponQuality", false);
-                this.reducedScopeQuality = builder.comment("If enabled all main scopes will be unloaded and replaced with lower quality and legacy models, not all scopes maybe replaced with this mode!").define("reducedScopeQuality", false);
-                this.reducedAmmunitionQuality = builder.comment("If enabled all main ammunition will be unloaded and replaced with lower quality and legacy models, not all ammo types maybe replaced with this mode!").define("reducedAmmunitionQuality", false);
-                this.reducedEffects = builder.comment("If enabled all main effects will be disabled such as muzzle flash / smoke and more!").define("reducedEffects", false);
             }
             builder.pop();
         }
