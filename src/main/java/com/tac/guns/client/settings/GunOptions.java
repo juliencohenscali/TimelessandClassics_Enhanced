@@ -6,6 +6,7 @@ import com.tac.guns.client.render.crosshair.Crosshair;
 import net.minecraft.client.AbstractOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.settings.BooleanOption;
 import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -23,12 +24,20 @@ public class GunOptions
     public static final SliderPercentageOption ADS_SENSITIVITY = new GunSliderPercentageOption("tac.options.adsSensitivity", 0.0, 1.0, 0.01F, gameSettings -> {
         return Config.CLIENT.controls.aimDownSightSensitivity.get();
     }, (gameSettings, value) -> {
-        Config.CLIENT.controls.aimDownSightSensitivity.set(MathHelper.clamp(value, 0.0, 1.0));
+        Config.CLIENT.controls.aimDownSightSensitivity.set(MathHelper.clamp(value, 0.0, 2.0));
         Config.saveClientConfig();
     }, (gameSettings, option) -> {
         double adsSensitivity = Config.CLIENT.controls.aimDownSightSensitivity.get();
         return new TranslationTextComponent("tac.options.adsSensitivity.format", FORMAT.format(adsSensitivity));
     });
+
+    public static final BooleanOption TOGGLE_ADS = new BooleanOption("tac.options.toggleAim", (settings) -> {
+        return Config.CLIENT.controls.toggleAim.get();
+    }, (settings, value) -> {
+        Config.CLIENT.controls.toggleAim.set(value);
+        Config.saveClientConfig();
+    });
+
 
     public static final AbstractOption CROSSHAIR = new GunListOption<>("tac.options.crosshair", () -> {
         return CrosshairHandler.get().getRegisteredCrosshairs();

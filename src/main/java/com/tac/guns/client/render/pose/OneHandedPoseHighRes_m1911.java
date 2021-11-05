@@ -26,7 +26,7 @@ public class OneHandedPoseHighRes_m1911 extends OneHandedPose {
             We would need to change the location of our hand by adjusting the values of [x,y,z](1), changing the final rotation of the rendered hand(2), and changing the scale of the rendered hand (3).
         */
 		
-		matrixStack.translate(-0.150, -0.52, 0.70);
+		matrixStack.translate(-0.151, -0.52, 0.70);
 		matrixStack.rotate(Vector3f.YP.rotationDegrees(180F));
 		
 		double centerOffset = 2.5;
