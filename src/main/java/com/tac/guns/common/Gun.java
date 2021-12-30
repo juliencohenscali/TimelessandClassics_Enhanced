@@ -1,6 +1,5 @@
 package com.tac.guns.common;
 
-import com.tac.guns.GunMod;
 import com.tac.guns.Reference;
 import com.tac.guns.annotation.Ignored;
 import com.tac.guns.annotation.Optional;
@@ -11,19 +10,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.List;
 
 
 public final class Gun implements INBTSerializable<CompoundNBT>
@@ -73,6 +67,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private GripType gripType = GripType.ONE_HANDED;
         private int maxAmmo;
         @Optional
+        private boolean magFed = false;
+        @Optional
+        private int reloadMagTimer = 20;
+        @Optional
         private int reloadAmount = 1;
         @Optional
         private float recoilAngle;
@@ -102,9 +100,11 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             tag.putString("GripType", this.gripType.getId().toString());
             tag.putInt("MaxAmmo", this.maxAmmo);
             tag.putInt("ReloadSpeed", this.reloadAmount);
-            tag.putFloat("RecoilAngle", this.recoilAngle);
+            tag.putInt("ReloadMagTimer", this.reloadMagTimer);
+            tag.putBoolean("ReloadMagSpeed", this.magFed);
+            tag.putFloat("RecoilAngle", this.recoilAngle*2); // x2 for quick camera recoil reduction balancing
             tag.putFloat("RecoilKick", this.recoilKick);
-            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle);
+            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*2); // x2 for quick camera recoil reduction balancing
             tag.putFloat("RecoilDurationOffset", this.recoilDurationOffset);
             tag.putFloat("RecoilAdsReduction", this.recoilAdsReduction);
             tag.putInt("ProjectileAmount", this.projectileAmount);
@@ -756,7 +756,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             }
             tag.putFloat("HipFireScale", this.hipfireScale);
             tag.putFloat("HipFireMoveScale", this.hipfireMoveScale);
-            tag.putFloat("HipFireRecoilScale", this.hipfireRecoilScale);
+            tag.putFloat("HipFireRecoilScale", this.hipfireRecoilScale/2); // Compensate for camera changes
             tag.putBoolean("ShowDynamicHipfire", this.showDynamicHipfire);
             tag.putInt("WeaponType", this.weaponType);
             return tag;
@@ -847,7 +847,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
 
         public Zoom[] getZoom()
         {
-            return this.zoom.clone();
+            return this.zoom;
         }
 
         public Attachments getAttachments()
@@ -927,6 +927,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             @Optional
             @Nullable
             private ScaledPositioned sideRail;
+            @Optional
+            @Nullable
+            private ScaledPositioned oldScope;
 
             @Nullable
             public ScaledPositioned getScope()
@@ -956,6 +959,11 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
                 return this.sideRail;
             }
+            @Nullable
+            public ScaledPositioned getOldScope()
+            {
+                return this.oldScope;
+            }
 
             @Override
             public CompoundNBT serializeNBT()
@@ -976,6 +984,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 if(this.underBarrel != null)
                 {
                     tag.put("UnderBarrel", this.underBarrel.serializeNBT());
+                }
+                if(this.oldScope != null)
+                {
+                    tag.put("OldScope", this.oldScope.serializeNBT());
                 }
                 return tag;
             }
@@ -999,6 +1011,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 {
                     this.underBarrel = this.createScaledPositioned(tag, "UnderBarrel");
                 }
+                if(tag.contains("OldScope", Constants.NBT.TAG_COMPOUND))
+                {
+                    this.oldScope = this.createScaledPositioned(tag, "OldScope");
+                }
             }
 
             public Attachments copy()
@@ -1019,6 +1035,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 if(this.underBarrel != null)
                 {
                     attachments.underBarrel = this.underBarrel.copy();
+                }
+                if(this.oldScope != null)
+                {
+                    attachments.oldScope = this.oldScope.copy();
                 }
                 return attachments;
             }
@@ -1104,29 +1124,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 }
             }
             tag.putInt("ZoomIterator",zoomIterator);
-
-            if(tag.get("Zoom0") != null)
-            {
-                GunMod.LOGGER.log(Level.FATAL, zoom.length);
-            }
             tag.put("Attachments", this.attachments.serializeNBT());
             return tag;
         }
-        
-         /*if(tag.contains("Zoom", Constants.NBT.TAG_COMPOUND))
-            {
-                Zoom zoom = new Zoom();
 
-                Zoom[] zoomarr = new Zoom[]{zoom};
-                zoomarr[0].deserializeNBT(tag.getCompound("Zoom"));
-
-                this.zoom = zoomarr;
-            }
-            if(tag.contains("Attachments", Constants.NBT.TAG_COMPOUND))
-            {
-                this.attachments.deserializeNBT(tag.getCompound("Attachments"));
-            }*/
-        
         @Override
         public void deserializeNBT(CompoundNBT tag)
         {
@@ -1341,6 +1342,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.stock != null;
                 case UNDER_BARREL:
                     return this.modules.attachments.underBarrel != null;
+                case OLD_SCOPE:
+                    return this.modules.attachments.oldScope != null;
             }
         }
         return false;
@@ -1361,6 +1364,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.stock;
                 case UNDER_BARREL:
                     return this.modules.attachments.underBarrel;
+                case OLD_SCOPE:
+                    return this.modules.attachments.oldScope;
             }
         }
         return null;
@@ -1368,7 +1373,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
 
     public boolean canAimDownSight()
     {
-        return this.canAttachType(IAttachment.Type.SCOPE) || this.modules.zoom != null;
+        return this.canAttachType(IAttachment.Type.SCOPE) || this.canAttachType(IAttachment.Type.OLD_SCOPE) || this.modules.zoom != null;
     }
 
     public static ItemStack getScopeStack(ItemStack gun)
@@ -1380,6 +1385,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             if(attachment.contains("Scope", Constants.NBT.TAG_COMPOUND))
             {
                 return ItemStack.read(attachment.getCompound("Scope"));
+            }
+            else if(attachment.contains("OldScope", Constants.NBT.TAG_COMPOUND))
+            {
+                return ItemStack.read(attachment.getCompound("OldScope"));
             }
         }
         return ItemStack.EMPTY;
@@ -1413,6 +1422,16 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 if(scopeStack.getItem() instanceof IScope)
                 {
                     scope = ((IScope) scopeStack.getItem()).getProperties();
+                }
+                return scope;
+            }
+            else if(attachment.contains("OldScope", Constants.NBT.TAG_COMPOUND))
+            {
+                ItemStack OldScopeStack = ItemStack.read(attachment.getCompound("OldScope"));
+                Scope scope = null;
+                if(OldScopeStack.getItem() instanceof IScope)
+                {
+                    scope = ((IScope) OldScopeStack.getItem()).getProperties();
                 }
                 return scope;
             }

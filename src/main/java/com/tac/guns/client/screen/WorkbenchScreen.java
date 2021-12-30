@@ -47,7 +47,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer>
 {

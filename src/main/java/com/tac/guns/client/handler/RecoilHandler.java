@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Level;
 import java.util.Random;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class RecoilHandler
 {
@@ -82,7 +82,7 @@ public class RecoilHandler
         float horizontalRecoilModifier = 1.0F - GunModifierHelper.getHorizontalRecoilModifier(heldItem);
         horizontalRecoilModifier *= this.getAdsRecoilReduction(modifiedGun);
         horizontalRecoilModifier *= horizontalRandomAmount;
-        horizontalCameraRecoil = modifiedGun.getGeneral().getHorizontalRecoilAngle() * horizontalRecoilModifier;
+        horizontalCameraRecoil = (modifiedGun.getGeneral().getHorizontalRecoilAngle() * horizontalRecoilModifier);
         horizontalProgressCameraRecoil = 0F;
     }
     @SubscribeEvent
@@ -105,19 +105,19 @@ public class RecoilHandler
 
         if(startProgress < 0.2F)
         {
-            mc.player.rotationPitch -= ((endProgress - startProgress) / 0.2F) * this.cameraRecoil;
+            mc.player.rotationPitch -= ((endProgress - startProgress) / 0.2F) * this.cameraRecoil / 3;
             if(recoilRand == 1)
-                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.2F) * this.horizontalCameraRecoil;
+                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.2F) * this.horizontalCameraRecoil / 3;
             else
-                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.2F) * -this.horizontalCameraRecoil;
+                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.2F) * -this.horizontalCameraRecoil / 3;
         }
         else
         {
-            mc.player.rotationPitch += ((endProgress - startProgress) / 0.8F) * this.cameraRecoil;
+            mc.player.rotationPitch += ((endProgress - startProgress) / 0.8F) * this.cameraRecoil / 3;
             if(recoilRand == 1)
-                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.8F) * -this.horizontalCameraRecoil;
+                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.8F) * -this.horizontalCameraRecoil / 3;
             else
-                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.8F) * this.horizontalCameraRecoil;
+                mc.player.rotationYaw -= ((endProgress - startProgress) / 0.8F) * this.horizontalCameraRecoil / 3;
         }
 
         this.progressCameraRecoil += recoilAmount;

@@ -4,7 +4,7 @@ import com.tac.guns.interfaces.IGunModifier;
 import net.minecraft.util.math.MathHelper;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class GunModifiers
 {
@@ -32,12 +32,39 @@ public class GunModifiers
         }
     };
 
-    public static final IGunModifier SLOW_ADS = new IGunModifier()
+    public static final IGunModifier LOW_FOV_ADS = new IGunModifier()
     {
         @Override
         public double modifyAimDownSightSpeed(double speed)
         {
             return speed * 0.95F;
+        }
+    };
+
+    public static final IGunModifier MIDRANGE_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.835F;
+        }
+    };
+
+    public static final IGunModifier LONGRANGE_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.795F;
+        }
+    };
+
+    public static final IGunModifier OLD_SCOPE_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.625F;
         }
     };
 
@@ -380,13 +407,13 @@ public class GunModifiers
         @Override
         public float modifyProjectileSpread(float spread)
         {
-            return spread * 1.20F;
+            return spread * 1.125F;
         }
 
         @Override
         public float horizontalRecoilModifier()
         {
-            return 1.105F;
+            return 1.075F;
         }
 
         @Override
@@ -400,19 +427,19 @@ public class GunModifiers
         @Override
         public float recoilModifier()
         {
-            return 1.15F;
+            return 1.125F;
         }
 
         @Override
         public float modifyProjectileSpread(float spread)
         {
-            return spread * 0.90F;
+            return spread * 0.875F;
         }
 
         @Override
         public float horizontalRecoilModifier()
         {
-            return 0.55F;
+            return 0.625F;
         }
 
         @Override

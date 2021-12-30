@@ -9,6 +9,7 @@ import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.container.AttachmentContainer;
 import com.tac.guns.item.GunItem;
 import com.tac.guns.item.ScopeItem;
+import com.tac.guns.item.TransitionalTypes.TimelessOldGunItem;
 import com.tac.guns.item.attachment.IAttachment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -28,7 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
 {
@@ -155,43 +156,59 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         this.blit(matrixStack, left, top, 0, 0, this.xSize, this.ySize);
 
         if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof ScopeItem))
-            for(int i = 0; i < IAttachment.Type.values().length-4; i++)
+            for(int i = 0; i < IAttachment.Type.values().length-5; i++)
             {
-                if(!this.container.getSlot(i+4).isEnabled() && i == 0)
+                if(!this.container.getSlot(i+5).isEnabled() && i == 0)
                 {
                     this.blit(matrixStack, left + 70, top + 32 + (i+2) * 18, 176, 0, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+4).isEmpty() && i == 0)
+                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 0)
                 {
                     this.blit(matrixStack, left + 70, top + 32 + (i+2) * 18, 176, 16 + i * 16, 16, 16);
                 }
-                if(!this.container.getSlot(i+4).isEnabled() && i == 1)
+                if(!this.container.getSlot(i+5).isEnabled() && i == 2)
                 {
-                    this.blit(matrixStack, left + 40, top + 0 + i * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 40, top + 0 + (i-1) * 18, 176, 0, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+4).isEmpty() && i == 1)
+                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 2)
                 {
-                    this.blit(matrixStack, left + 10, top + 32 + (i+1) * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 10, top + 32 + (i) * 18, 176, 0, 16, 16);
                 }
-                if(!this.container.getSlot(i+4).isEnabled() && i == 2)
+                if(!this.container.getSlot(i+5).isEnabled() && i == 1)
                 {
                     this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 0, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+4).isEmpty() && i == 2)
+                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 1)
                 {
-                    this.blit(matrixStack, left + 40, top - 1 + (i-1) * 18, 176, 16 + (i-1) * 16, 16, 16);
+                    this.blit(matrixStack, left + 40, top - 1 + (i) * 18, 176, 16 + (i-1) * 16, 16, 16);
                 }
-                if(!this.container.getSlot(i+4).isEnabled() && i == 3)
+                if(!this.container.getSlot(i+5).isEnabled() && i == 3)
                 {
                     //this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 0, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+4).isEmpty() && i == 3)
+                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 3)
                 {
                     //this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 16 + i * 16, 16, 16);
                 }
             }
+        else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessOldGunItem))
+        {
+            int iSkipper = 0;
+            for(int i = 1; i < IAttachment.Type.values().length-3; i++)
+            {
+                if(!this.container.getSlot(iSkipper).isEnabled())
+                {
+                    this.blit(matrixStack, left + 5, top + 17 + iSkipper * 18, 176, 0, 16, 16);
+                }
+                else if(this.weaponInventory.getStackInSlot(iSkipper).isEmpty())
+                {
+                    this.blit(matrixStack, left + 5, top + 17 + iSkipper * 18, 176, 16 + iSkipper * 16, 16, 16);
+                }
+                iSkipper++;
+            }
+        }
         else
-            for(int i = 0; i < IAttachment.Type.values().length-3; i++)
+            for(int i = 0; i < IAttachment.Type.values().length-4; i++)
             {
                 if(!this.container.getSlot(i).isEnabled())
                 {

@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.BiFunction;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class ModEntities
 {

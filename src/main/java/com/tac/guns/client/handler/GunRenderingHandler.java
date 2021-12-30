@@ -7,7 +7,6 @@ import com.mrcrayfish.obfuscate.client.event.PlayerModelEvent;
 import com.mrcrayfish.obfuscate.client.event.RenderItemEvent;
 import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
 import com.tac.guns.Config;
-import com.tac.guns.GunMod;
 import com.tac.guns.Reference;
 import com.tac.guns.client.GunRenderType;
 import com.tac.guns.client.render.gun.IOverrideModel;
@@ -28,6 +27,9 @@ import com.tac.guns.item.attachment.impl.Scope;
 import com.tac.guns.util.GunEnchantmentHelper;
 import com.tac.guns.util.GunModifierHelper;
 import com.tac.guns.util.OptifineHelper;
+import com.tac.guns.util.math.easing.QuadEaseOut;
+import com.tac.guns.util.math.easing.SineEaseInOut;
+import com.tac.guns.util.math.easing.TimelessMathHelper;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -53,6 +55,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.LightType;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -64,11 +67,8 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 
-import org.apache.logging.log4j.Level;
-
-import sun.security.util.ArrayUtil;
-
 import java.lang.reflect.Field;
+import java.sql.Time;
 import java.util.*;
 
 public class GunRenderingHandler {
@@ -98,6 +98,13 @@ public class GunRenderingHandler {
 
     private Field equippedProgressMainHandField;
     private Field prevEquippedProgressMainHandField;
+
+    public float immersiveWeaponRoll;
+    private float immersiveRoll; //TEST FROM CGM
+
+    public float walkingDistance;
+    public float walkingCrouch;
+    public float walkingCameraYaw;
 
     private GunRenderingHandler() {
     }
@@ -187,6 +194,22 @@ public class GunRenderingHandler {
         }
     }
 
+/*    @SubscribeEvent
+    public void onCameraSetup(EntityViewRenderEvent.CameraSetup event) // TEST FROM CGM
+    {
+        *//*if(!Config.CLIENT.experimental.immersiveCamera.get())
+            return;*//*
+
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null)
+            return;
+
+        ItemStack heldItem = mc.player.getHeldItemMainhand();
+        float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * 1F: 0F;
+        this.immersiveRoll = MathHelper.approach(this.immersiveRoll, targetAngle, 0.4F);
+        event.setRoll(-this.immersiveRoll);
+    }*/
+
     @SubscribeEvent
     public void onRenderOverlay(RenderHandEvent event) {
         boolean isAnimated = event.getItemStack().getItem() instanceof ITimelessAnimated;
@@ -199,16 +222,31 @@ public class GunRenderingHandler {
             float cameraYaw = MathHelper.lerp(event.getPartialTicks(), playerentity.prevCameraYaw, playerentity.cameraYaw);
 
             /* Reverses the original bobbing rotations and translations so it can be controlled */
+
             matrixStack.rotate(Vector3f.XP.rotationDegrees(-(Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI - 0.2F) * cameraYaw) * 5.0F)));
             matrixStack.rotate(Vector3f.ZP.rotationDegrees(-(MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 3.0F)));
             matrixStack.translate((double) -(MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 0.5F), (double) -(-Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI) * cameraYaw)), 0.0D);
 
+            // Walking bobbing
+            boolean aimed = false;
             /* The new controlled bobbing */
-            double invertZoomProgress = 1.0 - AimingHandler.get().getNormalisedAdsProgress();
-            matrixStack.translate((double) (MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 0.5F) * invertZoomProgress, (double) (-Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI) * cameraYaw)) * invertZoomProgress, 0.0D);
-            matrixStack.rotate(Vector3f.ZP.rotationDegrees((MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 3.0F) * (float) invertZoomProgress));
-            matrixStack.rotate(Vector3f.XP.rotationDegrees((Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI - 0.2F) * cameraYaw) * 5.0F) * (float) invertZoomProgress));
-        }
+            if(AimingHandler.get().isAiming())
+                aimed = true;
+
+            double invertZoomProgress = aimed ? 0.085 : 0.68; //0.135 : 0.44;//0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
+            float crouch = mc.player.isCrouching() ? 148f : 1f;
+
+            this.walkingDistance = distanceWalked;
+            this.walkingCrouch = crouch;
+            this.walkingCameraYaw = cameraYaw;
+
+            //matrixStack.translate((double) (MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 0.5F) * invertZoomProgress, ((double) (-Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI) * cameraYaw)) * invertZoomProgress) * (1.285 * crouch), 0.0D);
+            matrixStack.translate((double) (MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 0.5F) * invertZoomProgress, ((double) (-Math.abs(MathHelper.cos(distanceWalked*crouch * (float) Math.PI) * cameraYaw)) * invertZoomProgress) * 1.140, 0.0D);// * 1.140, 0.0D);
+            //matrixStack.translate((double) (Math.asin(-MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 0.5F)) * invertZoomProgress, ((double) (Math.asin((-Math.abs(-MathHelper.cos(distanceWalked*crouch * (float) Math.PI) * cameraYaw))) * invertZoomProgress)) * 1.140, 0.0D);// * 1.140, 0.0D);
+            matrixStack.rotate(Vector3f.ZP.rotationDegrees((MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 3.0F) * (float) invertZoomProgress));
+            matrixStack.rotate(Vector3f.XP.rotationDegrees((Math.abs(MathHelper.cos(distanceWalked*crouch * (float) Math.PI - 0.2F) * cameraYaw) * 5.0F) * (float) invertZoomProgress));
+
+    }
 
         boolean right = Minecraft.getInstance().gameSettings.mainHand == HandSide.RIGHT ? event.getHand() == Hand.MAIN_HAND : event.getHand() == Hand.OFF_HAND;
         ItemStack heldItem = event.getItemStack();
@@ -240,6 +278,20 @@ public class GunRenderingHandler {
 
         /* Cancel it because we are doing our own custom render */
         event.setCanceled(true);
+
+        // Weapon movement clanting
+        float rollingForceCrouch = mc.player.isCrouching() ? 4f : 1f;
+        float rollingForceAim = AimingHandler.get().isAiming() ? 0.5f : 1f;
+        /*
+            Pretty much from CGM, was going to build something very similar for 0.3, movement update comes early I guess,
+            all credit to Mr.Crayfish who developed this weapon roll code for CGM,
+            all I added was scaling for other game actions and adjusted rolling values
+        */
+        float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * (6.25F * rollingForceCrouch * rollingForceAim) : 0F;
+        this.immersiveWeaponRoll = MathHelper.approach(this.immersiveWeaponRoll, targetAngle, 0.335F);
+        matrixStack.rotate(Vector3f.ZP.rotationDegrees(this.immersiveWeaponRoll));
+
+        //mc.player.chasingPosX
 
         ItemStack overrideModel = ItemStack.EMPTY;
         if (heldItem.getTag() != null) {
@@ -275,7 +327,16 @@ public class GunRenderingHandler {
                     double viewFinderOffset = scope.getViewFinderOffset();
                     if (OptifineHelper.isShadersEnabled()) viewFinderOffset *= 0.75;
                     Gun.ScaledPositioned scaledPos = modifiedGun.getModules().getAttachments().getScope();
-                    xOffset = -translateX + scaledPos.getXOffset() * 0.0625 * scaleX;
+                    xOffset = -translateX + -scaledPos.getXOffset() * 0.0625 * scaleX;
+                    yOffset = -translateY + (8 - scaledPos.getYOffset()) * 0.0625 * scaleY - scope.getCenterOffset() * scaleY * 0.0625 * scaledPos.getScale();
+                    zOffset = -translateZ - scaledPos.getZOffset() * 0.0625 * scaleZ + 0.72 - viewFinderOffset * scaleZ * scaledPos.getScale();
+
+                }
+                else if (modifiedGun.canAttachType(IAttachment.Type.OLD_SCOPE) && scope != null) {
+                    double viewFinderOffset = scope.getViewFinderOffset();
+                    if (OptifineHelper.isShadersEnabled()) viewFinderOffset *= 0.75;
+                    Gun.ScaledPositioned scaledPos = modifiedGun.getModules().getAttachments().getOldScope();
+                    xOffset = -translateX + -scaledPos.getXOffset() * 0.0625 * scaleX;
                     yOffset = -translateY + (8 - scaledPos.getYOffset()) * 0.0625 * scaleY - scope.getCenterOffset() * scaleY * 0.0625 * scaledPos.getScale();
                     zOffset = -translateZ - scaledPos.getZOffset() * 0.0625 * scaleZ + 0.72 - viewFinderOffset * scaleZ * scaledPos.getScale();
 
@@ -290,10 +351,15 @@ public class GunRenderingHandler {
 
                 /* Controls the direction of the following translations, changes depending on the main hand. */
                 float side = right ? 1.0F : -1.0F;
-                double transition = 1.0 - Math.pow(1.0 - AimingHandler.get().getNormalisedAdsProgress(), 2);
+                //double transition = 1.0 - Math.pow(1.0 - AimingHandler.get().getNormalisedAdsProgress(), 2);
+
+                QuadEaseOut easeOut = new QuadEaseOut();
+                double transition = new SineEaseInOut().evaluate((float) AimingHandler.get().getNormalisedAdsProgress(), 0, 1);
+                double transitionY = easeOut.evaluate(1.0f - (float) Math.abs(0.5-AimingHandler.get().getNormalisedAdsProgress())*2,0,1);
 
                 /* Reverses the original first person translations */
-                matrixStack.translate(-0.56 * side * transition, 0.52 * transition, 0);
+                //matrixStack.translate(-0.56 * side * transition, 0.52 * transition, 0);
+                matrixStack.translate(-0.56 * side * transition, 0.52 * (transition- 0.1*transitionY), 0);
 
                 /* Reverses the first person translations of the item in order to position it in the center of the screen */
                 matrixStack.translate(xOffset * side * transition, yOffset * transition, zOffset * transition);
@@ -312,8 +378,8 @@ public class GunRenderingHandler {
                     else
                         scopeJitterOffset *= scope.getStabilityOffset();
 
-                    double yOffsetRatio = ScopeJitterHandler.getInstance().getYOffsetRatio() * (0.0125 * scopeJitterOffset);
-                    double xOffsetRatio = ScopeJitterHandler.getInstance().getXOffsetRatio() * (0.0085 * scopeJitterOffset);
+                    double yOffsetRatio = ScopeJitterHandler.getInstance().getYOffsetRatio() * (0.0125 * 0.75 * scopeJitterOffset);
+                    double xOffsetRatio = ScopeJitterHandler.getInstance().getXOffsetRatio() * (0.0085 * 0.875 * scopeJitterOffset);
                     Objects.requireNonNull(Minecraft.getInstance().player).rotationPitch += yOffsetRatio;
                     Objects.requireNonNull(Minecraft.getInstance().player).rotationYaw += xOffsetRatio;
                 }
@@ -462,7 +528,7 @@ public class GunRenderingHandler {
         }
 
         if (heldItem.getItem() instanceof GunItem) {
-            Gun gun = ((GunItem) heldItem.getItem()).getGun();
+            Gun gun = ((GunItem) heldItem.getItem()).getGun(); // Cooldown stuffs, i should look into this
             if (!gun.getGeneral().isAuto()) {
                 float coolDown = player.getCooldownTracker().getCooldown(heldItem.getItem(), event.renderTickTime);
                 if (coolDown > 0.0F) {

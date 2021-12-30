@@ -859,7 +859,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     }
 
     /**
-     * Author: MrCrayfish
+     * Author: Forked from MrCrayfish, continued by Timeless devs
      */
     public static class EntityResult
     {

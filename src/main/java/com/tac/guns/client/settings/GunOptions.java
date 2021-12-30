@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.text.DecimalFormat;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class GunOptions
 {

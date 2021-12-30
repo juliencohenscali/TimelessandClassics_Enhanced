@@ -3,7 +3,9 @@ package com.tac.guns.common.container;
 import com.tac.guns.common.Gun;
 import com.tac.guns.common.container.slot.AttachmentSlot;
 import com.tac.guns.init.ModContainers;
+import com.tac.guns.item.GunItem;
 import com.tac.guns.item.ScopeItem;
+import com.tac.guns.item.TransitionalTypes.TimelessOldGunItem;
 import com.tac.guns.item.attachment.IAttachment;
 import com.tac.guns.item.attachment.impl.Scope;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class AttachmentContainer extends Container
 {
@@ -41,16 +43,31 @@ public class AttachmentContainer extends Container
         ItemStack[] attachments = new ItemStack[IAttachment.Type.values().length];
         if(stack.getItem() instanceof ScopeItem)
         {
-            for (int i = 4; i < attachments.length; i++) {
+            for (int i = 5; i < attachments.length; i++) {
                 attachments[i] = Gun.getAttachment(IAttachment.Type.values()[i], stack);
             }
-            for (int i = 4; i < attachments.length; i++) {
+            for (int i = 5; i < attachments.length; i++) {
+                this.weaponInventory.setInventorySlotContents(i, attachments[i]);
+            }
+        }
+        else if(this.weapon.getItem() instanceof TimelessOldGunItem)
+        {
+            for (int i = 0; i < attachments.length-3; i++)
+            {
+                if(IAttachment.Type.values()[i] == IAttachment.Type.SCOPE)
+                    attachments[i] = Gun.getAttachment(IAttachment.Type.OLD_SCOPE, stack);
+                else
+                    attachments[i] = Gun.getAttachment(IAttachment.Type.values()[i], stack);
+            }
+            for (int i = 0; i < attachments.length-3; i++)
+            {
                 this.weaponInventory.setInventorySlotContents(i, attachments[i]);
             }
         }
         else
         {
-            for (int i = 0; i < attachments.length-3; i++) {
+            for (int i = 0; i < attachments.length-3; i++)
+            {
                 attachments[i] = Gun.getAttachment(IAttachment.Type.values()[i], stack);
             }
             for (int i = 0; i < attachments.length-3; i++) {
@@ -68,18 +85,37 @@ public class AttachmentContainer extends Container
 
         if(this.weapon.getItem() instanceof ScopeItem)
         {
-            for (int i = 4; i < IAttachment.Type.values().length; i++)
+            for (int i = 5; i < IAttachment.Type.values().length; i++)
             {
-                if(i==4)
-                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 70, 32 + (i-2) * 18));
-                if(i==6)
-                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 40, -1 + (i-5) * 18));
+                int itorationAdjustment = i;
                 if(i==5)
-                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 10, 32 + (i-3) * 18));
-
+                {
+                    itorationAdjustment = i-3;
+                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 70, 32 + (itorationAdjustment) * 18));
+                }
+                if(i==6)
+                {
+                    itorationAdjustment = i-5;
+                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 40, -1 + (itorationAdjustment) * 18));
+                }
+                if(i==7)
+                {
+                    itorationAdjustment = i-5;
+                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 10, 32 + (itorationAdjustment) * 18));
+                }
             }
         }
-        else
+        else if(this.weapon.getItem() instanceof TimelessOldGunItem)
+        {
+            for (int i = 0; i < IAttachment.Type.values().length; i++)
+            {
+                if(IAttachment.Type.values()[i] == IAttachment.Type.SCOPE)
+                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.OLD_SCOPE, playerInventory.player, 0, 5, 17 + 0 * 18));
+                else if(!(IAttachment.Type.values()[i] == IAttachment.Type.OLD_SCOPE))
+                    this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 5, 17 + i * 18));
+            }
+        }
+        else if(this.weapon.getItem() instanceof GunItem && !(this.weapon.getItem() instanceof TimelessOldGunItem))
         {
             for (int i = 0; i < IAttachment.Type.values().length; i++) {
                 this.addSlot(new AttachmentSlot(this, this.weaponInventory, this.weapon, IAttachment.Type.values()[i], playerInventory.player, i, 5, 17 + i * 18));

@@ -8,7 +8,7 @@ import com.tac.guns.item.attachment.impl.Barrel;
  * See {@link GunModifiers} for examples of how this can be implemented. Implementations can then
  * be passed to "create" method of attachment objects. See {@link Barrel#create(float, IGunModifier...)}
  * <p>
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public interface IGunModifier
 {

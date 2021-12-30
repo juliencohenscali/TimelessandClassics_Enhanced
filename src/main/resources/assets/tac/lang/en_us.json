@@ -53,7 +53,7 @@
     "item.tac.762x54": "7.62x54mm Bullet",
     "item.tac.762x25": "7.62mm Tokarev Bullet",
     "item.tac.58x42": "5.8mm DBP87 Bullet",
-    "item.tac.762x39": "762x39mm Bullet",
+    "item.tac.762x39": "7.62x39mm Bullet",
 
     "block.tac.box45": "Box of .45 ACP Bullets (x16)",
     "block.tac.magnumbox": "Box of .357 Magnum Bullets (x12)",
@@ -85,6 +85,8 @@
     "subtitle.tac.fire_dbfire": "Shotgun Fire",
 
     "info.tac.auto": "This weapon is automatic!",
+    "info.tac.gun_safety_lock": "Fire mode is safe click %s",
+
 
     "item.tac.grenade": "Grenade",
     "item.tac.stun_grenade": "Stun Grenade",

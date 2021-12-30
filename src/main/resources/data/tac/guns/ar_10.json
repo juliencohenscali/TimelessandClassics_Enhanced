@@ -37,7 +37,8 @@
     "hipfireScale": 0.95,
     "hipfireMoveScale": 0.55,
     "hipfireRecoilScale": 0.525,
-    "weaponType": 0
+    "weaponType": 0,
+    "showDynamicHipfire": false
   },
   "modules": {
     "zoom": [

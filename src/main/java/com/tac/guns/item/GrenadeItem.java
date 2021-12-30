@@ -13,16 +13,18 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class GrenadeItem extends AmmoItem
 {
     protected int maxCookTime;
+    private float power;
 
-    public GrenadeItem(Item.Properties properties, int maxCookTime)
+    public GrenadeItem(Item.Properties properties, int maxCookTime, float power)
     {
         super(properties);
         this.maxCookTime = maxCookTime;
+        this.power = power;
     }
 
     @Override
@@ -88,7 +90,7 @@ public class GrenadeItem extends AmmoItem
 
     public ThrowableGrenadeEntity create(World world, LivingEntity entity, int timeLeft)
     {
-        return new ThrowableGrenadeEntity(world, entity, timeLeft);
+        return new ThrowableGrenadeEntity(world, entity, timeLeft, this.power);
     }
 
     public boolean canCook()

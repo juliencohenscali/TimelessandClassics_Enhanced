@@ -44,6 +44,13 @@
       "fovModifier": 0.60,
       "yOffset": 8.4,
       "zOffset": -5.7
-    }]
+    }],
+    "attachments": {
+      "oldScope": {
+        "yOffset": 7.375,
+        "zOffset": 6.0,
+        "scale": 1.0
+      }
+    }
   }
 }

@@ -9,6 +9,7 @@ import com.tac.guns.common.ProjectileManager;
 import com.tac.guns.common.ShootTracker;
 import com.tac.guns.common.SpreadTracker;
 import com.tac.guns.common.container.AttachmentContainer;
+import com.tac.guns.common.container.ColorBenchContainer;
 import com.tac.guns.common.container.InspectionContainer;
 import com.tac.guns.common.container.WorkbenchContainer;
 import com.tac.guns.crafting.WorkbenchRecipe;
@@ -62,7 +63,7 @@ import java.util.function.Predicate;
 
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class ServerPlayHandler
 {
@@ -316,6 +317,18 @@ public class ServerPlayHandler
         if(heldItem.getItem() instanceof GunItem || heldItem.getItem() instanceof ScopeItem)
         {
             NetworkHooks.openGui(player, new SimpleNamedContainerProvider((windowId, playerInventory, player1) -> new AttachmentContainer(windowId, playerInventory, heldItem), new TranslationTextComponent("container.tac.attachments")));
+        }
+    }
+
+    /**
+     * @param player
+     */
+    public static void handleColorbenchGui(ServerPlayerEntity player)
+    {
+        ItemStack heldItem = player.getHeldItemMainhand();
+        if(heldItem.getItem() instanceof GunItem || heldItem.getItem() instanceof ScopeItem)
+        {
+            NetworkHooks.openGui(player, new SimpleNamedContainerProvider((windowId, playerInventory, player1) -> new ColorBenchContainer(windowId, playerInventory), new TranslationTextComponent("container.tac.color_bench")));
         }
     }
 

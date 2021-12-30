@@ -22,10 +22,10 @@ import sun.security.util.ArrayUtil;
 import javax.lang.model.type.ArrayType;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 @Mixin(MouseHelper.class)
 public class MouseHelperMixin

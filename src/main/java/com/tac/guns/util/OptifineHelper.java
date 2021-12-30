@@ -3,7 +3,7 @@ package com.tac.guns.util;
 import java.lang.reflect.Field;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class OptifineHelper
 {

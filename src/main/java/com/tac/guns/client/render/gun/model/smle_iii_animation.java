@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.client.SpecialModels;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.util.RenderUtil;
+import com.tac.guns.common.Gun;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -28,38 +29,42 @@ public class smle_iii_animation implements IOverrideModel {
         If you are just starting out I don't recommend attempting to create an animated part of your weapon is as much as I can comfortably give at this point!
     */
     @Override
-    public void render(float v, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrices, IRenderTypeBuffer renderBuffer, int light, int overlay) {
+    public void render(float v, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrices, IRenderTypeBuffer renderBuffer, int light, int overlay)
+    {
+        if(Gun.getScope(stack) != null)
+        {
+            RenderUtil.renderModel(SpecialModels.SMLE_III_MOUNT.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
 
-            RenderUtil.renderModel(SpecialModels.SMLE_III.getModel(), stack, matrices, renderBuffer, light, overlay);
-            matrices.push();
+        RenderUtil.renderModel(SpecialModels.SMLE_III.getModel(), stack, matrices, renderBuffer, light, overlay);
+        matrices.push();
 
+        CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();
+        float cooldownOg = tracker.getCooldown(stack.getItem(), Minecraft.getInstance().getRenderPartialTicks());
+        float cooldown = (float) easeInOutBack(cooldownOg);
 
-            CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();
-            float cooldownOg = tracker.getCooldown(stack.getItem(), Minecraft.getInstance().getRenderPartialTicks());
-            float cooldown = (float) easeInOutBack(cooldownOg);
-
-            if (cooldownOg != 0 && cooldownOg < 0.83)
+        if (cooldownOg != 0 && cooldownOg < 0.83)
+        {
+            if (cooldownOg < 0.822 && cooldownOg > 0.433)
             {
-                if (cooldownOg < 0.822 && cooldownOg > 0.433)
-                {
-                    matrices.translate(0, 0, -0.03 * -cooldown);
-                    matrices.translate(0, 0, 0.318f * ((1.0 * -cooldown)+1));
-                }
-                if (cooldownOg < 0.433 && cooldownOg > 0.02)
-                {
-                    matrices.translate(0, 0, 0.788f * ((1.0 * cooldownOg-0.07)));
-                }
-
-                RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT_EXTRA.getModel(), stack, matrices, renderBuffer, light, overlay);
-
-                matrices.translate(-0.039, -0.038, 0.00);
-                matrices.rotate(Vector3f.ZN.rotationDegrees(-90F));
+                matrices.translate(0, 0, -0.03 * -cooldown);
+                matrices.translate(0, 0, 0.318f * ((1.0 * -cooldown)+1));
             }
-            else
-                RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT_EXTRA.getModel(), stack, matrices, renderBuffer, light, overlay);
+            if (cooldownOg < 0.433 && cooldownOg > 0.02)
+            {
+                matrices.translate(0, 0, 0.788f * ((1.0 * cooldownOg-0.07)));
+            }
 
-            RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT.getModel(), stack, matrices, renderBuffer, light, overlay);
-            matrices.pop();
+            RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT_EXTRA.getModel(), stack, matrices, renderBuffer, light, overlay);
+
+            matrices.translate(-0.039, -0.038, 0.00);
+            matrices.rotate(Vector3f.ZN.rotationDegrees(-90F));
+        }
+        else
+            RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT_EXTRA.getModel(), stack, matrices, renderBuffer, light, overlay);
+
+        RenderUtil.renderModel(SpecialModels.SMLE_III_BOLT.getModel(), stack, matrices, renderBuffer, light, overlay);
+        matrices.pop();
     }
     //Same method from GrenadeLauncherModel, to make a smooth rotation of the chamber.
     private double easeInOutBack(double x) {

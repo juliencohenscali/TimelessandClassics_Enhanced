@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public enum SpecialModels
@@ -131,6 +131,7 @@ public enum SpecialModels
     QBZ_95_MUZZLE("qbz_95_muzzle_device"),
     SPRINGFIELD_1903("springfield_1903"),
     SPRINGFIELD_1903_BOLT("springfield_1903_bolt"),
+    SPRINGFIELD_1903_MOUNT("springfield_1903_mount"),
     DEAGLE_50("deagle_50_body"),
     DEAGLE_50_EXTENDED_MAG("deagle_50_extended_mag"),
     DEAGLE_50_SLIDE("deagle_50_slide"),
@@ -154,6 +155,7 @@ public enum SpecialModels
     SMLE_III("smle_iii"),
     SMLE_III_BOLT("smle_iii_bolt"),
     SMLE_III_BOLT_EXTRA("smle_iii_bolt_extra"),
+    SMLE_III_MOUNT("smle_iii_mount"),
     M870_CLASSIC("m870_classic"),
     M870_CLASSIC_SLIDE("m870_classic_slide"),
     M60_UNFOLDED_SIGHT("m60_unfolded_sight"),

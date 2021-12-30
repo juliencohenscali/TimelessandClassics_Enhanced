@@ -20,7 +20,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 //apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-version = "0.1.4-1.16.5"
+version = "0.2.201-1.16.5"
 group = "com.tac"
 archivesBaseName = "timeless_and_classics-gun_mod"
 
@@ -90,7 +90,7 @@ processResources {
 }
 
 repositories {
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven {
         url = "https://www.cursemaven.com"
     }
@@ -99,8 +99,6 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
     implementation fg.deobf('curse.maven:obfuscate-289380:3169370')
-    //implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.16.5:3.0.44')
-    //annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 }
 
 jar {

@@ -9,7 +9,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * they provide and the y-offset to the center of the scope for them to render correctly. Use
  * {@link #create(float, double, double, IGunModifier...)} to create an get.
  * <p>
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class Scope extends Attachment
 {

@@ -248,6 +248,7 @@ public class Config
         public final Grenades grenades;
         public final StunGrenades stunGrenades;
         public final ProjectileSpread projectileSpread;
+        public final Development development;
 
 
         public Common(ForgeConfigSpec.Builder builder)
@@ -261,7 +262,7 @@ public class Config
                 this.grenades = new Grenades(builder);
                 this.stunGrenades = new StunGrenades(builder);
                 this.projectileSpread = new ProjectileSpread(builder);
-
+                this.development = new Development(builder);
             }
             builder.pop();
         }
@@ -311,6 +312,20 @@ public class Config
                 this.realisticAimedBreathing = builder.comment("Aiming will present a breathing animation, moving the weapon over time, crouch to lower it's effects").define("realisticAimedBreathing", false);
 
 
+            }
+            builder.pop();
+        }
+    }
+
+    public static class Development
+    {
+        public final ForgeConfigSpec.BooleanValue permanentCrosshair;
+
+        public Development(ForgeConfigSpec.Builder builder)
+        {
+            builder.comment("Development").push("development");
+            {
+                this.permanentCrosshair = builder.comment("If enabled any crosshair will continue to render on aim.").define("permanentCrosshair", false);
             }
             builder.pop();
         }

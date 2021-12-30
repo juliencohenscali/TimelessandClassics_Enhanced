@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public class ScopeAttachmentScreen extends ContainerScreen<AttachmentContainer>
 {

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 /**
  * The base attachment interface
  * <p>
- * Author: MrCrayfish
+ * Author: Forked from MrCrayfish, continued by Timeless devs
  */
 public interface IAttachment<T extends Attachment>
 {
@@ -28,9 +28,13 @@ public interface IAttachment<T extends Attachment>
         STOCK("stock", "Stock"),
         UNDER_BARREL("under_barrel", "Under_Barrel"),
 
-        SCOPE_RETICLE_COLOR("reticle_color", "Reticle_Color"),
-        SCOPE_BODY_COLOR("body_color", "Body_Color"),
-        SCOPE_GLASS_COLOR("glass_color", "Glass_Color");
+        OLD_SCOPE("oldScope", "OldScope"),
+
+        SCOPE_RETICLE_COLOR("reticle_color", "Reticle_Color"), // Scope Attachment Type
+        SCOPE_BODY_COLOR("body_color", "Body_Color"),          // Scope Attachment Type
+        SCOPE_GLASS_COLOR("glass_color", "Glass_Color");       // Scope Attachment Type
+
+
 
         private String translationKey;
         private String tagKey;
