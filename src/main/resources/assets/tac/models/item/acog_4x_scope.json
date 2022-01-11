@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "tac:items/glock_slide_17",
 		"1": "tac:items/ppsh_bolt",
-		"2": "tac:items/acog_glass",
+		"2": "tac:items/vortex_green_glass",
 		"3": "tac:items/raythean"
 	},
 	"elements": [

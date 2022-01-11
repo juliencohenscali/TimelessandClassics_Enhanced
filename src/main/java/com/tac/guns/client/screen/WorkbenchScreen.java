@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.NetworkGunManager;
 import com.tac.guns.common.container.WorkbenchContainer;
@@ -410,6 +411,7 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer>
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
         RenderUtil.scissor(startX + 8, startY + 17, 160, 70);
 
+        IRenderTypeBuffer.Impl buffer = this.minecraft.getRenderTypeBuffers().getBufferSource();
         RenderSystem.pushMatrix();
         {
             RenderSystem.translatef(startX + 88, startY + 60, 100);
@@ -424,8 +426,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer>
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
             RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-            IRenderTypeBuffer.Impl buffer = this.minecraft.getRenderTypeBuffers().getBufferSource();
-            Minecraft.getInstance().getItemRenderer().renderItem(currentItem, ItemCameraTransforms.TransformType.FIXED, false, matrixStack, buffer, 15728880, OverlayTexture.NO_OVERLAY, RenderUtil.getModel(currentItem));
+            buffer = this.minecraft.getRenderTypeBuffers().getBufferSource();
+            GunRenderingHandler.get().renderWeapon(this.minecraft.player, currentItem, ItemCameraTransforms.TransformType.FIXED, matrixStack, buffer, 15728880, 0F); // GROUND, matrixStack, buffer, 15728880, 0F);
+            //Minecraft.getInstance().getItemRenderer().renderItem(currentItem, ItemCameraTransforms.TransformType.FIXED, false, matrixStack, buffer, 15728880, OverlayTexture.NO_OVERLAY, RenderUtil.getModel(currentItem));
             buffer.finish();
 
             RenderSystem.disableAlphaTest();
@@ -472,7 +475,9 @@ public class WorkbenchScreen extends ContainerScreen<WorkbenchContainer>
                     stack.setCount(stack.getCount() - count);
                 }
 
+                //GunRenderingHandler.get().renderWeapon(minecraft.player, stack, ItemCameraTransforms.TransformType.GROUND, matrixStack, buffer, )
                 Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(this.font, stack, startX + 172 + 2, startY + i * 19 + 1 + 63, null);
+                //GunRenderingHandler.get().renderWeapon(this.minecraft.player, this.minecraft.player.getHeldItemMainhand(), ItemCameraTransforms.TransformType.GROUND, matrixStack, buffer, 15728880, 0F); // GROUND, matrixStack, buffer, 15728880, 0F);
             }
         }
     }

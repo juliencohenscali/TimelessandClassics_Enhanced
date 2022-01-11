@@ -73,14 +73,17 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         private int reloadAmount = 1;
         @Optional
-        private float recoilAngle;
+        private float recoilAngle = 1.0F;
         @Optional
         private float recoilKick;
         @Optional
         private float horizontalRecoilAngle = 2.0F;
         @Optional
-        private float recoilDurationOffset; // Anyone have a clue what this is? IS SUPER COOL, the amount of camera downwards after each shot, making recoil more difficult to manage
-
+        private float cameraRecoilModifier = 2.25F; // How much to divide out of camera recoil, use for either softening camera shake while keeping high recoil feeling weapons
+        @Optional
+        private float recoilDurationOffset;
+        @Optional
+        private float weaponRecoilDuration = 0.5F; // Recoil up until the weapon cooldown is under this value (0.1 == 10% recoil time left, use to help scale with high firerate weapons and their weapon recoil feel)
         @Optional
         private float recoilAdsReduction = 0.2F;
         @Optional
@@ -106,7 +109,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             tag.putFloat("RecoilAngle", this.recoilAngle*2.5F); // x2 for quick camera recoil reduction balancing
             tag.putFloat("RecoilKick", this.recoilKick);
             tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*2.5F); // x2 for quick camera recoil reduction balancing
+            tag.putFloat("CameraRecoilModifier", this.cameraRecoilModifier);
             tag.putFloat("RecoilDurationOffset", this.recoilDurationOffset);
+            tag.putFloat("WeaponRecoilDuration", this.weaponRecoilDuration);
             tag.putFloat("RecoilAdsReduction", this.recoilAdsReduction);
             tag.putInt("ProjectileAmount", this.projectileAmount);
             tag.putBoolean("AlwaysSpread", this.alwaysSpread);
@@ -157,9 +162,17 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
                 this.horizontalRecoilAngle = tag.getFloat("HorizontalRecoilAngle");
             }
+            if(tag.contains("CameraRecoilModifier", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.cameraRecoilModifier = tag.getFloat("CameraRecoilModifier");
+            }
             if(tag.contains("RecoilDurationOffset", Constants.NBT.TAG_ANY_NUMERIC))
             {
                 this.recoilDurationOffset = tag.getFloat("RecoilDurationOffset");
+            }
+            if(tag.contains("WeaponRecoilDuration", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.weaponRecoilDuration = tag.getFloat("WeaponRecoilDuration");
             }
             if(tag.contains("RecoilAdsReduction", Constants.NBT.TAG_ANY_NUMERIC))
             {
@@ -195,7 +208,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             general.recoilAngle = this.recoilAngle;
             general.recoilKick = this.recoilKick;
             general.horizontalRecoilAngle = this.horizontalRecoilAngle;
+            general.cameraRecoilModifier = this.cameraRecoilModifier;
             general.recoilDurationOffset = this.recoilDurationOffset;
+            general.weaponRecoilDuration = this.weaponRecoilDuration;
             general.recoilAdsReduction = this.recoilAdsReduction;
             general.projectileAmount = this.projectileAmount;
             general.alwaysSpread = this.alwaysSpread;
@@ -284,11 +299,27 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         }
 
         /**
+         * @return How much to divide out of camera recoil, use for either softening camera shake while keeping high recoil feeling weapons
+         */
+        public float getCameraRecoilModifier()
+        {
+            return this.cameraRecoilModifier;
+        }
+
+        /**
          * @return The duration offset for recoil. This reduces the duration of recoil animation
          */
         public float getRecoilDurationOffset()
         {
             return this.recoilDurationOffset;
+        }
+
+        /**
+         * @return Recoil (the weapon) up until the weapon cooldown is under this value (0.1 == 10% recoil time left, use to help scale with high firerate weapons and their weapon recoil feel)
+         */
+        public float getWeaponRecoilDuration()
+        {
+            return this.weaponRecoilDuration;
         }
 
         /**
@@ -345,7 +376,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         private int trailColor = 0xFFD289;
         @Optional
-        private double trailLengthMultiplier = 118.0;
+        private double trailLengthMultiplier = 2.5;
         @Optional
         private boolean ricochet = true;
 

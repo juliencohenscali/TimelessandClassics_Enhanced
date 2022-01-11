@@ -154,5 +154,11 @@
       "sounds": [
          { "name": "tac:item/reload" }
       ]
+   },
+   "item.pistol.cock": {
+      "subtitle": "subtitle.tac.cock",
+      "sounds": [
+         { "name": "tac:item/cock" }
+      ]
    }
 }

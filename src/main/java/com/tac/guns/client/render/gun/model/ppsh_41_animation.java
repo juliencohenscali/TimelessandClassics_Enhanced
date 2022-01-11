@@ -38,7 +38,11 @@ public class ppsh_41_animation implements IOverrideModel {
             controller.applySpecialModelTransform(SpecialModels.PPSH_41.getModel(),Ppsh41AnimationController.INDEX_BODY,transformType,matrices);
 
             RenderUtil.renderModel(SpecialModels.PPSH_41.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        matrices.pop();
 
+        matrices.push();
+        {
             controller.applySpecialModelTransform(SpecialModels.PPSH_41.getModel(),Ppsh41AnimationController.INDEX_MAGAZINE,transformType,matrices);
             if (EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0) {
                 RenderUtil.renderModel(SpecialModels.PPSH_41_EXTENDED_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);

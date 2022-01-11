@@ -55,6 +55,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -166,7 +167,7 @@ public class ServerPlayHandler
                         float pitch = 0.9F + world.rand.nextFloat() * 0.2F;
                         double radius = GunModifierHelper.getModifiedFireSoundRadius(heldItem, Config.SERVER.gunShotMaxDistance.get());
                         boolean muzzle = modifiedGun.getDisplay().getFlash() != null;
-                        MessageGunSound messageSound = new MessageGunSound(fireSound, SoundCategory.PLAYERS, (float) posX, (float) posY, (float) posZ, volume, pitch, player.getEntityId(), muzzle);
+                        MessageGunSound messageSound = new MessageGunSound(fireSound, SoundCategory.PLAYERS, (float) posX, (float) posY, (float) posZ, volume, pitch, player.getEntityId(), muzzle, false);
                         PacketDistributor.TargetPoint targetPoint = new PacketDistributor.TargetPoint(posX, posY, posZ, radius, player.world.getDimensionKey());
                         PacketHandler.getPlayChannel().send(PacketDistributor.NEAR.with(() -> targetPoint), messageSound);
                     }
@@ -350,9 +351,9 @@ public class ServerPlayHandler
     public static void handleFireMode(ServerPlayerEntity player)
     {
         ItemStack heldItem = player.getHeldItemMainhand();
-        if(heldItem.getItem() instanceof TimelessGunItem)
+        if(heldItem.getItem() instanceof GunItem)
         {
-            Gun gun = ((TimelessGunItem) heldItem.getItem()).getModifiedGun(heldItem.getStack());
+            Gun gun = ((GunItem) heldItem.getItem()).getModifiedGun(heldItem.getStack());
             int[] gunItemFireModes = heldItem.getTag().getIntArray("supportedFireModes");
 
             // Check if the weapon is new, add in all supported modes
@@ -379,6 +380,13 @@ public class ServerPlayHandler
             {
                 heldItem.getTag().remove("CurrentFireMode");
                 heldItem.getTag().putInt("CurrentFireMode", heldItem.getTag().getIntArray("supportedFireModes")[1]);
+            }
+
+            ResourceLocation fireModeSound = gun.getSounds().getCock(); // Use cocking sound for now
+            if(fireModeSound != null && player.isAlive())
+            {
+                MessageGunSound messageSound = new MessageGunSound(fireModeSound, SoundCategory.PLAYERS, (float) player.getPosX(), (float) (player.getPosY() + 1.0), (float) player.getPosZ(), 1F, 1F, player.getEntityId(), false, false);
+                PacketHandler.getPlayChannel().send(PacketDistributor.PLAYER.with(() ->(ServerPlayerEntity) player), messageSound);
             }
         }
     }

@@ -42,6 +42,7 @@ public class ModSounds
 	public static final RegistryObject<SoundEvent> MTAR_FIRE = register("item.mtar_fire");
 	public static final RegistryObject<SoundEvent> MTAR_FIREs = register("item.mtar_fire_s");
 
+	//public static final RegistryObject<SoundEvent> COCK = register("item.pistol.cock");
 	public static final RegistryObject<SoundEvent> HEADSHOT_EXTENDED_PLAYFUL = register("item.headshot");
 
 	private static RegistryObject<SoundEvent> register(String key)

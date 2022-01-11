@@ -24,7 +24,7 @@
   "sounds": {
     "fire": "tac:item.modern_sniper_fire",
     "reload": "tac:item.pistol.reload",
-    "cock": "tac:item.assault_rifle.cock",
+    "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.assault_rifle.silenced_fire"
   },
   "display": {

@@ -3,6 +3,7 @@ package com.tac.guns.client.render.gun.model;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.client.SpecialModels;
 import com.tac.guns.client.render.gun.IOverrideModel;
+import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.Gun;
 import com.tac.guns.init.ModItems;
@@ -27,6 +28,11 @@ public class ar15_hellmouth_animation implements IOverrideModel {
     @Override
     public void render(float v, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrices, IRenderTypeBuffer renderBuffer, int light, int overlay)
     {
+        if(ModelOverrides.hasModel(stack) && transformType.equals(ItemCameraTransforms.TransformType.GUI))
+        {
+            RenderUtil.renderModel(stack, stack, matrices, renderBuffer, light, overlay);
+            return;
+        }
         if(Gun.getScope(stack) == null && stack.hasTag())
         {
             if(stack.getTag().getInt("currentZoom") == 0)
@@ -90,7 +96,9 @@ public class ar15_hellmouth_animation implements IOverrideModel {
         {
             RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_LIGHTWEIGHT_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
+
         RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_BODY.getModel(), stack, matrices, renderBuffer, light, overlay);
+
         matrices.push();
         CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();
         float cooldownOg = tracker.getCooldown(stack.getItem(), Minecraft.getInstance().getRenderPartialTicks());

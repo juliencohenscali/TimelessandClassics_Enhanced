@@ -85,8 +85,7 @@
     "subtitle.tac.fire_dbfire": "Shotgun Fire",
 
     "info.tac.auto": "This weapon is automatic!",
-    "info.tac.gun_safety_lock": "Fire mode is safe click %s",
-
+    "info.tac.gun_safety_lock": "Firemode is on safe, press %s to switch modes",
 
     "item.tac.grenade": "Grenade",
     "item.tac.stun_grenade": "Stun Grenade",

@@ -256,6 +256,11 @@ public class AimingHandler
     {
         if(!Config.CLIENT.controls.toggleAim.get())
             return;
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null)
+            return;
+        if(!(mc.player.getHeldItemMainhand().getItem() instanceof GunItem))
+            return;
         if(this.toggledAimAwaiter > 0)
             return;
 
@@ -263,10 +268,6 @@ public class AimingHandler
         boolean isRightClickAim = KeyBinds.KEY_ADS.matchesMouseKey(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
 
         if(isLeftClickAim || isRightClickAim)
-            return;
-
-        Minecraft mc = Minecraft.getInstance();
-        if(mc.player == null)
             return;
 
         if (KeyBinds.KEY_ADS.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS) {
@@ -280,11 +281,11 @@ public class AimingHandler
     {
         if(!Config.CLIENT.controls.toggleAim.get())
             return;
-
         Minecraft mc = Minecraft.getInstance();
         if(mc.player == null)
             return;
-
+        if(!(mc.player.getHeldItemMainhand().getItem() instanceof GunItem))
+            return;
         if(this.toggledAimAwaiter > 0)
             return;
         if(event.getAction() != GLFW.GLFW_PRESS)
@@ -296,7 +297,6 @@ public class AimingHandler
             this.toggledAimAwaiter = Config.CLIENT.controls.toggleAimDelay.get();
         }
     }
-
 
     public boolean isToggledAim()
     {
@@ -310,7 +310,6 @@ public class AimingHandler
         else
             this.toggledAim = true;
     }
-
 
     public boolean isLookingAtInteractableBlock()
     {
