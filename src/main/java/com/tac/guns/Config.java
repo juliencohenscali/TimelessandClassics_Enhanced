@@ -219,8 +219,8 @@ public class Config
     public static class Quality
     {
         public final ForgeConfigSpec.BooleanValue reducedGuiWeaponQuality;
-        public final ForgeConfigSpec.BooleanValue reducedGuiScopeQuality;
-        public final ForgeConfigSpec.BooleanValue reducedGuiAmmunitionQuality;
+        //public final ForgeConfigSpec.BooleanValue reducedGuiScopeQuality;
+        //public final ForgeConfigSpec.BooleanValue reducedGuiAmmunitionQuality;
         //public final ForgeConfigSpec.BooleanValue reducedEffects;
 
         public Quality(ForgeConfigSpec.Builder builder)
@@ -228,8 +228,8 @@ public class Config
             builder.comment("Properties relating to improving graphical performance (Currently unsupported, do not attempt to change these settings until announcements are made about these features!)").push("quality");
             {
                 this.reducedGuiWeaponQuality = builder.comment("If enabled all main weapons will be unloaded and replaced with lower quality and legacy models, not all guns maybe replaced with this mode!").define("reducedGuiWeaponQuality", false);
-                this.reducedGuiScopeQuality = builder.comment("If enabled all main scopes will be unloaded and replaced with lower quality and legacy models, not all scopes maybe replaced with this mode!").define("reducedScopeQuality", false);
-                this.reducedGuiAmmunitionQuality = builder.comment("If enabled all main ammunition will be unloaded and replaced with lower quality and legacy models, not all ammo types maybe replaced with this mode!").define("reducedAmmunitionQuality", false);
+                //this.reducedGuiScopeQuality = builder.comment("If enabled all main scopes will be unloaded and replaced with lower quality and legacy models, not all scopes maybe replaced with this mode!").define("reducedScopeQuality", false);
+                //this.reducedGuiAmmunitionQuality = builder.comment("If enabled all main ammunition will be unloaded and replaced with lower quality and legacy models, not all ammo types maybe replaced with this mode!").define("reducedAmmunitionQuality", false);
                 //this.reducedEffects = builder.comment("If enabled all main effects will be disabled such as muzzle flash / smoke and more!").define("reducedEffects", false);
             }
             builder.pop();
@@ -290,6 +290,7 @@ public class Config
 
         public final ForgeConfigSpec.BooleanValue gameplayEnchancedScopeOffset;
         public final ForgeConfigSpec.BooleanValue scopeDoubleRender;
+        public final ForgeConfigSpec.BooleanValue redDotSquish2D;
 
         public Gameplay(ForgeConfigSpec.Builder builder)
         {
@@ -312,8 +313,9 @@ public class Config
 
                 this.realisticAimedBreathing = builder.comment("Aiming will present a breathing animation, moving the weapon over time, crouch to lower it's effects").define("realisticAimedBreathing", false);
 
-                this.gameplayEnchancedScopeOffset = builder.comment("Scopes are brought closer to the shooter to help fill FOV with a scope view").define("gameplayEnchancedScopeOffset", true);
-                this.scopeDoubleRender = builder.comment("Enable scope double render, saves on some performance and compatability issues").define("scopeDoubleRender", true);
+                this.gameplayEnchancedScopeOffset = builder.comment("Scopes are brought closer to the shooter to help fill FOV with a scope view at all times").define("gameplayEnchancedScopeOffset", true);
+                this.scopeDoubleRender = builder.comment("Enable scope double render, saves on some performance and compatability issues with Optifine").define("scopeDoubleRender", true);
+                this.redDotSquish2D = builder.comment("Enable 0 fov multiplied sights (Dot/Holo sights) to render in 2d when aimed like the scopeDoubleRender(false) effect.").define("redDotSquish2D", false);
             }
             builder.pop();
         }

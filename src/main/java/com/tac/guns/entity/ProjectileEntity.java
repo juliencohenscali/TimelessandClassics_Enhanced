@@ -411,6 +411,9 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
     private void onHit(RayTraceResult result, Vector3d startVec, Vector3d endVec)
     {
+        if(modifiedGun == null)
+            return;
+
         MinecraftForge.EVENT_BUS.post(new GunProjectileHitEvent(result, this));
 
         if(result instanceof BlockRayTraceResult)
@@ -546,7 +549,6 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
         Vector3d startVec = this.getPositionVec();
         Vector3d endVec = startVec.add(this.getMotion());
-
         EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
 
         RayTraceResult result = rayTraceBlocks(this.world, new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this), IGNORE_LEAVES); // Ricochet Raytrace
@@ -566,7 +568,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         //IChiselsAndBitsAPI.getInstance()
         //ChiselAdaptingWorldMutator chiselAdaptingWorldMutator =
         float bitSize = ChiselsAndBitsAPI.getInstance().getStateEntrySize().getSizePerBit();
-        ChiselsAndBitsAPI.getInstance().getMutatorFactory().in(mc.world, blockPos).clearInBlockTarget(BlockPos.ZERO, new Vector3d(Math.abs(x)/bitSize,Math.abs(y)/bitSize,Math.abs(z)/bitSize));
+        ChiselsAndBitsAPI.getInstance().getMutatorFactory().in(mc.world, blockPos).overrideInAreaTarget(Blocks.AIR.getDefaultState(), new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));
+
+        //ChiselsAndBitsAPI.getInstance().getMutatorFactory().in(mc.world, blockPos).clearInBlockTarget(BlockPos.ZERO, new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));//Math.abs(x),Math.abs(y),Math.abs(z) //clearInBlockTarget(BlockPos.ZERO, new Vector3d(Math.abs(x)/bitSize,Math.abs(y)/bitSize,Math.abs(z)/bitSize));
+
+        /*ChiselsAndBitsAPI.getInstance().getMutatorFactory().covering(, blockPos).overrideInAreaTarget(Blocks.AIR.getDefaultState(), new Vector3d(0,0,0));*/
         //chiselAdaptingWorldMutator.clearInAreaTarget(new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));//(BlockPos.ZERO, new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));//setInBlockTarget(Blocks.AIR.getDefaultState(), BlockPos.ZERO, new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z))); //clearInBlockTarget(blockPos, new Vector3d(Math.abs(x)/1000,Math.abs(y)/1000,Math.abs(z)/1000));// clearInBlockTarget(blockPos, new Vector3d(x,y,z));
         return true;
     }

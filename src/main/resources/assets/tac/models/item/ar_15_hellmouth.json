@@ -19,7 +19,7 @@
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
-			"translation": [-2, 2.5, -8],
+			"translation": [-4, 2, -10],
 			"scale": [1.08, 1.08, 1.08]
 		},
 		"ground": {

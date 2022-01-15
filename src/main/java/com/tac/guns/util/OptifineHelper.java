@@ -48,4 +48,26 @@ public class OptifineHelper
         }
         return false;
     }
+
+    public static boolean isFastRenderEnabled()
+    {
+        if(isLoaded())
+        {
+            try
+            {
+                Class<?> clazz = Class.forName("net.optifine.shaders.Shaders");
+                if(clazz != null && programIdField == null)
+                {
+                    programIdField = clazz.getDeclaredField("activeProgramID");
+                }
+                if(programIdField != null)
+                {
+                    int activeProgramID = (int) programIdField.get(null);
+                    return activeProgramID != 0;
+                }
+            }
+            catch(Exception ignored) {}
+        }
+        return false;
+    }
 }

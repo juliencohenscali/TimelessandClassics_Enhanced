@@ -44,8 +44,11 @@ public class MouseHelperMixin
                         Scope scope = Gun.getScope(heldItem);
                         if (scope != null) {
                             newFov -= scope.getAdditionalZoom();// * (Config.COMMON.gameplay.scopeDoubleRender.get() ? 1:1.25);
+
+                            additionalAdsSensitivity = MathHelper.clamp(1.0F - (1.0F / newFov) / 10F, 0.0F, 1.0F) * (Config.COMMON.gameplay.scopeDoubleRender.get() && scope.getAdditionalZoom() > 0 ? 1F:0.825F);
                         }
-                        additionalAdsSensitivity = MathHelper.clamp(1.0F - (1.0F / newFov) / 10F, 0.0F, 1.0F) * (Config.COMMON.gameplay.scopeDoubleRender.get() && scope.getAdditionalZoom() > 0 ? 1F:0.825F);
+                        else
+                            additionalAdsSensitivity = MathHelper.clamp(1.0F - (1.0F / newFov) / 10F, 0.0F, 1.0F);
                     }
                 }
             }
