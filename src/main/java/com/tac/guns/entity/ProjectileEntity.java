@@ -4,6 +4,7 @@ package com.tac.guns.entity;
 
 import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
 import com.tac.guns.Config;
+import com.tac.guns.GunMod;
 import com.tac.guns.common.BoundingBoxManager;
 import com.tac.guns.common.Gun;
 import com.tac.guns.common.Gun.Projectile;
@@ -25,8 +26,13 @@ import com.tac.guns.util.GunEnchantmentHelper;
 import com.tac.guns.util.GunModifierHelper;
 import com.tac.guns.util.math.ExtendedEntityRayTraceResult;
 import com.tac.guns.world.ProjectileExplosion;
+import mod.chiselsandbits.api.ChiselsAndBitsAPI;
+import mod.chiselsandbits.api.IChiselsAndBitsAPI;
+import mod.chiselsandbits.api.chiseling.ChiselingOperation;
+import mod.chiselsandbits.multistate.mutator.ChiselAdaptingWorldMutator;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -440,8 +446,16 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
             }
 */
 
-            this.onHitBlock(blockRayTraceResult);
-            this.onHitBlock(state, pos, blockRayTraceResult.getFace(), hitVec.x, hitVec.y, hitVec.z);
+            if(modifiedGun.getProjectile().isRicochet() &&
+            ((
+                            state.getMaterial() == Material.ROCK ||
+                            state.getMaterial() == Material.PACKED_ICE ||
+                            state.getMaterial() == Material.IRON ||
+                            state.getMaterial() == Material.ANVIL
+            )))
+                this.onHitBlock(blockRayTraceResult);
+            else
+                this.onHitBlock(state, pos, blockRayTraceResult.getFace(), hitVec.x, hitVec.y, hitVec.z);
 
             int fireStarterLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FIRE_STARTER.get(), this.weapon);
             if(fireStarterLevel > 0 && Config.COMMON.gameplay.enableGunGriefing.get())
@@ -512,57 +526,60 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
     {
         if(modifiedGun == null)
             return;
-
-        BlockPos pos = blockRayTraceResult.getPos();
-        BlockState state = this.world.getBlockState(pos);
-
-        if(modifiedGun.getProjectile().isRicochet())
-        {
-            if
-            (
-                    state.getMaterial() == Material.ROCK ||
-                    state.getMaterial() == Material.PACKED_ICE ||
-                    state.getMaterial() == Material.IRON ||
-                    state.getMaterial() == Material.ANVIL
-            )
-            {
-                Direction blockDirection = blockRayTraceResult.getFace();
-                switch (blockDirection) {
-                    case UP:
-                    case DOWN:
-                        this.setMotion(this.getMotion().mul(1, -1, 1));
-                        break;
-                    case EAST:
-                    case WEST:
-                        this.setMotion(this.getMotion().mul(-1, 1, 1));
-                        break;
-                    case NORTH:
-                    case SOUTH:
-                        this.setMotion(this.getMotion().mul(1, 1, -1));
-                        break;
-                    default:
-                        break;
-                }
-
-                Vector3d startVec = this.getPositionVec();
-                Vector3d endVec = startVec.add(this.getMotion());
-
-                EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
-
-                RayTraceResult result = rayTraceBlocks(this.world, new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this), IGNORE_LEAVES); // Ricochet Raytrace
-
-                if (entityResult != null) {
-                    this.tick();
-                    return;
-                } else {
-                    this.teleportToHitPoint(result);
-                }
-                this.life -= 1;
-            }
+        Direction blockDirection = blockRayTraceResult.getFace();
+        switch (blockDirection) {
+            case UP:
+            case DOWN:
+                this.setMotion(this.getMotion().mul(1, -1, 1));
+                break;
+            case EAST:
+            case WEST:
+                this.setMotion(this.getMotion().mul(-1, 1, 1));
+                break;
+            case NORTH:
+            case SOUTH:
+                this.setMotion(this.getMotion().mul(1, 1, -1));
+                break;
+            default:
+                break;
         }
+
+        Vector3d startVec = this.getPositionVec();
+        Vector3d endVec = startVec.add(this.getMotion());
+
+        EntityResult entityResult = this.findEntityOnPath(startVec, endVec);
+
+        RayTraceResult result = rayTraceBlocks(this.world, new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, this), IGNORE_LEAVES); // Ricochet Raytrace
+
+        if (entityResult != null) {
+            this.tick();
+            return;
+        } else {
+            this.teleportToHitPoint(result);
+        }
+        this.life -= 1;
     }
 
-    protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z) {
+    private static boolean deleteBitOnHit(BlockPos blockPos, BlockState blockState, double x, double y, double z)//(IParticleData data, double x, double y, double z, Random rand, double velocityMultiplier)
+    {
+        Minecraft mc = Minecraft.getInstance();
+        //IChiselsAndBitsAPI.getInstance()
+        //ChiselAdaptingWorldMutator chiselAdaptingWorldMutator =
+        float bitSize = ChiselsAndBitsAPI.getInstance().getStateEntrySize().getSizePerBit();
+        ChiselsAndBitsAPI.getInstance().getMutatorFactory().in(mc.world, blockPos).clearInBlockTarget(BlockPos.ZERO, new Vector3d(Math.abs(x)/bitSize,Math.abs(y)/bitSize,Math.abs(z)/bitSize));
+        //chiselAdaptingWorldMutator.clearInAreaTarget(new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));//(BlockPos.ZERO, new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z)));//setInBlockTarget(Blocks.AIR.getDefaultState(), BlockPos.ZERO, new Vector3d(Math.abs(x),Math.abs(y),Math.abs(z))); //clearInBlockTarget(blockPos, new Vector3d(Math.abs(x)/1000,Math.abs(y)/1000,Math.abs(z)/1000));// clearInBlockTarget(blockPos, new Vector3d(x,y,z));
+        return true;
+    }
+
+    protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
+    {
+        if(GunMod.cabLoaded)
+        {
+            double holeX = 0.005 * face.getXOffset();
+            double holeY = 0.005 * face.getYOffset();
+            double holeZ = 0.005 * face.getZOffset();
+            deleteBitOnHit(pos, state, holeX, holeY, holeZ);
+        }
         PacketHandler.getPlayChannel().send(PacketDistributor.TRACKING_CHUNK.with(() -> this.world.getChunkAt(pos)), new MessageProjectileHitBlock(x, y, z, pos, face));
     }
 

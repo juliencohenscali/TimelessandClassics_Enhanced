@@ -11,7 +11,7 @@
     "recoilKick": 1.600,
     "recoilAdsReduction": 0.375,
     "alwaysSpread": true,
-    "spread": 8.20
+    "spread": 6.75
   },
   "projectile": {
     "item": "tac:nato_556_bullet",

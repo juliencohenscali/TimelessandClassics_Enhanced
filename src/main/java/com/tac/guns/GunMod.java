@@ -42,6 +42,8 @@ public class GunMod
 {
     public static boolean controllableLoaded = false;
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
+    public static boolean cabLoaded = false;
+
     public static final ItemGroup GROUP = new  ItemGroup(Reference.MOD_ID)
     {
         @Override
@@ -197,9 +199,6 @@ public class GunMod
         bus.addListener(this::onClientSetup);
         bus.addListener(this::dataSetup);
         controllableLoaded = ModList.get().isLoaded("controllable");
-
-        /*MixinEnvironment.getDefaultEnvironment()
-                .addConfiguration("tac.mixins.json");*/
     }
 
     private void onCommonSetup(FMLCommonSetupEvent event)

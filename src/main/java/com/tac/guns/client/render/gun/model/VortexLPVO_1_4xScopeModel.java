@@ -40,6 +40,7 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
         if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get()) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.75D * (1.0D - transition);
+            matrixStack.translate(0,0,transition*0.12);
             matrixStack.scale(1.0F, 1.0F, (float)zScale);
         }
 

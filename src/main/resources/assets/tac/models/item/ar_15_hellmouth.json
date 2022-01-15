@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"4": "tac:items/lungmen_512",
+		"4": "tac:items/gui_renders/ar15v2",
 		"particle": "tac:items/mosin_bolt"
 	},
 	"elements": [
@@ -9,12 +9,7 @@
 			"from": [0, 0, 0],
 			"to": [0.01563, 16, 16],
 			"faces": {
-				"north": {"uv": [0, 0, 0.01563, 16], "texture": "#4"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"south": {"uv": [0, 0, 0.01563, 16], "texture": "#4"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"up": {"uv": [0, 0, 0.01563, 16], "texture": "#4"},
-				"down": {"uv": [0, 0, 0.01563, 16], "texture": "#4"}
+				"west": {"uv": [0, 0, 16, 16], "texture": "#4", "tintindex": 0}
 			}
 		}
 	],
@@ -31,9 +26,9 @@
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"gui": {
-			"rotation": [0, 90, 0],
-			"translation": [0.25, 0, 0],
-			"scale": [0.87, 0.87, 0.87]
+			"rotation": [30, -145, 0],
+			"translation": [1.25, -0.5, 0],
+			"scale": [0.7, 0.7, 0.7]
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],

@@ -169,7 +169,7 @@ public class AimingHandler
                         if(scope != null)
                         {
                             if(!Config.COMMON.gameplay.realisticLowPowerFovHandling.get() || (scope.getAdditionalZoom() > 0 && Config.COMMON.gameplay.realisticLowPowerFovHandling.get()))
-                            {    newFov -= scope.getAdditionalZoom(); event.setNewfov(newFov + (1.0F - newFov) * (1.0F - (float) this.normalisedAdsProgress));}
+                            {    newFov -= scope.getAdditionalZoom() * (Config.COMMON.gameplay.scopeDoubleRender.get() ? 1:1.5); event.setNewfov(newFov + (1.0F - newFov) * (1.0F - (float) this.normalisedAdsProgress));}
                         }
                         else if(!Config.COMMON.gameplay.realisticIronSightFovHandling.get())
                             event.setNewfov(newFov + (1.0F - newFov) * (1.0F - (float) this.normalisedAdsProgress));

@@ -1,6 +1,7 @@
 package com.tac.guns.client.network;
 
 import com.tac.guns.Config;
+import com.tac.guns.GunMod;
 import com.tac.guns.client.BulletTrail;
 import com.tac.guns.client.CustomGunManager;
 import com.tac.guns.client.audio.GunShotSound;
@@ -11,7 +12,23 @@ import com.tac.guns.init.ModParticleTypes;
 import com.tac.guns.init.ModSounds;
 import com.tac.guns.network.message.*;
 import com.tac.guns.particles.BulletHoleData;
+import mod.chiselsandbits.ChiselsAndBits;
+import mod.chiselsandbits.api.ChiselsAndBitsAPI;
+import mod.chiselsandbits.api.chiseling.ChiselingOperation;
+import mod.chiselsandbits.api.chiseling.IChiselingContext;
+import mod.chiselsandbits.api.chiseling.IChiselingManager;
+import mod.chiselsandbits.api.chiseling.mode.IChiselMode;
+import mod.chiselsandbits.api.exceptions.SpaceOccupiedException;
+import mod.chiselsandbits.api.multistate.accessor.IStateEntryInfo;
+import mod.chiselsandbits.api.multistate.accessor.identifier.IAreaShapeIdentifier;
+import mod.chiselsandbits.api.multistate.accessor.sortable.IPositionMutator;
+import mod.chiselsandbits.api.multistate.mutator.IAreaMutator;
+import mod.chiselsandbits.api.multistate.mutator.IMutableStateEntryInfo;
+import mod.chiselsandbits.api.multistate.snapshot.IMultiStateSnapshot;
+import mod.chiselsandbits.multistate.mutator.ChiselAdaptingWorldMutator;
+import mod.chiselsandbits.multistate.mutator.WorldWrappingMutator;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SimpleSound;
@@ -25,12 +42,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+//import mod.chiselsandbits.chiseling.
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -121,25 +144,45 @@ public class ClientPlayHandler
 
     private static Particle spawnParticle(ParticleManager manager, IParticleData data, double x, double y, double z, Random rand, double velocityMultiplier)
     {
+        //if(GunMod.cabLoaded)
+            //deleteBitOnHit();
         return manager.addParticle(data, x, y, z, (rand.nextDouble() - 0.5) * velocityMultiplier, (rand.nextDouble() - 0.5) * velocityMultiplier, (rand.nextDouble() - 0.5) * velocityMultiplier);
     }
-
+  /*  private static boolean deleteBitOnHit(BlockPos blockPos, BlockState blockState, double x, double y, double z)//(IParticleData data, double x, double y, double z, Random rand, double velocityMultiplier)
+    {
+        Minecraft mc = Minecraft.getInstance();
+        ChiselAdaptingWorldMutator chiselAdaptingWorldMutator = new ChiselAdaptingWorldMutator(mc.world, blockPos);
+        float bitSize = ChiselsAndBitsAPI.getInstance().getStateEntrySize().getSizePerBit();
+        ChiselsAndBitsAPI.getInstance().getMutatorFactory().in(mc.world, blockPos).overrideInAreaTarget(Blocks.AIR.getDefaultState(), new Vector3d(bitSize*Math.abs(x),bitSize*Math.abs(y),bitSize*Math.abs(z)));
+        return true;
+    }
+*/
     public static void handleProjectileHitBlock(MessageProjectileHitBlock message)
     {
         Minecraft mc = Minecraft.getInstance();
         World world = mc.world;
         if (world != null) {
-            BlockState state = world.getBlockState(message.getPos());
-            double holeX = message.getX() + 0.005 * message.getFace().getXOffset();
-            double holeY = message.getY() + 0.005 * message.getFace().getYOffset();
-            double holeZ = message.getZ() + 0.005 * message.getFace().getZOffset();
-            double distance = Math.sqrt(mc.player.getDistanceSq(message.getX(), message.getY(), message.getZ()));
-            world.addParticle(new BulletHoleData(message.getFace(), message.getPos()), false, holeX, holeY, holeZ, 0, 0, 0);
-            if (distance < 16.0) {
-                world.addParticle(new BlockParticleData(ParticleTypes.BLOCK, state), false, message.getX(), message.getY(), message.getZ(), 0, 0, 0);
+            if(GunMod.cabLoaded)
+            {
+                double holeX = 0.005 * message.getFace().getXOffset();
+                double holeY = 0.005 * message.getFace().getYOffset();
+                double holeZ = 0.005 * message.getFace().getZOffset();
+                System.out.println(world.getBlockState(message.getPos()).getBlock().getTranslatedName().getString());
+                //deleteBitOnHit(message.getPos(), world.getBlockState(message.getPos()), holeX,holeY,holeZ);
             }
-            if (distance < 32.0) {
-                world.playSound(message.getX(), message.getY(), message.getZ(), state.getSoundType().getBreakSound(), SoundCategory.BLOCKS, 0.75F, 2.0F, false);
+            else {
+                BlockState state = world.getBlockState(message.getPos());
+                double holeX = message.getX() + 0.005 * message.getFace().getXOffset();
+                double holeY = message.getY() + 0.005 * message.getFace().getYOffset();
+                double holeZ = message.getZ() + 0.005 * message.getFace().getZOffset();
+                double distance = Math.sqrt(mc.player.getDistanceSq(message.getX(), message.getY(), message.getZ()));
+                world.addParticle(new BulletHoleData(message.getFace(), message.getPos()), false, holeX, holeY, holeZ, 0, 0, 0);
+                if (distance < 16.0) {
+                    world.addParticle(new BlockParticleData(ParticleTypes.BLOCK, state), false, message.getX(), message.getY(), message.getZ(), 0, 0, 0);
+                }
+                if (distance < 32.0) {
+                    world.playSound(message.getX(), message.getY(), message.getZ(), state.getSoundType().getBreakSound(), SoundCategory.BLOCKS, 0.75F, 2.0F, false);
+                }
             }
         }
     }

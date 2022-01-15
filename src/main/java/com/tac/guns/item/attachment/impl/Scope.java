@@ -1,5 +1,6 @@
 package com.tac.guns.item.attachment.impl;
 
+import com.tac.guns.Config;
 import com.tac.guns.interfaces.IGunModifier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -19,6 +20,11 @@ public class Scope extends Attachment
     private double stabilityOffset = 0d;
     private double viewFinderOffset;
     private double viewFinderOffsetSpecial;
+
+    private double viewFinderOffsetDR;
+    private double viewFinderOffsetSpecialDR;
+
+    private static boolean isDoubleRender = Config.COMMON.gameplay.scopeDoubleRender.get();
 
     private Scope(float additionalZoom, double centerOffset, double stabilityOffset, IGunModifier... modifier)
     {
@@ -51,6 +57,23 @@ public class Scope extends Attachment
     public Scope viewFinderOffsetSpecial(double offset)
     {
         this.viewFinderOffsetSpecial = offset;
+        return this;
+    }
+
+    /**
+     * Sets the offset distance from the camera to the view finder when Double Render is enabled
+     *
+     * @param offset the view finder offset when Double Render is enabled
+     * @return this scope
+     */
+    public Scope viewFinderOffsetDR(double offset)
+    {
+        this.viewFinderOffsetDR = offset;
+        return this;
+    }
+    public Scope viewFinderOffsetSpecialDR(double offset)
+    {
+        this.viewFinderOffsetSpecialDR = offset;
         return this;
     }
 
@@ -101,6 +124,23 @@ public class Scope extends Attachment
     public double getViewFinderOffsetSpecial()
     {
         return this.viewFinderOffsetSpecial;
+    }
+    /**
+     * @return The view finder offset of this scope and Double Render is enabled
+     */
+
+    @OnlyIn(Dist.CLIENT)
+    public double getViewFinderOffsetDR()
+    {
+        return this.viewFinderOffsetDR;
+    }
+    /**
+     * @return The view finder offset of this scope if gameplay enchanced is chosen and Double Render is enabled
+     */
+    @OnlyIn(Dist.CLIENT)
+    public double getViewFinderOffsetSpecialDR()
+    {
+        return this.viewFinderOffsetSpecialDR;
     }
     /**
      * @return The view finder offset of this scope
