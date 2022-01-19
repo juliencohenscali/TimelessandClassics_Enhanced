@@ -401,19 +401,19 @@ public class GunModifiers
         @Override
         public float recoilModifier()
         {
-            return 0.60F;
+            return 0.575F;
         }
 
         @Override
         public float modifyProjectileSpread(float spread)
         {
-            return spread * 1.125F;
+            return spread * 1.175F;
         }
 
         @Override
         public float horizontalRecoilModifier()
         {
-            return 1.075F;
+            return 1.1125F;
         }
 
         @Override

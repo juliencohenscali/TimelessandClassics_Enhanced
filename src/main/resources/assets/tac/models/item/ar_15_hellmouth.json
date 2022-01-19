@@ -1,13 +1,14 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"4": "tac:items/gui_renders/ar15v2",
-		"particle": "tac:items/mosin_bolt"
+		"4": "tac:items/gui_renders/ar15v6"
 	},
+	"gui_light": "front",
 	"elements": [
 		{
 			"from": [0, 0, 0],
 			"to": [0.01563, 16, 16],
+			"shade": false,
 			"faces": {
 				"west": {"uv": [0, 0, 16, 16], "texture": "#4", "tintindex": 0}
 			}

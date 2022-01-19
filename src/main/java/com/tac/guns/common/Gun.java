@@ -1021,6 +1021,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 {
                     tag.put("OldScope", this.oldScope.serializeNBT());
                 }
+                if(this.sideRail != null)
+                {
+                    tag.put("SideRail", this.sideRail.serializeNBT());
+                }
                 return tag;
             }
 
@@ -1047,6 +1051,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 {
                     this.oldScope = this.createScaledPositioned(tag, "OldScope");
                 }
+                if(tag.contains("SideRail", Constants.NBT.TAG_COMPOUND))
+                {
+                    this.sideRail = this.createScaledPositioned(tag, "SideRail");
+                }
             }
 
             public Attachments copy()
@@ -1071,6 +1079,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 if(this.oldScope != null)
                 {
                     attachments.oldScope = this.oldScope.copy();
+                }
+                if(this.sideRail != null)
+                {
+                    attachments.sideRail = this.sideRail.copy();
                 }
                 return attachments;
             }
@@ -1374,6 +1386,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.stock != null;
                 case UNDER_BARREL:
                     return this.modules.attachments.underBarrel != null;
+                case SIDE_RAIL:
+                    return this.modules.attachments.sideRail != null;
                 case OLD_SCOPE:
                     return this.modules.attachments.oldScope != null;
             }
@@ -1396,6 +1410,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.stock;
                 case UNDER_BARREL:
                     return this.modules.attachments.underBarrel;
+                case SIDE_RAIL:
+                    return this.modules.attachments.sideRail;
                 case OLD_SCOPE:
                     return this.modules.attachments.oldScope;
             }

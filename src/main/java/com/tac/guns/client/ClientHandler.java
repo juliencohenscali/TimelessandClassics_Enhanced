@@ -23,6 +23,7 @@ import com.tac.guns.network.message.MessageAttachments;
 import com.tac.guns.network.message.MessageColorBench;
 import com.tac.guns.network.message.MessageInspection;
 import com.tac.guns.network.message.MessageIronSightSwitch;
+import com.tac.guns.tileentity.FlashLightSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.MouseSettingsScreen;
@@ -68,6 +69,7 @@ public class ClientHandler
         MinecraftForge.EVENT_BUS.register(HUDRenderingHandler.get());
         MinecraftForge.EVENT_BUS.register(FireModeSwitchEvent.get()); // Technically now a handler but, yes I need some naming reworks
         MinecraftForge.EVENT_BUS.register(IronSightSwitchEvent.get()); // Still, as well an event, am uncertain on what to name it, in short handles upcoming advanced iron sights
+        MinecraftForge.EVENT_BUS.register(FlashlightHandler.get());
 
         MinecraftForge.EVENT_BUS.register(ScopeJitterHandler.getInstance()); // All built by MayDay memory part of the Timeless dev team, amazing work!!!!!!!!!!!
 

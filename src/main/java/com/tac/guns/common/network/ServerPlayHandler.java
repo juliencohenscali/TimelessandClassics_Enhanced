@@ -4,10 +4,7 @@ import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
 import com.tac.guns.Config;
 import com.tac.guns.GunMod;
 import com.tac.guns.Reference;
-import com.tac.guns.common.Gun;
-import com.tac.guns.common.ProjectileManager;
-import com.tac.guns.common.ShootTracker;
-import com.tac.guns.common.SpreadTracker;
+import com.tac.guns.common.*;
 import com.tac.guns.common.container.AttachmentContainer;
 import com.tac.guns.common.container.ColorBenchContainer;
 import com.tac.guns.common.container.InspectionContainer;
@@ -16,6 +13,7 @@ import com.tac.guns.crafting.WorkbenchRecipe;
 import com.tac.guns.crafting.WorkbenchRecipes;
 import com.tac.guns.entity.ProjectileEntity;
 import com.tac.guns.event.GunFireEvent;
+import com.tac.guns.init.ModBlocks;
 import com.tac.guns.init.ModEnchantments;
 import com.tac.guns.init.ModSyncedDataKeys;
 import com.tac.guns.interfaces.IProjectileFactory;
@@ -23,16 +21,20 @@ import com.tac.guns.item.GunItem;
 import com.tac.guns.item.IColored;
 import com.tac.guns.item.ScopeItem;
 import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
+import com.tac.guns.item.attachment.IAttachment;
 import com.tac.guns.network.PacketHandler;
 import com.tac.guns.network.message.MessageBulletTrail;
 import com.tac.guns.network.message.MessageGunSound;
 import com.tac.guns.network.message.MessageShoot;
+import com.tac.guns.tileentity.FlashLightSource;
 import com.tac.guns.tileentity.WorkbenchTileEntity;
 import com.tac.guns.util.GunModifierHelper;
 import com.tac.guns.util.InventoryUtil;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
@@ -40,14 +42,14 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
@@ -391,6 +393,82 @@ public class ServerPlayHandler
         }
     }
 
+
+    /**
+     * @param player
+     * @param lookingRange maximum range to attempt flashlight rendering
+     */
+    public static void handleFlashLight(ServerPlayerEntity player, int[] lookingRange)
+    {
+        if(player.getHeldItemMainhand().getItem() instanceof GunItem)
+        {
+            if(Gun.getAttachment(IAttachment.Type.SIDE_RAIL,player.getHeldItemMainhand()) != null) {
+                IWorld world = player.world;
+                TileEntity tile = null;
+                for (int itor: lookingRange)
+                {
+                    int x = lookingAt(player, itor).getX();
+                    int y = lookingAt(player, itor).getY();
+                    int z = lookingAt(player, itor).getZ();
+                    boolean createLight = false;
+                    for (int i = 0; i < 5; ++i) {
+                        tile = world.getTileEntity(new BlockPos(x, y, z));
+                        if (tile instanceof FlashLightSource) {
+                            createLight = true;
+                            break;
+                        }
+
+                        if (!world.isAirBlock(new BlockPos(x, y, z))) {
+                            int pX = (int) player.getPositionVec().getX();
+                            int pY = (int) player.getPositionVec().getY();
+                            int pZ = (int) player.getPositionVec().getZ();
+                            if (pX > x) {
+                                ++x;
+                            } else if (pX < x) {
+                                --x;
+                            }
+                            if (pY > y) {
+                                ++y;
+                            } else if (pY < y) {
+                                --y;
+                            }
+                            if (pZ > z) {
+                                ++z;
+                            } else if (pZ < z) {
+                                --z;
+                            }
+                        } else if (world.isAirBlock(new BlockPos(x, y, z))) {
+                            createLight = true;
+                            break;
+                        }
+                    }
+
+                    if (createLight) {
+                        tile = world.getTileEntity(new BlockPos(x, y, z));
+                        if (tile instanceof FlashLightSource) {
+                            ((FlashLightSource) tile).ticks = 0;
+                        } else if (world.getBlockState(new BlockPos(x, y, z)).getBlock() != ModBlocks.FLASHLIGHT_BLOCK.get()) { //
+                            world.setBlockState(new BlockPos(x, y, z), (ModBlocks.FLASHLIGHT_BLOCK.get()).getDefaultState(), 3);
+                        }
+                        world.setBlockState(new BlockPos(x, y, z), (ModBlocks.FLASHLIGHT_BLOCK.get()).getDefaultState(), 3);
+                    }
+                }
+            }
+        }
+    }
+    protected static BlockPos lookingAt(PlayerEntity player, int rangeL)
+    {
+        //RayTraceResult entityPos = lookingAtEntity(player,rangeL);GunMod.LOGGER.log(Level.FATAL, entityPos.getType().toString());
+        ///if(entityPos instanceof EntityRayTraceResult)
+         //   return new BlockPos(entityPos.getHitVec());
+        //else
+            return ((BlockRayTraceResult)player.pick((double)rangeL, 0.0F, false)).getPos();
+
+    }
+    protected static RayTraceResult lookingAtEntity(PlayerEntity player, int rangeL)
+    {
+        return ((RayTraceResult)player.pick((double)rangeL, 0.0F, false));
+    }
     /**
      * @param player
      */

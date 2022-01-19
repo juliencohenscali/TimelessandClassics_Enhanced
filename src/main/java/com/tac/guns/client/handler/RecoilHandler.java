@@ -161,8 +161,8 @@ public class RecoilHandler
         float cooldown = tracker.getCooldown(gunItem, Minecraft.getInstance().getRenderPartialTicks());
         cooldown = cooldown >= modifiedGun.getGeneral().getRecoilDurationOffset() ? (cooldown - modifiedGun.getGeneral().getRecoilDurationOffset()) / (1.0F - modifiedGun.getGeneral().getRecoilDurationOffset()) : 0.0F;
 
-        float durationRandom = this.random.nextFloat()*(1.22f - 0.75f) + 0.75f;
-        float weaponRecoilDuration = modifiedGun.getGeneral().getWeaponRecoilDuration() >= 0.0F && modifiedGun.getGeneral().getWeaponRecoilDuration() <= 1.0F ? modifiedGun.getGeneral().getWeaponRecoilDuration() * durationRandom : 0.5F;
+        //float durationRandom = this.random.nextFloat()*(1.22f - 0.75f) + 0.75f;  * durationRandom
+        float weaponRecoilDuration = modifiedGun.getGeneral().getWeaponRecoilDuration() >= 0.0F && modifiedGun.getGeneral().getWeaponRecoilDuration() <= 1.0F ? modifiedGun.getGeneral().getWeaponRecoilDuration(): 0.5F;
 
         boolean tooFast = modifiedGun.getGeneral().getRate() < 2;
 

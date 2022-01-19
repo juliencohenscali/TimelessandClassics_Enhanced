@@ -43,10 +43,10 @@ public class AttachmentContainer extends Container
         ItemStack[] attachments = new ItemStack[IAttachment.Type.values().length];
         if(stack.getItem() instanceof ScopeItem)
         {
-            for (int i = 5; i < attachments.length; i++) {
+            for (int i = 6; i < attachments.length; i++) {
                 attachments[i] = Gun.getAttachment(IAttachment.Type.values()[i], stack);
             }
-            for (int i = 5; i < attachments.length; i++) {
+            for (int i = 6; i < attachments.length; i++) {
                 this.weaponInventory.setInventorySlotContents(i, attachments[i]);
             }
         }

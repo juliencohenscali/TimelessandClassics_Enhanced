@@ -2,12 +2,14 @@ package com.tac.guns.init;
 
 import com.tac.guns.GunMod;
 import com.tac.guns.Reference;
+import com.tac.guns.block.FlashLightBlock;
 import com.tac.guns.block.WorkbenchBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -33,11 +35,12 @@ public class ModBlocks
         {
             Block.spawnAsEntity((World) worldIn,pos,WORKBENCH.get().getItem(worldIn,pos,state));
         }
-    });
+    },true);
+    public static final RegistryObject<Block> FLASHLIGHT_BLOCK = register("flashlight", () -> new FlashLightBlock(),false);
 
-    private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier)
+    private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier, boolean grouped)
     {
-        return register(id, blockSupplier, block1 -> new BlockItem(block1, new Item.Properties().group(GunMod.GROUP)));
+        return register(id, blockSupplier, block1 -> new BlockItem(block1, grouped ? new Item.Properties().group(GunMod.GROUP) : new Item.Properties().group(ItemGroup.SEARCH)));
     }
 
     private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier, @Nullable Function<T, BlockItem> supplier)

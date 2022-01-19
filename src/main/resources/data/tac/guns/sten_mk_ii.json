@@ -1,0 +1,53 @@
+{
+  "general": {
+    "auto": true,
+    "rate": 3,
+    "rateSelector": [0,2],
+    "gripType": "tac:two_handed_ak47",
+    "maxAmmo": 32,
+    "reloadAmount": 5,
+    "recoilAngle": 0.875,
+    "horizontalRecoilAngle": 0.125,
+    "recoilKick": 0.980,
+    "recoilAdsReduction": 0.3,
+    "weaponRecoilDuration": 0.375,
+    "alwaysSpread": true,
+    "spread": 4.55
+  },
+  "projectile": {
+    "item": "tac:9mm_round",
+    "visible": true,
+    "damage": 3.75,
+    "size": 0.1,
+    "speed": 18.5,
+    "life": 4,
+    "ricochet": true
+  },
+  "sounds": {
+    "fire": "tac:item.fire_m16",
+    "reload": "tac:item.pistol.reload",
+    "cock": "tac:item.pistol.cock",
+    "silencedFire": "tac:item.fire_m16s"
+  },
+  "display": {
+    "flash": {
+      "yOffset": 7.65,
+      "zOffset": -11.55,
+      "size": 0.48
+    },
+    "hipfireScale": 0.70,
+    "hipfireMoveScale": 0.55,
+    "hipfireRecoilScale": 1.31,
+    "weaponType": 4
+  },
+  "modules": {
+    "zoom": [
+      {
+        "fovModifier": 0.65,
+        "yOffset": 9.425,
+        "zOffset": -4.75
+      }
+    ],
+    "attachments": {}
+  }
+}

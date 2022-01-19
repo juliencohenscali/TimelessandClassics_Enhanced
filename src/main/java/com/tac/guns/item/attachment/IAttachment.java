@@ -27,6 +27,7 @@ public interface IAttachment<T extends Attachment>
         BARREL("barrel", "Barrel"),
         STOCK("stock", "Stock"),
         UNDER_BARREL("under_barrel", "Under_Barrel"),
+        SIDE_RAIL("side_rail", "Side_Rail"),
 
         OLD_SCOPE("oldScope", "OldScope"),
 

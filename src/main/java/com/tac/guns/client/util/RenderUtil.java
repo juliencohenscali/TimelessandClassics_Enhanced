@@ -335,7 +335,7 @@ public class RenderUtil
         }
     }
 
-    private static RenderType getRenderType(ItemStack stack, boolean entity)
+    public static RenderType getRenderType(ItemStack stack, boolean entity)
     {
         Item item = stack.getItem();
         if(item instanceof BlockItem)

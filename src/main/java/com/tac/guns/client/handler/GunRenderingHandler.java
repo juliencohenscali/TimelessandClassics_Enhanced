@@ -476,14 +476,16 @@ public class GunRenderingHandler {
         }
     }
 
-    public float kickReduction;
-    public float recoilReduction;
-    public double kick;
-    public float recoilLift;
-    public float recoilSwayAmount;
-    public float recoilSway;
-    public float weaponsHorizontalAngle;
-    private void applyRecoilTransforms(MatrixStack matrixStack, ItemStack item, Gun gun) {
+    public float kickReduction = 0;
+    public float recoilReduction = 0;
+    public double kick = 0;
+    public float recoilLift = 0;
+    public float recoilSwayAmount = 0;
+    public float recoilSway = 0;
+    public float weaponsHorizontalAngle = 0;
+    private void applyRecoilTransforms(MatrixStack matrixStack, ItemStack item, Gun gun)
+    {
+        Minecraft mc = Minecraft.getInstance();
         double recoilNormal = RecoilHandler.get().getGunRecoilNormal();
         if (Gun.hasAttachmentEquipped(item, gun, IAttachment.Type.SCOPE)) {
             recoilNormal -= recoilNormal * (0.25 * AimingHandler.get().getNormalisedAdsProgress());
@@ -493,15 +495,22 @@ public class GunRenderingHandler {
         this.kick = gun.getGeneral().getRecoilKick() * 0.0625 * recoilNormal * RecoilHandler.get().getAdsRecoilReduction(gun);
         this.recoilLift = ((float) (gun.getGeneral().getRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
         this.recoilSwayAmount = ((float) (2F + 1F * (1.0 - AimingHandler.get().getNormalisedAdsProgress())));// * 1.5f;
-        this.recoilSway = (float) ((RecoilHandler.get().getGunRecoilRandom() * this.recoilSwayAmount - this.recoilSwayAmount / 2F) * recoilNormal);
-        this.weaponsHorizontalAngle = ((float) (gun.getGeneral().getHorizontalRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));;
+        this.recoilSway = ((float) ((RecoilHandler.get().getGunRecoilRandom() * this.recoilSwayAmount - this.recoilSwayAmount / 2F) * recoilNormal)) / 2;
+        if (item.getTag().getInt("CurrentFireMode") == 1)
+            this.recoilSway *= 0.375;
+        if (mc.player.isCrouching()) {
+            this.recoilSway *= 0.75;
+            this.recoilLift *= 0.875;
+        }
+        this.weaponsHorizontalAngle = ((float) (gun.getGeneral().getHorizontalRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
 
         matrixStack.translate(0, 0, this.kick * this.kickReduction);
         matrixStack.translate(0, 0, 0.35);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(this.recoilSway * this.recoilReduction));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(this.recoilSway * this.recoilReduction * this.weaponsHorizontalAngle));
         matrixStack.rotate(Vector3f.ZN.rotationDegrees(this.recoilSway * this.weaponsHorizontalAngle * this.recoilReduction)); // seems to be interesting to increase the force of
         //matrixStack.rotate(Vector3f.ZP.rotationDegrees(recoilSway * 2.5f * recoilReduction)); // seems to be interesting to increase the force of
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(this.recoilLift * this.recoilReduction));
+        if(gun.getGeneral().getWeaponRecoilDuration() != 0)
+            matrixStack.rotate(Vector3f.XP.rotationDegrees(this.recoilLift * this.recoilReduction));
         matrixStack.translate(0, 0, -0.35);
     }
 

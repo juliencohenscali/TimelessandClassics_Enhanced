@@ -51,6 +51,7 @@ public class PacketHandler
         registerPlayMessage(MessageAim.class, MessageAim::new, LogicalSide.SERVER);
         registerPlayMessage(MessageReload.class, MessageReload::new, LogicalSide.SERVER);
         registerPlayMessage(MessageShoot.class, MessageShoot::new, LogicalSide.SERVER);
+        registerPlayMessage(MessageLightChange.class, MessageLightChange::new, LogicalSide.SERVER);
         registerPlayMessage(MessageUnload.class, MessageUnload::new, LogicalSide.SERVER);
         registerPlayMessage(MessageStunGrenade.class, MessageStunGrenade::new, LogicalSide.CLIENT);
         registerPlayMessage(MessageCraft.class, MessageCraft::new, LogicalSide.SERVER);

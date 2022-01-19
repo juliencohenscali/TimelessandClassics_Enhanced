@@ -141,7 +141,7 @@ import org.lwjgl.glfw.GLFW;
         {
             if(this.startReloadTick == -1)
             {
-                this.startReloadTick = player.ticksExisted + 5;
+                this.startReloadTick = player.ticks + 5;
             }
             if(this.reloadTimer < 5)
             {
