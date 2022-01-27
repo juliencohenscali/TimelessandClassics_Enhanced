@@ -6,14 +6,20 @@
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "maxAmmo": 16,
-    "reloadAmount": 4,
     "recoilAngle": 3.4,
     "horizontalRecoilAngle": 1.125,
     "recoilKick": 1.75,
     "recoilAdsReduction": 0.45,
     "alwaysSpread": true,
-    "spread": 1.8
+    "spread": 2.42
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 16,
+    "reloadMagTimer": 40,
+    "additionalReloadEmptyMagTimer": 6,
+    "maxAdditionalAmmoPerOC": [6, 10, 14],
+    "preReloadPauseTicks": 4
   },
   "projectile": {
     "item": "tac:9mm_round",
@@ -43,7 +49,20 @@
       "yOffset": 11.965,
       "zOffset": -15.6
     }],
-    "attachments": {
+    "attachments":
+    {
+      "pistolBarrel": {
+        "yOffset": -100829.84,
+        "zOffset": -11.55,
+        "scale": 1.00
+      },
+      "pistolScope": {
+        "yOffset": 10.25,
+        "zOffset": 7.4,
+        "scale": 1.90,
+        "renderMount": false,
+        "doOnSlideMovement": true
+      }
     }
   }
 }

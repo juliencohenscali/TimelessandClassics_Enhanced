@@ -3,14 +3,20 @@
     "rate": 7,
     "rateSelector": [1],
     "gripType":  "tac:one_handed_m1911",
-    "maxAmmo": 2,
-    "reloadAmount": 1,
     "recoilAngle": 15.385,
     "recoilKick": 1.155,
     "recoilAdsReduction": 0.28,
     "alwaysSpread": true,
     "spread": 20.25,
     "projectileAmount": 11
+  },
+  "reloads": {
+    "magFed": false,
+    "maxAmmo": 2,
+    "reloadAmount": 1,
+    "preReloadPauseTicks": 6,
+    "interReloadPauseTicks": 14,
+    "openBolt": true
   },
   "projectile": {
     "item":  "tac:10_gauge_round",

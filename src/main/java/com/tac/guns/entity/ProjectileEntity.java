@@ -456,9 +456,11 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
                             state.getMaterial() == Material.IRON ||
                             state.getMaterial() == Material.ANVIL
             )))
+            {
                 this.onHitBlock(blockRayTraceResult);
-            else
-                this.onHitBlock(state, pos, blockRayTraceResult.getFace(), hitVec.x, hitVec.y, hitVec.z);
+            }
+
+            this.onHitBlock(state, pos, blockRayTraceResult.getFace(), hitVec.x, hitVec.y, hitVec.z);
 
             int fireStarterLevel = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.FIRE_STARTER.get(), this.weapon);
             if(fireStarterLevel > 0 && Config.COMMON.gameplay.enableGunGriefing.get())
@@ -510,6 +512,7 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
         if(headshot)
         {
             damage *= Config.COMMON.gameplay.headShotDamageMultiplier.get();
+            damage *= GunModifierHelper.getAdditionalHeadshotDamage(this.weapon) == 0F ? 1F : GunModifierHelper.getAdditionalHeadshotDamage(this.weapon);
         }
 
         DamageSource source = new DamageSourceProjectile("bullet", this, shooter, weapon).setProjectile();
@@ -579,13 +582,13 @@ public class ProjectileEntity extends Entity implements IEntityAdditionalSpawnDa
 
     protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
     {
-        if(GunMod.cabLoaded)
+        /*if(GunMod.cabLoaded)
         {
             double holeX = 0.005 * face.getXOffset();
             double holeY = 0.005 * face.getYOffset();
             double holeZ = 0.005 * face.getZOffset();
             deleteBitOnHit(pos, state, holeX, holeY, holeZ);
-        }
+        }*/
         PacketHandler.getPlayChannel().send(PacketDistributor.TRACKING_CHUNK.with(() -> this.world.getChunkAt(pos)), new MessageProjectileHitBlock(x, y, z, pos, face));
     }
 

@@ -267,13 +267,13 @@ public class ServerPlayHandler
         if(stack.getItem() instanceof GunItem)
         {
             CompoundNBT tag = stack.getTag();
+            GunItem gunItem = (GunItem) stack.getItem();
+            Gun gun = gunItem.getModifiedGun(stack);
             if(tag != null && tag.contains("AmmoCount", Constants.NBT.TAG_INT))
             {
                 int count = tag.getInt("AmmoCount");
                 tag.putInt("AmmoCount", 0);
 
-                GunItem gunItem = (GunItem) stack.getItem();
-                Gun gun = gunItem.getModifiedGun(stack);
                 ResourceLocation id = gun.getProjectile().getItem();
 
                 Item item = ForgeRegistries.ITEMS.getValue(id);
@@ -294,6 +294,12 @@ public class ServerPlayHandler
                 {
                     spawnAmmo(player, new ItemStack(item, remaining));
                 }
+            }
+            ResourceLocation reloadSound = gun.getSounds().getCock();
+            if(reloadSound != null)
+            {
+                MessageGunSound message = new MessageGunSound(reloadSound, SoundCategory.PLAYERS, (float) player.getPosX(), (float) player.getPosY() + 1.0F, (float) player.getPosZ(), 1.0F, 1.0F, player.getEntityId(), false, true);
+                PacketHandler.getPlayChannel().send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), (player.getPosY() + 1.0), player.getPosZ(), 16.0, player.world.getDimensionKey())), message);
             }
         }
     }

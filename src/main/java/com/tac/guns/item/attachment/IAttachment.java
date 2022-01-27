@@ -30,7 +30,9 @@ public interface IAttachment<T extends Attachment>
         SIDE_RAIL("side_rail", "Side_Rail"),
 
         OLD_SCOPE("oldScope", "OldScope"),
+        PISTOL_SCOPE("pistolScope", "PistolScope"),
 
+        PISTOL_BARREL("pistolBarrel", "PistolBarrel"),
         SCOPE_RETICLE_COLOR("reticle_color", "Reticle_Color"), // Scope Attachment Type
         SCOPE_BODY_COLOR("body_color", "Body_Color"),          // Scope Attachment Type
         SCOPE_GLASS_COLOR("glass_color", "Glass_Color");       // Scope Attachment Type

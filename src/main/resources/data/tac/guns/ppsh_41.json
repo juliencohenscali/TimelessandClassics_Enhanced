@@ -8,8 +8,6 @@
       2
     ],
     "gripType": "tac:two_handed_ak47",
-    "maxAmmo": 35,
-    "reloadAmount": 5,
     "recoilAngle": 1.05,
     "horizontalRecoilAngle": 0.2235,
     "recoilKick": 0.25,
@@ -17,6 +15,14 @@
     "weaponRecoilDuration": 0.085,
     "alwaysSpread": true,
     "spread": 3.75
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 35,
+    "reloadMagTimer": 28,
+    "maxAdditionalAmmoPerOC": [5, 15, 40],
+    "preReloadPauseTicks": 18,
+    "openBolt": true
   },
   "projectile": {
     "item": "tac:762x25",

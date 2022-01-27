@@ -6,14 +6,20 @@
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "maxAmmo": 10,
-    "reloadAmount": 2,
     "recoilAngle": 3.85,
     "horizontalRecoilAngle": 1.025,
     "recoilKick": 1.95,
     "recoilAdsReduction": 0.50,
     "alwaysSpread": true,
     "spread": 1.55
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 10,
+    "reloadMagTimer": 30,
+    "additionalReloadEmptyMagTimer": 6,
+    "maxAdditionalAmmoPerOC": [4, 6, 10],
+    "preReloadPauseTicks": 4
   },
   "projectile": {
     "item": "tac:round45",

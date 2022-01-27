@@ -8,14 +8,20 @@
       2
     ],
     "gripType": "tac:two_handed_ak47",
-    "maxAmmo": 20,
-    "reloadAmount": 5,
     "recoilAngle": 1.15,
     "horizontalRecoilAngle": 0.725,
     "recoilKick": 0.55,
     "recoilAdsReduction": 0.585,
     "alwaysSpread": true,
     "spread": 1.15
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 20,
+    "reloadMagTimer": 45,
+    "additionalReloadEmptyMagTimer": 22,
+    "maxAdditionalAmmoPerOC": [10, 20, 40],
+    "preReloadPauseTicks": 12
   },
   "projectile": {
     "item": "tac:nato_556_bullet",

@@ -68,7 +68,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.M1911.get());
-            stack.getOrCreateTag().putInt("AmmoCount", 8);//ModItems.M1911.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.M1911.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 
@@ -85,7 +85,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.VECTOR45.get());
-            stack.getOrCreateTag().putInt("AmmoCount", ModItems.VECTOR45.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.VECTOR45.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 
@@ -102,7 +102,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.AK47.get());
-            stack.getOrCreateTag().putInt("AmmoCount", ModItems.AK47.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.AK47.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 
@@ -119,7 +119,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.M24.get());
-            stack.getOrCreateTag().putInt("AmmoCount", ModItems.M24.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.M24.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 
@@ -136,7 +136,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.MOSBERG590.get());
-            stack.getOrCreateTag().putInt("AmmoCount", ModItems.MOSBERG590.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.MOSBERG590.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 
@@ -153,7 +153,7 @@ public class GunMod
         public ItemStack createIcon()
         {
             ItemStack stack = new ItemStack(ModItems.M60.get());
-            stack.getOrCreateTag().putInt("AmmoCount", ModItems.M60.get().getGun().getGeneral().getMaxAmmo());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.M60.get().getGun().getReloads().getMaxAmmo());
             return stack;
         }
 

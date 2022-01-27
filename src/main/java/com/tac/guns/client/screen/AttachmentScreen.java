@@ -3,13 +3,13 @@ package com.tac.guns.client.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.tac.guns.GunMod;
 import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.container.AttachmentContainer;
 import com.tac.guns.item.GunItem;
 import com.tac.guns.item.ScopeItem;
-import com.tac.guns.item.TransitionalTypes.TimelessOldGunItem;
+import com.tac.guns.item.TransitionalTypes.TimelessOldRifleGunItem;
+import com.tac.guns.item.TransitionalTypes.TimelessPistolGunItem;
 import com.tac.guns.item.attachment.IAttachment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -20,13 +20,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import org.apache.logging.log4j.Level;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -182,16 +177,16 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
                 {
                     this.blit(matrixStack, left + 40, top - 1 + (i) * 18, 176, 16 + (i-1) * 16, 16, 16);
                 }
-                if(!this.container.getSlot(i+5).isEnabled() && i == 3)
+                /*if(!this.container.getSlot(i+5).isEnabled() && i == 3)
                 {
                     //this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 0, 16, 16);
                 }
                 else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 3)
                 {
                     //this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 16 + i * 16, 16, 16);
-                }
+                }*/
             }
-        else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessOldGunItem))
+        else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessOldRifleGunItem))
         {
             int iSkipper = 0;
             for(int i = 1; i < IAttachment.Type.values().length-3; i++)
@@ -207,8 +202,25 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
                 iSkipper++;
             }
         }
+        else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessPistolGunItem))
+        {
+            int iSkipper = 0;
+            for(int i = 1; i < IAttachment.Type.values().length-5; i++)
+            {
+                if(!this.container.getSlot(iSkipper).isEnabled())
+                {
+                    this.blit(matrixStack, left + 5, top + 17 + iSkipper * 18, 176, 0, 16, 16);
+                }
+                else if(this.weaponInventory.getStackInSlot(iSkipper).isEmpty())
+                {
+                    this.blit(matrixStack, left + 5, top + 17 + iSkipper * 18, 176, 16 + iSkipper * 16, 16, 16);
+                }
+                iSkipper++;
+                // Redo to display new pistolScope & pistolBarrel icons
+            }
+        }
         else
-            for(int i = 0; i < IAttachment.Type.values().length-4; i++)
+            for(int i = 0; i < IAttachment.Type.values().length-6; i++)
             {
                 if(!this.container.getSlot(i).isEnabled())
                 {

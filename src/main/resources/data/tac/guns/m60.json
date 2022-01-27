@@ -7,14 +7,21 @@
       2
     ],
     "gripType": "tac:two_handed_m60",
-    "maxAmmo": 100,
-    "reloadAmount": 10,
     "recoilAngle": 2.10,
     "recoilKick": 1.2,
     "horizontalRecoilAngle": 0.25,
     "recoilAdsReduction": 0.64,
     "alwaysSpread": true,
-    "spread": 4.16
+    "spread": 4.52
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 100,
+    "reloadMagTimer": 150,
+    "additionalReloadEmptyMagTimer": -12,
+    "maxAdditionalAmmoPerOC": [50, 75, 100],
+    "preReloadPauseTicks": 18,
+    "openBolt": true
   },
   "projectile": {
     "item": "tac:bullet_308",

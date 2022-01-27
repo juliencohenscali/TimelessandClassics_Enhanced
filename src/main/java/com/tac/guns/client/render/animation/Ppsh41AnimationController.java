@@ -23,7 +23,7 @@ public class Ppsh41AnimationController extends GunAnimationController {
         } catch (IOException e) {
             GunMod.LOGGER.fatal(e.getStackTrace());
         }
-        GunAnimationController.setAnimationControllerMap(ModItems.PPSH_41.getId(),this);
+        //GunAnimationController.setAnimationControllerMap(ModItems.PPSH_41.getId(),this);
     }
 
     public static Ppsh41AnimationController getInstance(){

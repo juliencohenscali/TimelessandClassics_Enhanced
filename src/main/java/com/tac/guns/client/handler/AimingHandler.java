@@ -8,6 +8,7 @@ import com.tac.guns.common.Gun;
 import com.tac.guns.init.ModBlocks;
 import com.tac.guns.init.ModSyncedDataKeys;
 import com.tac.guns.item.GunItem;
+import com.tac.guns.item.attachment.impl.Attachment;
 import com.tac.guns.item.attachment.impl.Scope;
 import com.tac.guns.network.PacketHandler;
 import com.tac.guns.network.message.MessageAim;
@@ -224,7 +225,7 @@ public class AimingHandler
         CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();
         float cooldown = tracker.getCooldown(heldItem.getItem(), Minecraft.getInstance().getRenderPartialTicks());
 
-        if(gun.getGeneral().isBoltAction() && (cooldown < 0.8 && cooldown > 0))
+        if(gun.getGeneral().isBoltAction() && (cooldown < 0.8 && cooldown > 0) && Gun.getScope(heldItem) != null)
         {
             return false;
         }

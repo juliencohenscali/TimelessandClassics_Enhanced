@@ -3,14 +3,20 @@
     "boltAction": true,
     "rate": 26,
     "gripType": "tac:two_handed_mosin",
-    "maxAmmo": 5,
-    "reloadAmount": 1,
     "recoilAngle": 4.25,
     "horizontalRecoilAngle": 0.125,
     "recoilKick": 1.65,
     "recoilAdsReduction": 0.875,
     "alwaysSpread": true,
     "spread": 0.15
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 5,
+    "reloadMagTimer": 60,
+    "additionalReloadEmptyMagTimer": 18,
+    "maxAdditionalAmmoPerOC": [5, 8, 10],
+    "preReloadPauseTicks": 10
   },
   "projectile": {
     "item": "tac:win_30-30",

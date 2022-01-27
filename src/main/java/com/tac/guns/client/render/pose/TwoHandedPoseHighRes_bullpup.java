@@ -3,6 +3,7 @@ package com.tac.guns.client.render.pose;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.client.handler.ReloadHandler;
 import com.tac.guns.client.util.RenderUtil;
+import com.tac.guns.item.GunItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -20,7 +21,7 @@ public class TwoHandedPoseHighRes_bullpup extends TwoHandedPose {
 		matrixStack.translate(0, 0, -1);
 		matrixStack.rotate(Vector3f.YP.rotationDegrees(180F));
 
-		float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks);
+		float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks, stack);
 
 		matrixStack.push();
 

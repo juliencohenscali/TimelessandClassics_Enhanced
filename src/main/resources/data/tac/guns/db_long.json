@@ -5,14 +5,20 @@
       1
     ],
     "gripType": "tac:two_handed_ak47",
-    "maxAmmo": 2,
-    "reloadAmount": 1,
     "recoilAngle": 7.385,
     "recoilKick": 1.155,
     "recoilAdsReduction": 0.28,
     "alwaysSpread": true,
     "spread": 11.25,
     "projectileAmount": 11
+  },
+  "reloads": {
+    "magFed": false,
+    "maxAmmo": 2,
+    "reloadAmount": 1,
+    "preReloadPauseTicks": 6,
+    "interReloadPauseTicks": 14,
+    "openBolt": true
   },
   "projectile": {
     "item": "tac:10_gauge_round",

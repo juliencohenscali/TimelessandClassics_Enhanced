@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mrcrayfish.obfuscate.client.event.PlayerModelEvent;
 import com.tac.guns.Config;
 import com.tac.guns.client.SpecialModels;
+import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
@@ -20,6 +21,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 
 /*
@@ -156,22 +158,29 @@ public class glock_17_animation implements IOverrideModel {
         {
             // Math provided by Bomb787 on GitHub and Curseforge!!!
             if(GunEnchantmentHelper.getRate(stack, gunItem.getGun()) <= 1 && cooldownOg != 0)
+            {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+            }
             else
-                matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+            {
+                matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+            }
         }
         else if(!Gun.hasAmmo(stack))
         {
             if(cooldownOg > 0.5){
                 // Math provided by Bomb787 on GitHub and Curseforge!!!
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
             }
             else
             {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
             }
         }
-        //matrices.translate(0.00, 0.0, -0.1);
         RenderUtil.renderModel(SpecialModels.GLOCK_17_SLIDE.getModel(), stack, matrices, renderBuffer, light, overlay);
 
         //Always pop

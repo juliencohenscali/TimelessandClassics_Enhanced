@@ -14,6 +14,14 @@
     "alwaysSpread": true,
     "spread": 5.425
   },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 30,
+    "reloadMagTimer": 45,
+    "additionalReloadEmptyMagTimer": 20,
+    "maxAdditionalAmmoPerOC": [10, 30, 70],
+    "preReloadPauseTicks": 7
+  },
   "projectile": {
     "item": "tac:nato_556_bullet",
     "visible": true,

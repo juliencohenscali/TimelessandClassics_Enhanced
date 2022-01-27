@@ -12,6 +12,7 @@ import com.tac.guns.client.render.gun.model.*;
 import com.tac.guns.client.screen.*;
 import com.tac.guns.client.settings.GunOptions;
 import com.tac.guns.common.BoundingBoxManager;
+import com.tac.guns.common.FloodLightSource.FloodLightSource;
 import com.tac.guns.init.ModBlocks;
 import com.tac.guns.init.ModContainers;
 import com.tac.guns.init.ModEntities;
@@ -70,6 +71,8 @@ public class ClientHandler
         MinecraftForge.EVENT_BUS.register(FireModeSwitchEvent.get()); // Technically now a handler but, yes I need some naming reworks
         MinecraftForge.EVENT_BUS.register(IronSightSwitchEvent.get()); // Still, as well an event, am uncertain on what to name it, in short handles upcoming advanced iron sights
         MinecraftForge.EVENT_BUS.register(FlashlightHandler.get());
+
+        MinecraftForge.EVENT_BUS.register(FloodLightSource.get());
 
         MinecraftForge.EVENT_BUS.register(ScopeJitterHandler.getInstance()); // All built by MayDay memory part of the Timeless dev team, amazing work!!!!!!!!!!!
 
@@ -130,8 +133,11 @@ public class ClientHandler
         ModelOverrides.register(ModItems.EOTECH_SHORT_SIGHT.get(), new EotechShortSightModel());
         ModelOverrides.register(ModItems.SRS_RED_DOT_SIGHT.get(), new SrsRedDotSightModel());
         ModelOverrides.register(ModItems.QMK152.get(), new Qmk152ScopeModel());
+
         ModelOverrides.register(ModItems.OLD_LONGRANGE_8x_SCOPE.get(), new OldLongRange8xScopeModel());
         ModelOverrides.register(ModItems.OLD_LONGRANGE_4x_SCOPE.get(), new OldLongRange4xScopeModel());
+
+        ModelOverrides.register(ModItems.MINI_DOT.get(), new SrsRedDotSightModel());
      }
 
     private static void registerScreenFactories()

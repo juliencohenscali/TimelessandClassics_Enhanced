@@ -1,19 +1,25 @@
 {
   "general": {
-    "rate": 5,
+    "rate": 6,
     "rateSelector": [
       0,
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "maxAmmo": 7,
-    "reloadAmount": 2,
-    "recoilAngle": 6.95,
+    "recoilAngle": 6.45,
     "horizontalRecoilAngle": 0.825,
     "recoilKick": 2.25,
     "recoilAdsReduction": 0.35,
     "alwaysSpread": true,
     "spread": 2.41
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 7,
+    "reloadMagTimer": 60,
+    "additionalReloadEmptyMagTimer": 16,
+    "maxAdditionalAmmoPerOC": [3, 7, 11],
+    "preReloadPauseTicks": 4
   },
   "projectile": {
     "item": "tac:round45",
@@ -41,7 +47,7 @@
     "zoom": [{
       "fovModifier": 0.75,
       "yOffset": 13.385,
-      "zOffset": -18.6
+      "zOffset": -22.75
     }],
     "attachments":
     {

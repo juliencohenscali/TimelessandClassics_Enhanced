@@ -15,6 +15,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public final class Gun implements INBTSerializable<CompoundNBT>
 {
     private General general = new General();
+    private Reloads reloads = new Reloads();
     private Projectile projectile = new Projectile();
     private Sounds sounds = new Sounds();
     private Display display = new Display();
@@ -31,6 +33,11 @@ public final class Gun implements INBTSerializable<CompoundNBT>
     public General getGeneral()
     {
         return this.general;
+    }
+
+    public Reloads getReloads()
+    {
+        return this.reloads;
     }
 
     public Projectile getProjectile()
@@ -65,13 +72,6 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private int[] rateSelector = new int[]{0,1};
         @Ignored
         private GripType gripType = GripType.ONE_HANDED;
-        private int maxAmmo;
-        @Optional
-        private boolean magFed = false;
-        @Optional
-        private int reloadMagTimer = 20;
-        @Optional
-        private int reloadAmount = 1;
         @Optional
         private float recoilAngle = 1.0F;
         @Optional
@@ -79,7 +79,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         private float horizontalRecoilAngle = 2.0F;
         @Optional
-        private float cameraRecoilModifier = 2.25F; // How much to divide out of camera recoil, use for either softening camera shake while keeping high recoil feeling weapons
+        private float cameraRecoilModifier = 1.75F; // How much to divide out of camera recoil, use for either softening camera shake while keeping high recoil feeling weapons
         @Optional
         private float recoilDurationOffset;
         @Optional
@@ -102,13 +102,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             tag.putInt("Rate", this.rate);
             tag.putIntArray("RateSelector", this.rateSelector);
             tag.putString("GripType", this.gripType.getId().toString());
-            tag.putInt("MaxAmmo", this.maxAmmo);
-            tag.putInt("ReloadSpeed", this.reloadAmount);
-            tag.putInt("ReloadMagTimer", this.reloadMagTimer);
-            tag.putBoolean("ReloadMagSpeed", this.magFed);
-            tag.putFloat("RecoilAngle", this.recoilAngle*2.5F); // x2 for quick camera recoil reduction balancing
+            tag.putFloat("RecoilAngle", this.recoilAngle*1.75F); // x2 for quick camera recoil reduction balancing
             tag.putFloat("RecoilKick", this.recoilKick);
-            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*2.5F); // x2 for quick camera recoil reduction balancing
+            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*1.75F); // x2 for quick camera recoil reduction balancing
             tag.putFloat("CameraRecoilModifier", this.cameraRecoilModifier);
             tag.putFloat("RecoilDurationOffset", this.recoilDurationOffset);
             tag.putFloat("WeaponRecoilDuration", this.weaponRecoilDuration);
@@ -141,14 +137,6 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             if(tag.contains("GripType", Constants.NBT.TAG_STRING))
             {
                 this.gripType = GripType.getType(ResourceLocation.tryCreate(tag.getString("GripType")));
-            }
-            if(tag.contains("MaxAmmo", Constants.NBT.TAG_ANY_NUMERIC))
-            {
-                this.maxAmmo = tag.getInt("MaxAmmo");
-            }
-            if(tag.contains("ReloadSpeed", Constants.NBT.TAG_ANY_NUMERIC))
-            {
-                this.reloadAmount = tag.getInt("ReloadSpeed");
             }
             if(tag.contains("RecoilAngle", Constants.NBT.TAG_ANY_NUMERIC))
             {
@@ -203,8 +191,6 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             general.rate = this.rate;
             general.rateSelector = this.rateSelector;
             general.gripType = this.gripType;
-            general.maxAmmo = this.maxAmmo;
-            general.reloadAmount = this.reloadAmount;
             general.recoilAngle = this.recoilAngle;
             general.recoilKick = this.recoilKick;
             general.horizontalRecoilAngle = this.horizontalRecoilAngle;
@@ -256,22 +242,6 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         public GripType getGripType()
         {
             return this.gripType;
-        }
-
-        /**
-         * @return The maximum amount of ammo this weapon can hold
-         */
-        public int getMaxAmmo()
-        {
-            return this.maxAmmo;
-        }
-
-        /**
-         * @return The amount of ammo to add to the weapon each reload cycle
-         */
-        public int getReloadAmount()
-        {
-            return this.reloadAmount;
         }
 
         /**
@@ -353,6 +323,159 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         public float getSpread()
         {
             return this.spread;
+        }
+    }
+
+    public static class Reloads implements INBTSerializable<CompoundNBT>
+    {
+        private int maxAmmo = 20;
+        @Optional
+        private boolean magFed = false;
+        @Optional
+        private int reloadMagTimer = 20;
+        @Optional
+        private int additionalReloadEmptyMagTimer = 0;
+        @Optional
+        private int reloadAmount = 1;
+        @Optional
+        private int[] maxAdditionalAmmoPerOC = new int[]{};
+      /*@Optional                                          Impl at some point, allow additional reload times per OC (OverCap)
+        private int[] maxAdditionalAmmoPerOC = new int[]{};*/
+        @Optional
+        private int preReloadPauseTicks = 0;
+        @Optional
+        private int interReloadPauseTicks = 1;
+        @Optional
+        private boolean openBolt = false;
+
+        @Override
+        public CompoundNBT serializeNBT()
+        {
+            CompoundNBT tag = new CompoundNBT();
+            tag.putInt("MaxAmmo", this.maxAmmo);
+            tag.putBoolean("MagFed", this.magFed);
+            tag.putInt("ReloadSpeed", this.reloadAmount);
+            tag.putInt("ReloadMagTimer", this.reloadMagTimer);
+            tag.putInt("AdditionalReloadEmptyMagTimer", this.additionalReloadEmptyMagTimer);
+            tag.putIntArray("MaxAmmunitionPerOverCap", this.maxAdditionalAmmoPerOC);
+            tag.putInt("ReloadPauseTicks", this.preReloadPauseTicks);
+            tag.putInt("InterReloadPauseTicks", this.interReloadPauseTicks);
+            tag.putBoolean("OpenBolt", this.openBolt);
+            return tag;
+        }
+
+        @Override
+        public void deserializeNBT(CompoundNBT tag)
+        {
+            if(tag.contains("MaxAmmo", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.maxAmmo = tag.getInt("MaxAmmo");
+            }
+            if(tag.contains("MagFed", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.magFed = tag.getBoolean("MagFed");
+            }
+            if(tag.contains("ReloadSpeed", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.reloadAmount = tag.getInt("ReloadSpeed");
+            }
+            if(tag.contains("ReloadMagTimer", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.reloadMagTimer = tag.getInt("ReloadMagTimer");
+            }
+            if(tag.contains("AdditionalReloadEmptyMagTimer", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.additionalReloadEmptyMagTimer = tag.getInt("AdditionalReloadEmptyMagTimer");
+            }
+            if(tag.contains("MaxAmmunitionPerOverCap", Constants.NBT.TAG_INT_ARRAY))
+            {
+                this.maxAdditionalAmmoPerOC = tag.getIntArray("MaxAmmunitionPerOverCap");
+            }
+            if(tag.contains("ReloadPauseTicks", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.preReloadPauseTicks = tag.getInt("ReloadPauseTicks");
+            }
+            if(tag.contains("InterReloadPauseTicks", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.interReloadPauseTicks = tag.getInt("InterReloadPauseTicks");
+            }
+            if(tag.contains("OpenBolt", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.openBolt = tag.getBoolean("OpenBolt");
+            }
+        }
+
+        /**
+         * @return A copy of the general get
+         */
+        public Reloads copy()
+        {
+            Reloads reloads = new Reloads();
+            reloads.magFed = this.magFed;
+            reloads.maxAmmo = this.maxAmmo;
+            reloads.reloadAmount = this.reloadAmount;
+            reloads.reloadMagTimer = this.reloadMagTimer;
+            reloads.additionalReloadEmptyMagTimer = this.additionalReloadEmptyMagTimer;
+            reloads.maxAdditionalAmmoPerOC = this.maxAdditionalAmmoPerOC;
+            reloads.preReloadPauseTicks = this.preReloadPauseTicks;
+            reloads.interReloadPauseTicks = this.interReloadPauseTicks;
+            reloads.openBolt = this.openBolt;
+            return reloads;
+        }
+
+        /**
+         * @return Does this gun reload all ammunition following a single timer and replenish
+         */
+        public boolean isMagFed() {return this.magFed;}
+        /**
+         * @return The maximum amount of ammo this weapon can hold
+         */
+        public int getMaxAmmo()
+        {
+            return this.maxAmmo;
+        }
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int getReloadAmount()
+        {
+            return this.reloadAmount;
+        }
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int getReloadMagTimer()
+        {
+            return this.reloadMagTimer;
+        }
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int getAdditionalReloadEmptyMagTimer()
+        {
+            return this.additionalReloadEmptyMagTimer;
+        }
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int[] getMaxAdditionalAmmoPerOC() {return this.maxAdditionalAmmoPerOC;}
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int getPreReloadPauseTicks()
+        {
+            return this.preReloadPauseTicks;
+        }
+        /**
+         * @return The amount of ammo to add to the weapon each reload cycle
+         */
+        public int getinterReloadPauseTicks() {return this.interReloadPauseTicks;}
+        /**
+         * @return Does this gun reload all ammunition following a single timer and replenish
+         */
+        public boolean isOpenBolt()
+        {
+            return this.openBolt;
         }
     }
 
@@ -869,7 +992,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         @Nullable
         private Zoom[] zoom = new Zoom[]{};
-        
+
         private Attachments attachments = new Attachments();
 
         @Ignored
@@ -962,6 +1085,12 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             @Optional
             @Nullable
             private ScaledPositioned oldScope;
+            @Optional
+            @Nullable
+            private PistolScope pistolScope;
+            @Optional
+            @Nullable
+            private ScaledPositioned pistolBarrel;
 
             @Nullable
             public ScaledPositioned getScope()
@@ -996,6 +1125,17 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
                 return this.oldScope;
             }
+            @Nullable
+            public ScaledPositioned getPistolScope()
+            {
+                return this.pistolScope;
+            }
+            @Nullable
+            public ScaledPositioned getPistolBarrel()
+            {
+                return this.pistolBarrel;
+            }
+
 
             @Override
             public CompoundNBT serializeNBT()
@@ -1024,6 +1164,14 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 if(this.sideRail != null)
                 {
                     tag.put("SideRail", this.sideRail.serializeNBT());
+                }
+                if(this.pistolScope != null)
+                {
+                    tag.put("PistolScope", this.pistolScope.serializeNBT());
+                }
+                if(this.pistolBarrel != null)
+                {
+                    tag.put("PistolBarrel", this.pistolBarrel.serializeNBT());
                 }
                 return tag;
             }
@@ -1055,6 +1203,14 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 {
                     this.sideRail = this.createScaledPositioned(tag, "SideRail");
                 }
+                if(tag.contains("PistolScope", Constants.NBT.TAG_COMPOUND))
+                {
+                    this.pistolScope = this.createPistolScope(tag, "PistolScope");
+                }
+                if(tag.contains("PistolBarrel", Constants.NBT.TAG_COMPOUND))
+                {
+                    this.pistolBarrel = this.createScaledPositioned(tag, "PistolBarrel");
+                }
             }
 
             public Attachments copy()
@@ -1084,6 +1240,14 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 {
                     attachments.sideRail = this.sideRail.copy();
                 }
+                if(this.pistolScope != null)
+                {
+                    attachments.pistolScope = this.pistolScope.copy();
+                }
+                if(this.pistolBarrel != null)
+                {
+                    attachments.pistolBarrel = this.pistolBarrel.copy();
+                }
                 return attachments;
             }
 
@@ -1092,6 +1256,13 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
                 CompoundNBT attachment = tag.getCompound(key);
                 return attachment.isEmpty() ? null : new ScaledPositioned(attachment);
+            }
+
+            @Nullable
+            private PistolScope createPistolScope(CompoundNBT tag, String key)
+            {
+                CompoundNBT attachment = tag.getCompound(key);
+                return attachment.isEmpty() ? null : new PistolScope(attachment);
             }
         }
 
@@ -1156,9 +1327,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         public CompoundNBT serializeNBT()
         {
             CompoundNBT tag = new CompoundNBT();
-            
+
             int zoomIterator = 0;
-            
+
             if(!ArrayUtils.isEmpty(this.zoom))
             {
                 for(Zoom sight : this.zoom)
@@ -1179,19 +1350,19 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
 
                 ArrayList<Zoom> zoomArr = new ArrayList<Zoom>(){};
-                
+
                 int zoomItor = tag.getInt("ZoomIterator");
-                
+
                 for(int itor = 0; itor <= zoomItor; itor++)
                 {
                     Zoom zoom = new Zoom();
                     zoom.deserializeNBT(tag.getCompound("Zoom" + itor));
                     zoomArr.add(zoom);
                 }
-                
+
                 this.zoom = zoomArr.toArray(this.zoom).clone();
             }
-            
+
             if(tag.contains("Attachments", Constants.NBT.TAG_COMPOUND))
             {
                 this.attachments.deserializeNBT(tag.getCompound("Attachments"));
@@ -1317,11 +1488,78 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         }
     }
 
+    public static class PistolScope extends ScaledPositioned
+    {
+        @Required
+        protected boolean doRenderMount;
+        @Required
+        protected boolean doOnSlideMovement;
+
+        public PistolScope() {}
+
+        public PistolScope(CompoundNBT tag)
+        {
+            this.deserializeNBT(tag);
+        }
+
+        @Override
+        public CompoundNBT serializeNBT()
+        {
+            CompoundNBT tag = super.serializeNBT();
+            tag.putBoolean("RenderMount", this.doRenderMount);
+            tag.putBoolean("c", this.doOnSlideMovement);
+            return tag;
+        }
+
+        @Override
+        public void deserializeNBT(CompoundNBT tag)
+        {
+            super.deserializeNBT(tag);
+            if(tag.contains("RenderMount", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.doRenderMount = tag.getBoolean("RenderMount");
+            }
+            if(tag.contains("DoOnSlideMovement", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.doOnSlideMovement = tag.getBoolean("DoOnSlideMovement");
+            }
+        }
+
+        public boolean getDoRenderMount()
+        {
+            return this.doRenderMount;
+        }
+        public boolean getdoOnSlideMovement()
+        {
+            return this.doOnSlideMovement;
+        }
+
+        @Override
+        public PistolScope copy()
+        {
+            PistolScope positioned = new PistolScope();
+            positioned.xOffset = this.xOffset;
+            positioned.yOffset = this.yOffset;
+            positioned.zOffset = this.zOffset;
+            positioned.scale = this.scale;
+            positioned.doRenderMount = this.doRenderMount;
+            positioned.doOnSlideMovement = this.doOnSlideMovement;
+            return positioned;
+            /*ScaledPositioned positioned = new ScaledPositioned();
+            positioned.xOffset = this.xOffset;
+            positioned.yOffset = this.yOffset;
+            positioned.zOffset = this.zOffset;
+            positioned.scale = this.scale;
+            return positioned;*/
+        }
+    }
+
     @Override
     public CompoundNBT serializeNBT()
     {
         CompoundNBT tag = new CompoundNBT();
         tag.put("General", this.general.serializeNBT());
+        tag.put("Reloads", this.reloads.serializeNBT());
         tag.put("Projectile", this.projectile.serializeNBT());
         tag.put("Sounds", this.sounds.serializeNBT());
         tag.put("Display", this.display.serializeNBT());
@@ -1335,6 +1573,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         if(tag.contains("General", Constants.NBT.TAG_COMPOUND))
         {
             this.general.deserializeNBT(tag.getCompound("General"));
+        }
+        if(tag.contains("Reloads", Constants.NBT.TAG_COMPOUND))
+        {
+            this.reloads.deserializeNBT(tag.getCompound("Reloads"));
         }
         if(tag.contains("Projectile", Constants.NBT.TAG_COMPOUND))
         {
@@ -1354,6 +1596,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         }
     }
 
+
+
     public static Gun create(CompoundNBT tag)
     {
         Gun gun = new Gun();
@@ -1365,6 +1609,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
     {
         Gun gun = new Gun();
         gun.general = this.general.copy();
+        gun.reloads = this.reloads.copy();
         gun.projectile = this.projectile.copy();
         gun.sounds = this.sounds.copy();
         gun.display = this.display.copy();
@@ -1390,6 +1635,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.sideRail != null;
                 case OLD_SCOPE:
                     return this.modules.attachments.oldScope != null;
+                case PISTOL_SCOPE:
+                    return this.modules.attachments.pistolScope != null;
+                case PISTOL_BARREL:
+                    return this.modules.attachments.pistolBarrel != null;
             }
         }
         return false;
@@ -1414,6 +1663,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                     return this.modules.attachments.sideRail;
                 case OLD_SCOPE:
                     return this.modules.attachments.oldScope;
+                case PISTOL_SCOPE:
+                    return this.modules.attachments.pistolScope;
+                case PISTOL_BARREL:
+                    return this.modules.attachments.pistolBarrel;
             }
         }
         return null;
@@ -1421,7 +1674,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
 
     public boolean canAimDownSight()
     {
-        return this.canAttachType(IAttachment.Type.SCOPE) || this.canAttachType(IAttachment.Type.OLD_SCOPE) || this.modules.zoom != null;
+        return this.canAttachType(IAttachment.Type.SCOPE) || this.canAttachType(IAttachment.Type.OLD_SCOPE) || this.canAttachType(IAttachment.Type.PISTOL_SCOPE) || this.modules.zoom != null;
     }
 
     public static ItemStack getScopeStack(ItemStack gun)
@@ -1476,6 +1729,16 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             else if(attachment.contains("OldScope", Constants.NBT.TAG_COMPOUND))
             {
                 ItemStack OldScopeStack = ItemStack.read(attachment.getCompound("OldScope"));
+                Scope scope = null;
+                if(OldScopeStack.getItem() instanceof IScope)
+                {
+                    scope = ((IScope) OldScopeStack.getItem()).getProperties();
+                }
+                return scope;
+            }
+            else if(attachment.contains("PistolScope", Constants.NBT.TAG_COMPOUND))
+            {
+                ItemStack OldScopeStack = ItemStack.read(attachment.getCompound("PistolScope"));
                 Scope scope = null;
                 if(OldScopeStack.getItem() instanceof IScope)
                 {

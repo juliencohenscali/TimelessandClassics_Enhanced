@@ -7,13 +7,19 @@
       1
     ],
     "gripType": "tac:two_handed_mosin",
-    "maxAmmo": 5,
-    "reloadAmount": 1,
     "recoilAngle": 13.5,
     "recoilKick": 1.5,
     "recoilAdsReduction": 0.55,
     "alwaysSpread": true,
     "spread": 2.25
+  },
+  "reloads": {
+    "magFed": false,
+    "maxAmmo": 5,
+    "reloadAmount": 1,
+    "preReloadPauseTicks": 13,
+    "interReloadPauseTicks": 18,
+    "openBolt": true
   },
   "projectile": {
     "item": "tac:762x54",

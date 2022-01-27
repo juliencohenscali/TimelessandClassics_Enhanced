@@ -60,6 +60,17 @@ public interface IGunModifier
     }
 
     /**
+     * Adds additional headshot damage to the weapon. This can be positive or negative number, with negative
+     * reducing the headshot damage of the weapon.
+     *
+     * @return additional headshot damage to add on top of the base headshot damage for this weapon
+     */
+    default float additionalHeadshotDamage()
+    {
+        return 0.0F;
+    }
+
+    /**
      * Modify the damage of the projectile. This is called before critical logic is
      *
      * @param damage the current projectile damage

@@ -16,6 +16,15 @@
     "alwaysSpread": true,
     "spread": 8.65
   },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 20,
+    "reloadMagTimer": 36,
+    "additionalReloadEmptyMagTimer": 10,
+    "maxAdditionalAmmoPerOC": [10, 15, 20],
+    "preReloadPauseTicks": 9,
+    "openBolt": true
+  },
   "projectile": {
     "item": "tac:round45",
     "visible": false,

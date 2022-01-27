@@ -63,18 +63,24 @@ public abstract class GunAnimationController {
         if( isFirstPerson ) Animations.popNode();
     }
 
-    public void applyRightHandTransform(ItemStack heldItem, LivingEntity entity, MatrixStack matrixStack){
-        Animations.pushNode(previousAnimation, getRightHandNodeIndex());
-        Animations.applyAnimationTransform(heldItem, ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, entity, matrixStack);
-        matrixStack.translate(-0.56, 0.52, 0.72);
-        Animations.popNode();
+    public void applyRightHandTransform(ItemStack heldItem, LivingEntity entity, MatrixStack matrixStack)
+    {
+        if(isAnimationRunning()) {
+            Animations.pushNode(previousAnimation, getRightHandNodeIndex());
+            Animations.applyAnimationTransform(heldItem, ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, entity, matrixStack);
+            matrixStack.translate(-0.56, 0.52, 0.72);
+            Animations.popNode();
+        }
     }
 
-    public void applyLeftHandTransform(ItemStack heldItem, LivingEntity entity, MatrixStack matrixStack){
-        Animations.pushNode(previousAnimation, getLeftHandNodeIndex());
-        Animations.applyAnimationTransform(heldItem, ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, entity, matrixStack);
-        matrixStack.translate(-0.56, 0.52, 0.72);
-        Animations.popNode();
+    public void applyLeftHandTransform(ItemStack heldItem, LivingEntity entity, MatrixStack matrixStack)
+    {
+        if(isAnimationRunning()) {
+            Animations.pushNode(previousAnimation, getLeftHandNodeIndex());
+            Animations.applyAnimationTransform(heldItem, ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, entity, matrixStack);
+            matrixStack.translate(-0.56, 0.52, 0.72);
+            Animations.popNode();
+        }
     }
 
     /**

@@ -386,14 +386,41 @@ public class GunModifiers
         }
 
         @Override
-        public float criticalChance()
-        {
-            return 0.075F;
-        }
+        public float additionalHeadshotDamage() {return 1.3F;}
+
         @Override
         public double modifyMuzzleFlashSize(double size)
         {
             return size * 0.5F;
+        }
+    };
+    public static final IGunModifier PISTOL_SILENCER = new IGunModifier()
+    {
+        @Override
+        public boolean silencedFire()
+        {
+            return true;
+        }
+
+        @Override
+        public float modifyFireSoundVolume(float volume)
+        {
+            return volume * 0.35F;
+        }
+
+        @Override
+        public double modifyFireSoundRadius(double radius)
+        {
+            return radius * 0.125;
+        }
+
+        @Override
+        public float additionalHeadshotDamage() {return 1.55F;}
+
+        @Override
+        public double modifyMuzzleFlashSize(double size)
+        {
+            return size * 0.0F;
         }
     };
     public static final IGunModifier MUZZLE_BRAKE_MODIFIER = new IGunModifier()
@@ -401,25 +428,37 @@ public class GunModifiers
         @Override
         public float recoilModifier()
         {
-            return 0.575F;
+            return 0.675F;
         }
 
         @Override
         public float modifyProjectileSpread(float spread)
         {
-            return spread * 1.175F;
+            return spread * 1.125F;
         }
 
         @Override
         public float horizontalRecoilModifier()
         {
-            return 1.1125F;
+            return 1.135F;
         }
 
         @Override
         public double modifyMuzzleFlashSize(double size)
         {
             return size * 1.15F;
+        }
+
+        @Override
+        public float modifyFireSoundVolume(float volume)
+        {
+            return volume * 1.15F;
+        }
+
+        @Override
+        public double modifyFireSoundRadius(double radius)
+        {
+            return radius * 1.2;
         }
     };
     public static final IGunModifier MUZZLE_COMPENSATOR_MODIFIER = new IGunModifier()
@@ -427,25 +466,37 @@ public class GunModifiers
         @Override
         public float recoilModifier()
         {
-            return 1.125F;
+            return 1.075F;
         }
 
         @Override
         public float modifyProjectileSpread(float spread)
         {
-            return spread * 0.875F;
+            return spread * 0.75F;
         }
 
         @Override
         public float horizontalRecoilModifier()
         {
-            return 0.625F;
+            return 0.75F;
         }
 
         @Override
         public double modifyMuzzleFlashSize(double size)
         {
             return size * 1.15F;
+        }
+
+        @Override
+        public float modifyFireSoundVolume(float volume)
+        {
+            return volume * 1.05F;
+        }
+
+        @Override
+        public double modifyFireSoundRadius(double radius)
+        {
+            return radius * 1.05;
         }
     };
 }

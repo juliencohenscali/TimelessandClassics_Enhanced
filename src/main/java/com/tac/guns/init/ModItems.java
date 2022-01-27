@@ -1,13 +1,13 @@
 package com.tac.guns.init;
 
-import com.tac.guns.Config;
 import com.tac.guns.GunMod;
 import com.tac.guns.Reference;
 import com.tac.guns.common.GunModifiers;
 import com.tac.guns.item.*;
 import com.tac.guns.item.TransitionalTypes.TimelessAmmoItem;
 import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
-import com.tac.guns.item.TransitionalTypes.TimelessOldGunItem;
+import com.tac.guns.item.TransitionalTypes.TimelessOldRifleGunItem;
+import com.tac.guns.item.TransitionalTypes.TimelessPistolGunItem;
 import com.tac.guns.item.attachment.impl.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -18,26 +18,18 @@ public class ModItems
 {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    //public static final Boolean[] quality = new Boolean[]{ !Config.CLIENT.quality.reducedGuiWeaponQuality.get() };
-
-    public static final RegistryObject<Item> M1911 = REGISTER.register( "m1911", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
-
+    public static final RegistryObject<GunItem> M1911 = REGISTER.register( "m1911", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     //public static final RegistryObject<TimelessGunItem> M1894 = REGISTER.register("m1894", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
-    //public static final RegistryObject<TimelessGunItem> M1851 = REGISTER.register("m1851", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<Item> M1928 = REGISTER.register("m1928", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> MOSIN = REGISTER.register("mosin", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
     public static final RegistryObject<GunItem> AK47 = REGISTER.register("ak47", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
     public static final RegistryObject<GunItem> M60 = REGISTER.register("m60", () -> new TimelessGunItem(properties -> properties.group(GunMod.HEAVY_MATERIAL)));
-    //public static final RegistryObject<TimelessGunItem> M1917 = REGISTER.register("m1917", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
-    public static final RegistryObject<Item> GLOCK_17 = REGISTER.register("glock_17", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> GLOCK_17 = REGISTER.register("glock_17", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<Item> DP_28 = REGISTER.register("dp28", () -> new TimelessGunItem(properties -> properties.group(GunMod.HEAVY_MATERIAL)));
     public static final RegistryObject<Item> M16A1 = REGISTER.register("m16a1", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
-    //public static final RegistryObject<TimelessGunItem> MK18 = REGISTER.register("mk18", () -> new TimelessGunItem(properties -> properties.group(GunMod.GROUP)));
-    public static final RegistryObject<Item> STI2011 = REGISTER.register("sti2011", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
-    //public static final RegistryObject<TimelessGunItem> AK74 = REGISTER.register("ak74", () -> new AutomaticTimelessGunItem(properties -> properties.group(GunMod.GROUP), Config.SERVER.gunHandlingCustomization.AK74_trigMax));
-    public static final RegistryObject<Item> M92FS = REGISTER.register("m92fs", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> STI2011 = REGISTER.register("sti2011", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> M92FS = REGISTER.register("m92fs", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<GunItem> AR15_HELLMOUTH = REGISTER.register("ar_15_hellmouth", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
-    //public static final RegistryObject<TimelessGunItem> AR15_P = REGISTER.register("ar_15_p", () -> new ar15_p_item(properties -> properties.group(GunMod.GROUP)));
     public static final RegistryObject<GunItem> VECTOR45 = REGISTER.register("vector45", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> MICRO_UZI = REGISTER.register("micro_uzi", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> M4 = REGISTER.register("m4", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
@@ -49,25 +41,33 @@ public class ModItems
     public static final RegistryObject<GunItem> MOSBERG590 = REGISTER.register("mosberg590", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
     public static final RegistryObject<Item> DB_SHORT = REGISTER.register("db_short", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
     public static final RegistryObject<Item> DB_LONG = REGISTER.register("db_long", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
-    public static final RegistryObject<Item> WALTHER_PPK = REGISTER.register("walther_ppk", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> WALTHER_PPK = REGISTER.register("walther_ppk", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<GunItem> M24 = REGISTER.register("m24", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
     public static final RegistryObject<Item> PPSH_41 = REGISTER.register("ppsh_41", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> QBZ_95 = REGISTER.register("qbz_95", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
-    public static final RegistryObject<Item> SPRINGFIELD_1903 = REGISTER.register("springfield_1903", () -> new TimelessOldGunItem(properties -> properties.group(GunMod.SNIPER)));
+    public static final RegistryObject<Item> SPRINGFIELD_1903 = REGISTER.register("springfield_1903", () -> new TimelessOldRifleGunItem(properties -> properties.group(GunMod.SNIPER)));
     public static final RegistryObject<Item> AA_12 = REGISTER.register("aa_12", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
     public static final RegistryObject<Item> X95R = REGISTER.register("x95r", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
     public static final RegistryObject<Item> FR_F2 = REGISTER.register("fr_f2", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
-    public static final RegistryObject<Item> SMLE_III = REGISTER.register("smle_iii", () -> new TimelessOldGunItem(properties -> properties.group(GunMod.SNIPER)));
-    public static final RegistryObject<Item> M870_CLASSIC = REGISTER.register("m870_classic", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
+    public static final RegistryObject<Item> SMLE_III = REGISTER.register("smle_iii", () -> new TimelessOldRifleGunItem(properties -> properties.group(GunMod.SNIPER)));
+    public static final RegistryObject<Item> M870_CLASSIC = REGISTER.register("m870_classic", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));//properties.group(GunMod.SHOTGUN)));
     public static final RegistryObject<Item> MG3 = REGISTER.register("mg3", () -> new TimelessGunItem(properties -> properties.group(GunMod.HEAVY_MATERIAL)));
     public static final RegistryObject<Item> MG42 = REGISTER.register("mg42", () -> new TimelessGunItem(properties -> properties.group(GunMod.HEAVY_MATERIAL)));
     public static final RegistryObject<Item> AR_10 = REGISTER.register("ar_10", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
     public static final RegistryObject<Item> M1A1_SMG = REGISTER.register("m1a1_smg", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> MK14 = REGISTER.register("mk14", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
     public static final RegistryObject<Item> SPAS_12 = REGISTER.register("spas_12", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
-    public static final RegistryObject<Item> DEAGLE_50 = REGISTER.register("deagle_50", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> DEAGLE_50 = REGISTER.register("deagle_50", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<Item> HK_MP5A5 = REGISTER.register("hk_mp5a5", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> STEN_MK_II = REGISTER.register("sten_mk_ii", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
+    public static final RegistryObject<Item> GLOCK_18 = REGISTER.register("glock_18", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> M1873 = REGISTER.register("m1873", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> CZ75 = REGISTER.register("cz75", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> CZ75_AUTO = REGISTER.register("cz75_auto", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> VZ61 = REGISTER.register("vz61", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> QSZ92G1 = REGISTER.register("qsz92g1", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> KAR98 = REGISTER.register("kar98", () -> new TimelessOldRifleGunItem(properties -> properties.group(GunMod.SNIPER)));
+    public static final RegistryObject<Item> HK416_A5 = REGISTER.register("hk416_a5", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
 
     /* Ammunition */
     public static final RegistryObject<Item> MAGNUM_BULLET = REGISTER.register("magnumround", TimelessAmmoItem::new);
@@ -101,10 +101,17 @@ public class ModItems
     /* Old Scopes */
     public static final RegistryObject<Item> OLD_LONGRANGE_8x_SCOPE = REGISTER.register("old_8x_scope", () -> new OldScopeItem(Scope.create(0.375F, 1.930F,0.14, GunModifiers.OLD_SCOPE_ADS).viewFinderOffset(0.535).viewFinderOffsetDR(0.3745).viewFinderOffsetSpecial(0.5).viewFinderOffsetSpecialDR(0.35), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> OLD_LONGRANGE_4x_SCOPE = REGISTER.register("old_4x_scope", () -> new OldScopeItem(Scope.create(0.136F, 1.930F,0.21, GunModifiers.OLD_SCOPE_ADS).viewFinderOffset(0.5).viewFinderOffsetDR(0.35).viewFinderOffsetSpecial(0.4).viewFinderOffsetSpecialDR(0.28), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+
+    /* Pistol-Scopes */
+    public static final RegistryObject<Item> MINI_DOT = REGISTER.register("mini_dot", () -> new PistolScopeItem(Scope.create(0.00F, 1.645F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.675).viewFinderOffsetSpecial(0.675), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+
     /* Barrel Attachments */
     public static final RegistryObject<Item> SILENCER = REGISTER.register("silencer", () -> new BarrelItem(Barrel.create(8.0F, GunModifiers.TACTICAL_SILENCER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> MUZZLE_BRAKE = REGISTER.register("muzzle_brake", () -> new BarrelItem(Barrel.create(2.0F, GunModifiers.MUZZLE_BRAKE_MODIFIER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> MUZZLE_COMPENSATOR = REGISTER.register("muzzle_compensator", () -> new BarrelItem(Barrel.create(2.0F, GunModifiers.MUZZLE_COMPENSATOR_MODIFIER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+
+    /* Pistol-Barrel Attachments */
+    public static final RegistryObject<Item> PISTOL_SILENCER = REGISTER.register("pistol_silencer", () -> new PistolBarrelItem(Barrel.create(8.0F, GunModifiers.PISTOL_SILENCER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
 
     /* Stock Attachments */
     public static final RegistryObject<Item> LIGHT_STOCK = REGISTER.register("light_stock", () -> new StockItem(Stock.create(GunModifiers.LIGHT_STOCK_MODIFIER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP), false));

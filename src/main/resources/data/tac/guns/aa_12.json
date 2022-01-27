@@ -17,6 +17,14 @@
     "spread": 9.75,
     "projectileAmount": 16
   },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 9,
+    "reloadMagTimer": 43,
+    "additionalReloadEmptyMagTimer": 28,
+    "maxAdditionalAmmoPerOC": [3, 7, 11],
+    "preReloadPauseTicks": 8
+  },
   "projectile": {
     "item": "tac:10_gauge_round",
     "visible": false,

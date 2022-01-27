@@ -20,7 +20,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 //apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
 
-version = "0.2.2256-1.16.5"
+version = "0.2.3391-1.16.5"
 group = "com.tac"
 archivesBaseName = "timeless_and_classics-gun_mod"
 
@@ -89,21 +89,19 @@ processResources {
     }
 }
 
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+    implementation fg.deobf('curse.maven:obfuscate-289380:3169370')
+    implementation fg.deobf('curse.maven:chisel-and-bits-231095:3593643')
+    implementation fg.deobf('curse.maven:flashlight-addon-227874:3381556')
+    compile ('com.fasterxml.jackson.core:jackson-databind:2.12.4')
+}
 repositories {
     maven { url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     maven {
         url = "https://www.cursemaven.com"
     }
 }
-
-dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
-    implementation fg.deobf('curse.maven:obfuscate-289380:3169370')
-    implementation fg.deobf('curse.maven:chisel-and-bits-231095:3593643')
-    implementation fg.deobf('curse.maven:flashlight-451109:3454946')
-    compile ('com.fasterxml.jackson.core:jackson-databind:2.12.4')
-}
-
 jar {
     manifest {
         attributes([

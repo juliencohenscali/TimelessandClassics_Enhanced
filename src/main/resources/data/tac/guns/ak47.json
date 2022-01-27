@@ -4,8 +4,6 @@
     "rate": 3,
     "rateSelector": [0,1,2],
     "gripType":  "tac:two_handed_ak47",
-    "maxAmmo": 30,
-    "reloadAmount": 5,
     "recoilAngle": 4.985,
     "horizontalRecoilAngle": 3.05,
     "recoilKick": 1.65,
@@ -20,6 +18,14 @@
     "size": 0.2,
     "speed": 21.5,
     "life": 11
+  },
+  "reloads": {
+    "magFed": true,
+    "maxAmmo": 30,
+    "reloadMagTimer": 65,
+    "additionalReloadEmptyMagTimer": 22,
+    "maxAdditionalAmmoPerOC": [15, 20, 45],
+    "preReloadPauseTicks": 16
   },
   "sounds": {
     "fire":  "tac:item.fire_ak47",

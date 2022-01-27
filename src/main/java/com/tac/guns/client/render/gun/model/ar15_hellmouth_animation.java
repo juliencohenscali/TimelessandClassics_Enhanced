@@ -7,6 +7,7 @@ import com.tac.guns.Config;
 import com.tac.guns.client.SpecialModels;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
+import com.tac.guns.client.screen.WorkbenchScreen;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.Gun;
 import com.tac.guns.init.ModItems;
@@ -15,11 +16,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BreakableBlock;
 import net.minecraft.block.StainedGlassPaneBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
@@ -53,6 +56,20 @@ public class ar15_hellmouth_animation implements IOverrideModel {
 
             RenderType renderType = RenderUtil.getRenderType(stack, true);
             renderBuffer.getBuffer(renderType).lightmap(15728880);
+            RenderUtil.renderModel(stack, stack, matrices, renderBuffer, light, overlay);
+            matrices.pop();
+            return;
+        }
+        if(ModelOverrides.hasModel(stack) && transformType.equals(ItemCameraTransforms.TransformType.GROUND) && Minecraft.getInstance().currentScreen == null)// && Config.CLIENT.quality.reducedGuiWeaponQuality.get())
+        {
+            matrices.push();
+            matrices.rotate(Vector3f.XP.rotationDegrees(-60.0F));
+            matrices.rotate(Vector3f.YP.rotationDegrees(255.0F));
+            /*matrices.rotate(Vector3f.YP.rotationDegrees(225.0F));*/
+            matrices.rotate(Vector3f.ZP.rotationDegrees(-90.0F));
+            //matrices.rotate(Vector3f.ZP.rotationDegrees(-45.0F));
+            matrices.translate(1,0,0);
+            matrices.scale(1.375F,1.375F,1.375F);//matrices.scale(1.375F,1.375F,1.375F);
             RenderUtil.renderModel(stack, stack, matrices, renderBuffer, light, overlay);
             matrices.pop();
             return;

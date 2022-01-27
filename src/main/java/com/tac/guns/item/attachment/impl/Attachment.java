@@ -78,9 +78,9 @@ public abstract class Attachment
                 outputSound = modifier.modifyFireSoundVolume(outputSound);
             }
             if (outputSound > inputSound) {
-                addPerk(negativePerks, "perk.tac.fire_volume.negative", new TranslationTextComponent("+" + String.valueOf((1.0F - outputSound) * 100) + "% Volume").mergeStyle(TextFormatting.RED));
+                addPerk(negativePerks, "perk.tac.fire_volume.negative", new TranslationTextComponent("+" + String.valueOf((1.0F - Math.round(outputSound)) * 100) + "% Volume").mergeStyle(TextFormatting.RED));
             } else if (outputSound < inputSound) {
-                addPerk(negativePerks, "perk.tac.fire_volume.negative", new TranslationTextComponent("-" + String.valueOf((1.0F - outputSound) * 100) + "% Volume").mergeStyle(TextFormatting.GREEN));
+                addPerk(negativePerks, "perk.tac.fire_volume.negative", new TranslationTextComponent("" + String.valueOf((1.0F - Math.round(outputSound)) * 100) + "% Volume").mergeStyle(TextFormatting.GREEN));
                 //addPerk(positivePerks, "perk.tac.fire_volume.positive", TextFormatting.GREEN, "-" + String.valueOf((1.0F - outputSound) * 100) + new TranslationTextComponent("perk.tac.vol"));
             }
 
@@ -113,6 +113,17 @@ public abstract class Attachment
                 addPerk(positivePerks, "perk.tac.additional_damage.positive", ItemStack.DECIMALFORMAT.format(additionalDamage / 2.0));
             } else if (additionalDamage < 0.0F) {
                 addPerk(negativePerks, "perk.tac.additional_damage.negative", ItemStack.DECIMALFORMAT.format(additionalDamage / 2.0));
+            }
+
+            /* Test for additional headshot damage */
+            float additionalHeadshotDamage = 0.0F;
+            for (IGunModifier modifier : modifiers) {
+                additionalHeadshotDamage += modifier.additionalHeadshotDamage();
+            }
+            if (additionalHeadshotDamage > 0.0F) {
+                addPerk(positivePerks, "perk.tac.additional_damage.positive", ItemStack.DECIMALFORMAT.format(additionalHeadshotDamage / 2.0));
+            } else if (additionalHeadshotDamage < 0.0F) {
+                addPerk(negativePerks, "perk.tac.additional_damage.negative", ItemStack.DECIMALFORMAT.format(additionalHeadshotDamage / 2.0));
             }
 
             /* Test for modified damage */

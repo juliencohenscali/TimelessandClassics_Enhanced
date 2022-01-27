@@ -134,7 +134,7 @@ public class hk_mp5a5_animation implements IOverrideModel {
                 matrices.translate(0, 0, 0.085f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
             }
         }
-        matrices.translate(0, 0, 0.035F);
+        matrices.translate(0, 0, 0.025F);
         RenderUtil.renderModel(SpecialModels.HK_MP5A5_BOLT.getModel(), stack, matrices, renderBuffer, light, overlay);
         matrices.pop();
     }

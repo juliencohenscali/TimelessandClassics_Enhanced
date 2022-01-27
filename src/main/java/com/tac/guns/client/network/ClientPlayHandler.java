@@ -162,15 +162,15 @@ public class ClientPlayHandler
         Minecraft mc = Minecraft.getInstance();
         World world = mc.world;
         if (world != null) {
-            if(GunMod.cabLoaded)
+            /*if(GunMod.cabLoaded)
             {
                 double holeX = 0.005 * message.getFace().getXOffset();
                 double holeY = 0.005 * message.getFace().getYOffset();
                 double holeZ = 0.005 * message.getFace().getZOffset();
-                System.out.println(world.getBlockState(message.getPos()).getBlock().getTranslatedName().getString());
+                //System.out.println(world.getBlockState(message.getPos()).getBlock().getTranslatedName().getString());
                 //deleteBitOnHit(message.getPos(), world.getBlockState(message.getPos()), holeX,holeY,holeZ);
             }
-            else {
+            else {*/
                 BlockState state = world.getBlockState(message.getPos());
                 double holeX = message.getX() + 0.005 * message.getFace().getXOffset();
                 double holeY = message.getY() + 0.005 * message.getFace().getYOffset();
@@ -183,7 +183,7 @@ public class ClientPlayHandler
                 if (distance < 32.0) {
                     world.playSound(message.getX(), message.getY(), message.getZ(), state.getSoundType().getBreakSound(), SoundCategory.BLOCKS, 0.75F, 2.0F, false);
                 }
-            }
+            //}
         }
     }
 

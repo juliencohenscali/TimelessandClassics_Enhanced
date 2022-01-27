@@ -26,7 +26,7 @@ public class Ak47AnimationController extends GunAnimationController {
         } catch (IOException e) {
             GunMod.LOGGER.fatal(e.getStackTrace());
         }
-        GunAnimationController.setAnimationControllerMap(ModItems.AK47.getId(),this);
+        //GunAnimationController.setAnimationControllerMap(ModItems.AK47.getId(),this);
     }
 
     public static Ak47AnimationController getInstance(){

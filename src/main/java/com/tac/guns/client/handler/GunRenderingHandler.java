@@ -105,6 +105,8 @@ public class GunRenderingHandler {
     public float walkingCrouch;
     public float walkingCameraYaw;
 
+    private double opticMovement;
+
     private GunRenderingHandler() {
     }
 
@@ -351,6 +353,14 @@ public class GunRenderingHandler {
                     zOffset = -translateZ - scaledPos.getZOffset() * 0.0625 * scaleZ + 0.72 - viewFinderOffset * scaleZ * scaledPos.getScale();
 
                 }
+                else if (modifiedGun.canAttachType(IAttachment.Type.PISTOL_SCOPE) && scope != null) {
+                    double viewFinderOffset = isScopeOffsetType || isScopeRenderType ? scope.getViewFinderOffsetSpecial() : scope.getViewFinderOffset(); // switches between either, but either must be populated
+                    if (OptifineHelper.isShadersEnabled()) viewFinderOffset *= 0.735;
+                    Gun.ScaledPositioned scaledPos = modifiedGun.getModules().getAttachments().getPistolScope();
+                    xOffset = -translateX + -scaledPos.getXOffset() * 0.0625 * scaleX;
+                    yOffset = -translateY + (8 - scaledPos.getYOffset()) * 0.0625 * scaleY - scope.getCenterOffset() * scaleY * 0.0625 * scaledPos.getScale();
+                    zOffset = -translateZ - scaledPos.getZOffset() * 0.0625 * scaleZ + 0.72 - viewFinderOffset * scaleZ * scaledPos.getScale();
+                }
                 else if (!ArrayUtils.isEmpty(modifiedGun.getModules().getZoom()))
                 {
                     xOffset = -translateX + modifiedGun.getModules().getZoom()[gunZoom].getXOffset() * 0.0625 * scaleX;
@@ -419,7 +429,7 @@ public class GunRenderingHandler {
 
         /* Applies recoil and reload rotations */
         this.applyRecoilTransforms(matrixStack, heldItem, modifiedGun);
-        if(!isAnimated) this.applyReloadTransforms(matrixStack, hand, event.getPartialTicks());
+        if(!isAnimated) this.applyReloadTransforms(matrixStack, hand, event.getPartialTicks(), heldItem);
 
         /* Renders the first persons arms from the grip type of the weapon */
         matrixStack.push();
@@ -459,13 +469,13 @@ public class GunRenderingHandler {
         }
     }
 
-    private void applyReloadTransforms(MatrixStack matrixStack, HandSide hand, float partialTicks) {
-        /*float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks);
+    private void applyReloadTransforms(MatrixStack matrixStack, HandSide hand, float partialTicks, ItemStack modifiedGun) {
+        /*float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks, stack);
         matrixStack.translate(0, 0.35 * reloadProgress, 0);
         matrixStack.translate(0, 0, -0.1 * reloadProgress);
         matrixStack.rotate(Vector3f.XP.rotationDegrees(45F * reloadProgress));*/
 
-        float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks);
+        float reloadProgress = ReloadHandler.get().getReloadProgress(partialTicks,  modifiedGun);
 
         if(reloadProgress > 0) {
             float leftHanded = hand == HandSide.LEFT ? -1 : 1;
@@ -885,10 +895,10 @@ public class GunRenderingHandler {
         matrixStack.pop();
     }
 
-    private void renderReloadArm(MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, Gun modifiedGun, ItemStack stack, HandSide hand) {
-        /*if (stack.getItem() instanceof IAnimatable && stack.getItem() instanceof GunItem) {
+    /*private void renderReloadArm(MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, Gun modifiedGun, ItemStack stack, HandSide hand) {
+        *//*if (stack.getItem() instanceof IAnimatable && stack.getItem() instanceof GunItem) {
 
-        }*/
+        }*//*
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.player.ticksExisted < ReloadHandler.get().getStartReloadTick() || ReloadHandler.get().getReloadTimer() != 5)
             return;
@@ -925,11 +935,11 @@ public class GunRenderingHandler {
             matrixStack.translate(-side * 5 * 0.0625, 15 * 0.0625, -1 * 0.0625);
             matrixStack.rotate(Vector3f.XP.rotationDegrees(180F));
             matrixStack.scale(0.75F, 0.75F, 0.75F);
-            ItemStack ammo = new ItemStack(item, modifiedGun.getGeneral().getReloadAmount());
+            ItemStack ammo = new ItemStack(item, modifiedGun.getReloads().getReloadAmount());
             IBakedModel model = RenderUtil.getModel(ammo);
             boolean isModel = model.isGui3d();
             this.random.setSeed(Item.getIdFromItem(item));
-            int count = Math.min(modifiedGun.getGeneral().getReloadAmount(), 5);
+            int count = Math.min(modifiedGun.getReloads().getReloadAmount(), 5);
             for (int i = 0; i < count; ++i) {
                 matrixStack.push();
                 if (i > 0) {
@@ -955,7 +965,7 @@ public class GunRenderingHandler {
             matrixStack.pop();
         }
         matrixStack.pop();
-    }
+    }*/
 
     /**
      * A temporary hack to get the equip progress until Forge fixes the issue.
@@ -980,5 +990,13 @@ public class GunRenderingHandler {
             e.printStackTrace();
         }
         return 0.0F;
+    }
+
+    public double getOpticMovement() {
+        return this.opticMovement;
+    }
+
+    public void setOpticMovement(double opticMovement) {
+        this.opticMovement = opticMovement;
     }
 }
