@@ -8,6 +8,7 @@ import com.tac.guns.client.handler.AimingHandler;
 import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.util.RenderUtil;
+import com.tac.guns.item.GunItem;
 import com.tac.guns.item.attachment.IAttachment;
 import com.tac.guns.util.OptifineHelper;
 import net.minecraft.client.Minecraft;
@@ -23,6 +24,9 @@ import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.common.util.Constants;
+
+import static com.tac.guns.client.SpecialModels.MICRO_HOLO_BASE;
+import static com.tac.guns.client.SpecialModels.MINI_DOT_BASE;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -41,10 +45,17 @@ public class MicroHoloSightModel implements IOverrideModel
             matrixStack.scale(1.0F, 1.0F, (float)zScale);
         }
 
+        GunItem gunItem = ((GunItem) parent.getItem());
+        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoOnSlideMovement())
+        {
+            //matrixStack.translate(0, 0, 0.025F);
+            matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement*0.505);
+        }
+        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoRenderMount())
+            RenderUtil.renderModel(MICRO_HOLO_BASE.getModel(), parent, matrixStack, renderTypeBuffer, light, overlay);
+
         matrixStack.translate(0, 0.055, 0);
-
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
-
         matrixStack.translate(0, -0.049, 0);
 
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
@@ -62,7 +73,7 @@ public class MicroHoloSightModel implements IOverrideModel
                 double invertProgress = (1.0 - AimingHandler.get().getNormalisedAdsProgress());
                 matrixStack.translate(-0.04 * invertProgress, 0.01 * invertProgress, 0);
 
-                double scale = 6.0;
+                double scale = 4.0;
                 matrixStack.translate(size / 2, size / 2, 0);
                 matrixStack.translate(-(size / scale) / 2, -(size / scale) / 2, 0);
                 matrixStack.translate(0, 0, 0.0001);

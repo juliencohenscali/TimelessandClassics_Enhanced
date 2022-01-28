@@ -17,11 +17,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
+
+import static com.tac.guns.client.SpecialModels.MINI_DOT_BASE;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -37,29 +40,34 @@ public class MiniDotSightModel implements IOverrideModel
             double zScale = 0.05D + 0.95D * (1.0D - transition);
             matrixStack.scale(1.0F, 1.0F, (float)zScale);
         }
-        int bodyColor = RenderUtil.getItemStackColor(stack, parent, IAttachment.Type.SCOPE_BODY_COLOR,0);
-        GunItem gunItem = ((GunItem) stack.getItem());
+
 
         matrixStack.push();
+        matrixStack.translate(0, 0, 0.0085F);
+        GunItem gunItem = ((GunItem) parent.getItem());
+        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoOnSlideMovement())
+        {
+            matrixStack.translate(0, 0, 0.0085F);
+            matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement*0.525);
+        }
+        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoRenderMount())
+            RenderUtil.renderModel(MINI_DOT_BASE.getModel(), parent, matrixStack, renderTypeBuffer, light, overlay);
 
-        //if(Gun.getAttachment(IAttachment.Type.PISTOL_SCOPE, stack).getTag() != null)
-        //if(Gun.getAttachment(IAttachment.Type.PISTOL_SCOPE, stack).getTag().getBoolean("DoOnSlideMovement"))
-            matrixStack.translate(0,0,GunRenderingHandler.get().getOpticMovement()*100);
-
+        matrixStack.translate(0, 0.055, 0);
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
-
+        matrixStack.translate(0, -0.049, 0);
         matrixStack.pop();
 
-        matrixStack.translate(0, -100.474, 0);
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
             matrixStack.push();
             {
+                matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement*0.6);
                 Matrix4f matrix = matrixStack.getLast().getMatrix();
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
-                float size = 1.4F / 16.0F;
-                matrixStack.translate(-size / 2, 0.50 * 0.0625, -0.3 * 0.0625);
+                float size = 2.25F / 16.0F;
+                matrixStack.translate(-size / 2, 0.30 * 0.0625, -0.4125 * 0.0625);
 
                 IVertexBuilder builder;
 
@@ -80,7 +88,6 @@ public class MiniDotSightModel implements IOverrideModel
 
                 alpha = (float) (1F * AimingHandler.get().getNormalisedAdsProgress());
 
-                //matrixStack.scale(1.5f,1.5f,1.5f);
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
                 // Walking bobbing
                 boolean aimed = false;
@@ -89,11 +96,10 @@ public class MiniDotSightModel implements IOverrideModel
                     aimed = true;
 
                 double invertZoomProgress = aimed ? 0.085 : 0.68;//double invertZoomProgress = aimed ? 0.135 : 0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
-                matrixStack.translate(-0.9*Math.asin(((double) (MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI)) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * invertZoomProgress), 0.9*(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140),0);//(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140), 0.0D);// * 1.140, 0.0D);
+                matrixStack.translate(-0.80*Math.asin(((double) (MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI)) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * invertZoomProgress), 0.565*(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140),0);//(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140), 0.0D);// * 1.140, 0.0D);
                 matrixStack.rotate(Vector3f.ZN.rotationDegrees((float)(MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 3.0F) * (float) invertZoomProgress));
                 matrixStack.rotate(Vector3f.XN.rotationDegrees((float)(Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI - 0.2F) * GunRenderingHandler.get().walkingCameraYaw) * 5.0F) * (float) invertZoomProgress));
 
-                //matrixStack.translate(0, 0, (GunRenderingHandler.get().kick * -GunRenderingHandler.get().kickReduction)*0.75);
                 matrixStack.translate(0, 0, -0.35);
                 matrixStack.rotate(Vector3f.YN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().recoilReduction)*0.5F));
                 matrixStack.rotate(Vector3f.ZP.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().weaponsHorizontalAngle * 0.65f * GunRenderingHandler.get().recoilReduction)*0.5F)); // seems to be interesting to increase the force of

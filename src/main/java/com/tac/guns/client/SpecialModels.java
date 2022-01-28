@@ -274,7 +274,13 @@ public enum SpecialModels
     HK416_A5_TACTICAL_STOCK("hk416_a5_tactical_stock"),
     HK416_A5_FOLDED("hk416_a5_folded_sights"),
     HK416_A5_UNFOLDED("hk416_a5_unfolded_sights"),
-    HK416_A5_DEFAULT_MUZZLE("hk416_a5_default_muzzle");
+    HK416_A5_DEFAULT_MUZZLE("hk416_a5_default_muzzle"),
+    GLOCK_17_SUPPRESSOR("glock_17_suppressor"),
+    //Everything from this point on is all scope additions
+    MINI_DOT_BASE("optics/mini_dot_base"),
+    MICRO_HOLO_BASE("optics/micro_holo_base"),
+    //Everything from this point on is all LOD renders
+    M1911_LOD("lods/m1911_lod");
     /**
      * The location of an item model in the [MOD_ID]/models/special/[NAME] folder
      */

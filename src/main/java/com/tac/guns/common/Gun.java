@@ -1126,7 +1126,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
                 return this.oldScope;
             }
             @Nullable
-            public ScaledPositioned getPistolScope()
+            public PistolScope getPistolScope()
             {
                 return this.pistolScope;
             }
@@ -1491,9 +1491,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
     public static class PistolScope extends ScaledPositioned
     {
         @Required
-        protected boolean doRenderMount;
+        private boolean doRenderMount;
         @Required
-        protected boolean doOnSlideMovement;
+        private boolean doOnSlideMovement;
 
         public PistolScope() {}
 
@@ -1507,7 +1507,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         {
             CompoundNBT tag = super.serializeNBT();
             tag.putBoolean("RenderMount", this.doRenderMount);
-            tag.putBoolean("c", this.doOnSlideMovement);
+            tag.putBoolean("DoOnSlideMovement", this.doOnSlideMovement);
             return tag;
         }
 
@@ -1529,7 +1529,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         {
             return this.doRenderMount;
         }
-        public boolean getdoOnSlideMovement()
+        public boolean getDoOnSlideMovement()
         {
             return this.doOnSlideMovement;
         }
@@ -1545,12 +1545,6 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             positioned.doRenderMount = this.doRenderMount;
             positioned.doOnSlideMovement = this.doOnSlideMovement;
             return positioned;
-            /*ScaledPositioned positioned = new ScaledPositioned();
-            positioned.xOffset = this.xOffset;
-            positioned.yOffset = this.yOffset;
-            positioned.zOffset = this.zOffset;
-            positioned.scale = this.scale;
-            return positioned;*/
         }
     }
 

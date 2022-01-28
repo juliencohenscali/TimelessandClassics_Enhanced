@@ -137,7 +137,7 @@ public class ClientHandler
         ModelOverrides.register(ModItems.OLD_LONGRANGE_8x_SCOPE.get(), new OldLongRange8xScopeModel());
         ModelOverrides.register(ModItems.OLD_LONGRANGE_4x_SCOPE.get(), new OldLongRange4xScopeModel());
 
-        ModelOverrides.register(ModItems.MINI_DOT.get(), new SrsRedDotSightModel());
+        ModelOverrides.register(ModItems.MINI_DOT.get(), new MiniDotSightModel());
      }
 
     private static void registerScreenFactories()

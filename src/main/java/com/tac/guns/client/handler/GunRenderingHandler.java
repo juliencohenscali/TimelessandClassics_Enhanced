@@ -105,7 +105,7 @@ public class GunRenderingHandler {
     public float walkingCrouch;
     public float walkingCameraYaw;
 
-    private double opticMovement;
+    public double opticMovement;
 
     private GunRenderingHandler() {
     }
@@ -990,13 +990,5 @@ public class GunRenderingHandler {
             e.printStackTrace();
         }
         return 0.0F;
-    }
-
-    public double getOpticMovement() {
-        return this.opticMovement;
-    }
-
-    public void setOpticMovement(double opticMovement) {
-        this.opticMovement = opticMovement;
     }
 }

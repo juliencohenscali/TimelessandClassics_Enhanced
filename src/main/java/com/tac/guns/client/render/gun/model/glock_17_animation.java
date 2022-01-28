@@ -130,10 +130,9 @@ public class glock_17_animation implements IOverrideModel {
 
         GunItem gunItem = ((GunItem) stack.getItem());
 
-        if(Gun.getAttachment(IAttachment.Type.BARREL,stack).getItem() == ModItems.SILENCER.get())
+        if(Gun.getAttachment(IAttachment.Type.PISTOL_BARREL,stack).getItem() == ModItems.PISTOL_SILENCER.get())
         {
-            RenderUtil.renderModel(SpecialModels.GLOCK_17_SUPPRESSOR_OVERIDE.getModel(), stack, matrices, renderBuffer, light, overlay);
-            //Gun.getAttachment(IAttachment.Type.BARREL, GunItem.getItemById(Item.getIdFromItem(stack.getItem())).getDefaultInstance())
+            RenderUtil.renderModel(SpecialModels.GLOCK_17_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
 
         if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0)
@@ -160,12 +159,12 @@ public class glock_17_animation implements IOverrideModel {
             if(GunEnchantmentHelper.getRate(stack, gunItem.getGun()) <= 1 && cooldownOg != 0)
             {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
-                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0);
             }
             else
             {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
-                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0);
             }
         }
         else if(!Gun.hasAmmo(stack))
@@ -173,12 +172,12 @@ public class glock_17_animation implements IOverrideModel {
             if(cooldownOg > 0.5){
                 // Math provided by Bomb787 on GitHub and Curseforge!!!
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
-                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0);
             }
             else
             {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
-                GunRenderingHandler.get().setOpticMovement(0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0);
             }
         }
         RenderUtil.renderModel(SpecialModels.GLOCK_17_SLIDE.getModel(), stack, matrices, renderBuffer, light, overlay);

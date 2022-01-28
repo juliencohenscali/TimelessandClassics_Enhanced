@@ -84,7 +84,6 @@ public class ModItems
 
     /* Scope Attachments */
     public static final RegistryObject<Item> COYOTE_SIGHT = REGISTER.register("coyote_sight", () -> new ScopeItem(Scope.create(0.00F, 2.275F, 0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
-    public static final RegistryObject<Item> MICRO_HOLO_SIGHT = REGISTER.register("micro_holo_sight", () -> new ScopeItem(Scope.create(0.00F, 1.645F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> AIMPOINT_T1_SIGHT = REGISTER.register("aimpoint_t1", () -> new ScopeItem(Scope.create(0.0F, 1.875F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> EOTECH_N_SIGHT = REGISTER.register("eotech_n", () -> new ScopeItem(Scope.create(0.00F, 1.775F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.385).viewFinderOffsetSpecial(0.385), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> VORTEX_UH_1 = REGISTER.register("vortex_uh_1", () -> new ScopeItem(Scope.create(0.00F, 2.3F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.415).viewFinderOffsetSpecial(0.415), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
@@ -103,7 +102,8 @@ public class ModItems
     public static final RegistryObject<Item> OLD_LONGRANGE_4x_SCOPE = REGISTER.register("old_4x_scope", () -> new OldScopeItem(Scope.create(0.136F, 1.930F,0.21, GunModifiers.OLD_SCOPE_ADS).viewFinderOffset(0.5).viewFinderOffsetDR(0.35).viewFinderOffsetSpecial(0.4).viewFinderOffsetSpecialDR(0.28), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
 
     /* Pistol-Scopes */
-    public static final RegistryObject<Item> MINI_DOT = REGISTER.register("mini_dot", () -> new PistolScopeItem(Scope.create(0.00F, 1.645F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.675).viewFinderOffsetSpecial(0.675), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+    public static final RegistryObject<Item> MINI_DOT = REGISTER.register("mini_dot", () -> new PistolScopeItem(Scope.create(0.00F, 1.475F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.725).viewFinderOffsetSpecial(0.725), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+    public static final RegistryObject<Item> MICRO_HOLO_SIGHT = REGISTER.register("micro_holo_sight", () -> new PistolScopeItem(Scope.create(0.00F, 1.645F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.725).viewFinderOffsetSpecial(0.725), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
 
     /* Barrel Attachments */
     public static final RegistryObject<Item> SILENCER = REGISTER.register("silencer", () -> new BarrelItem(Barrel.create(8.0F, GunModifiers.TACTICAL_SILENCER), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
