@@ -19,6 +19,7 @@ import org.apache.logging.log4j.core.config.plugins.validation.constraints.Requi
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public final class Gun implements INBTSerializable<CompoundNBT>
@@ -1494,6 +1495,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private boolean doRenderMount;
         @Required
         private boolean doOnSlideMovement;
+        //private HashSet
 
         public PistolScope() {}
 
@@ -1508,6 +1510,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             CompoundNBT tag = super.serializeNBT();
             tag.putBoolean("RenderMount", this.doRenderMount);
             tag.putBoolean("DoOnSlideMovement", this.doOnSlideMovement);
+            //tag.put
             return tag;
         }
 

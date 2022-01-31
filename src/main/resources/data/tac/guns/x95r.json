@@ -8,17 +8,17 @@
       2
     ],
     "gripType": "tac:two_handed_vector",
-    "recoilAngle": 0.725,
-    "recoilKick": 0.425,
+    "recoilAngle": 0.925,
+    "recoilKick": 0.525,
     "horizontalRecoilAngle": 0.325,
-    "recoilAdsReduction": 0.40,
+    "recoilAdsReduction": 0.325,
     "alwaysSpread": true,
-    "spread": 2.85
+    "spread": 4.05
   },
   "reloads": {
     "magFed": true,
     "maxAmmo": 30,
-    "reloadMagTimer": 46,
+    "reloadMagTimer": 49,
     "additionalReloadEmptyMagTimer": 14,
     "maxAdditionalAmmoPerOC": [10, 30, 45],
     "preReloadPauseTicks": 12
@@ -28,7 +28,7 @@
     "visible": false,
     "damage": 7,
     "size": 0.2,
-    "speed": 38.5,
+    "speed": 30.5,
     "life": 6
   },
   "sounds": {
@@ -39,7 +39,7 @@
   },
   "display": {
     "flash": {
-      "yOffset": 9.35,
+      "yOffset": 8.15,
       "zOffset": -19.55,
       "size": 1.10
     },
@@ -48,14 +48,24 @@
   "modules": {
     "zoom": [{
       "fovModifier": 0.60,
-      "yOffset": 12.9,
-      "zOffset": 3.45
+      "yOffset": 12.125,
+      "zOffset": 2.25
     }],
     "attachments": {
       "scope": {
-        "yOffset": 11.30,
+        "yOffset": 10.55,
         "zOffset": -1.25,
         "scale": 1.00
+      },
+      "barrel": {
+        "yOffset": -100829.84,
+        "zOffset": -11.55,
+        "scale": 1.00
+      },
+      "underBarrel": {
+        "yOffset": 7.799,
+        "zOffset": -2.35,
+        "scale": 0.00
       }
     }
   }

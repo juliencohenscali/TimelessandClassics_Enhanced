@@ -2,8 +2,10 @@ package com.tac.guns.entity;
 
 import com.tac.guns.Config;
 import com.tac.guns.init.ModEntities;
+import com.tac.guns.init.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.World;
 
@@ -24,19 +26,19 @@ public class ThrowableGrenadeEntity extends ThrowableItemEntity
     public ThrowableGrenadeEntity(EntityType<? extends ThrowableItemEntity> entityType, World world, LivingEntity entity)
     {
         super(entityType, world, entity);
-        this.setShouldBounce(true);
-        this.setGravityVelocity(0.05F);
-        //this.setItem(new ItemStack(ModItems.GRENADE.get()));
-        this.setMaxLife(20 * 3);
+        //this.setShouldBounce(true);
+        //this.setGravityVelocity(0.05F);
+        //this.setItem(new ItemStack(ModItems.LIGHT_GRENADE.get()));
+        //this.setMaxLife(20 * 3);
     }
 
     public ThrowableGrenadeEntity(World world, LivingEntity entity, int timeLeft, float power)
     {
         super(ModEntities.THROWABLE_GRENADE.get(), world, entity);
         this.power = power;
-        this.setShouldBounce(true);
-        this.setGravityVelocity(0.045F);
-        //this.setItem(new ItemStack(ModItems.GRENADE.get()));
+        //this.setShouldBounce(true);
+        //this.setGravityVelocity(0.045F);
+        //this.setItem(new ItemStack(ModItems.LIGHT_GRENADE.get()));
         this.setMaxLife(timeLeft);
     }
 

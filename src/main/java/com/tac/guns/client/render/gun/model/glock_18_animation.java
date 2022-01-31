@@ -3,6 +3,7 @@ package com.tac.guns.client.render.gun.model;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.Config;
 import com.tac.guns.client.SpecialModels;
+import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
@@ -49,9 +50,9 @@ public class glock_18_animation implements IOverrideModel
 
         GunItem gunItem = ((GunItem) stack.getItem());
 
-        if(Gun.getAttachment(IAttachment.Type.BARREL,stack).getItem() == ModItems.SILENCER.get())
+        if(Gun.getAttachment(IAttachment.Type.PISTOL_BARREL,stack).getItem() == ModItems.PISTOL_SILENCER.get())
         {
-            RenderUtil.renderModel(SpecialModels.GLOCK_17_SUPPRESSOR_OVERIDE.getModel(), stack, matrices, renderBuffer, light, overlay);
+            RenderUtil.renderModel(SpecialModels.GLOCK_17_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
 
         if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0)
@@ -75,20 +76,26 @@ public class glock_18_animation implements IOverrideModel
         if(Gun.hasAmmo(stack))
         {
             // Math provided by Bomb787 on GitHub and Curseforge!!!
-            if(GunEnchantmentHelper.getRate(stack, gunItem.getGun()) <= 1 && cooldownOg != 0)
-                matrices.translate(0, 0, 0.205f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
-            else
+            if(GunEnchantmentHelper.getRate(stack, gunItem.getGun()) <= 1 && cooldownOg != 0) {
+                matrices.translate(0, 0, 0.205f * (-4.5 * Math.pow(0.5 - 0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0);
+            }
+            else{
                 matrices.translate(0, 0, 0.205f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0);
+            }
         }
         else if(!Gun.hasAmmo(stack))
         {
             if(cooldownOg > 0.5){
                 // Math provided by Bomb787 on GitHub and Curseforge!!!
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(cooldownOg - 0.5, 2) + 1.0);
             }
             else
             {
                 matrices.translate(0, 0, 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.185f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0);
             }
         }
         /*if(Gun.hasAmmo(stack))

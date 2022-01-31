@@ -51,10 +51,9 @@ public class MicroHoloSightModel implements IOverrideModel
             //matrixStack.translate(0, 0, 0.025F);
             matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement*0.505);
         }
+        matrixStack.translate(0, 0.055, 0);
         if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoRenderMount())
             RenderUtil.renderModel(MICRO_HOLO_BASE.getModel(), parent, matrixStack, renderTypeBuffer, light, overlay);
-
-        matrixStack.translate(0, 0.055, 0);
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
         matrixStack.translate(0, -0.049, 0);
 

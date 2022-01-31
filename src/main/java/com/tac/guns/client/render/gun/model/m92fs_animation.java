@@ -3,11 +3,14 @@ package com.tac.guns.client.render.gun.model;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.Config;
 import com.tac.guns.client.SpecialModels;
+import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.Gun;
 import com.tac.guns.init.ModEnchantments;
+import com.tac.guns.init.ModItems;
+import com.tac.guns.item.attachment.IAttachment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -53,7 +56,10 @@ public class m92fs_animation implements IOverrideModel {
         }*/
 
         RenderUtil.renderModel(SpecialModels.M92FS.getModel(), stack, matrices, renderBuffer, light, overlay);
-
+        if(Gun.getAttachment(IAttachment.Type.PISTOL_BARREL,stack).getItem() == ModItems.PISTOL_SILENCER.get())
+        {
+            RenderUtil.renderModel(SpecialModels.M92FS_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
             //Always push
             matrices.push();
 
@@ -65,16 +71,19 @@ public class m92fs_animation implements IOverrideModel {
         {
             // Math provided by Bomb787 on GitHub and Curseforge!!!
             matrices.translate(0, 0, 0.235f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+            GunRenderingHandler.get().opticMovement = 0.235f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0);
         }
         else if(!Gun.hasAmmo(stack))
         {
             if(cooldownOg > 0.5){
                 // Math provided by Bomb787 on GitHub and Curseforge!!!
                 matrices.translate(0, 0, 0.235f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.235f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0);
             }
             else
             {
                 matrices.translate(0, 0, 0.235f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                GunRenderingHandler.get().opticMovement = 0.235f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0);
             }
         }
 

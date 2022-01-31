@@ -11,7 +11,7 @@
     "recoilKick": 1.95,
     "recoilAdsReduction": 0.50,
     "alwaysSpread": true,
-    "spread": 1.55
+    "spread": 1.75
   },
   "reloads": {
     "magFed": true,
@@ -48,7 +48,21 @@
       "fovModifier": 0.7,
       "yOffset": 13.685,
       "zOffset": -12.6
-    }]
-
+    }],
+    "attachments":
+    {
+      "pistolBarrel": {
+        "yOffset": -100829.84,
+        "zOffset": -11.55,
+        "scale": 1.00
+      },
+      "pistolScope": {
+        "yOffset": 12.325,
+        "zOffset": 3.635,
+        "scale": 1.80,
+        "doRenderMount": true,
+        "doOnSlideMovement": true
+      }
+    }
   }
 }

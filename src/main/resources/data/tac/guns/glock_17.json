@@ -11,7 +11,7 @@
     "recoilKick": 1.75,
     "recoilAdsReduction": 0.45,
     "alwaysSpread": true,
-    "spread": 2.42
+    "spread": 3.32
   },
   "reloads": {
     "magFed": true,
@@ -60,7 +60,7 @@
         "yOffset": 10.25,
         "zOffset": 4.715,
         "scale": 1.80,
-        "renderMount": false,
+        "doRenderMount": false,
         "doOnSlideMovement": true
       }
     }

@@ -8,6 +8,8 @@ import com.tac.guns.item.TransitionalTypes.TimelessAmmoItem;
 import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
 import com.tac.guns.item.TransitionalTypes.TimelessOldRifleGunItem;
 import com.tac.guns.item.TransitionalTypes.TimelessPistolGunItem;
+import com.tac.guns.item.TransitionalTypes.grenades.BaseballGrenadeItem;
+import com.tac.guns.item.TransitionalTypes.grenades.LightGrenadeItem;
 import com.tac.guns.item.attachment.impl.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -68,6 +70,12 @@ public class ModItems
     public static final RegistryObject<Item> QSZ92G1 = REGISTER.register("qsz92g1", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<Item> KAR98 = REGISTER.register("kar98", () -> new TimelessOldRifleGunItem(properties -> properties.group(GunMod.SNIPER)));
     public static final RegistryObject<Item> HK416_A5 = REGISTER.register("hk416_a5", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
+    public static final RegistryObject<Item> TYPE81_X = REGISTER.register("type81_x", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
+    public static final RegistryObject<Item> PKP_PENCHENBERG = REGISTER.register("pkp_penchenberg", () -> new TimelessGunItem(properties -> properties.group(GunMod.HEAVY_MATERIAL)));
+    public static final RegistryObject<Item> MP7 = REGISTER.register("mp7", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
+    public static final RegistryObject<Item> M82A2 = REGISTER.register("m82a2", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
+    public static final RegistryObject<Item> AI_AWP = REGISTER.register("ai_awp", () -> new TimelessGunItem(properties -> properties.group(GunMod.SNIPER)));
+    //public static final RegistryObject<Item> TEC_9 = REGISTER.register("tec_9", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
 
     /* Ammunition */
     public static final RegistryObject<Item> MAGNUM_BULLET = REGISTER.register("magnumround", TimelessAmmoItem::new);
@@ -124,5 +132,7 @@ public class ModItems
     /* Side rail Attachments */
     public static final RegistryObject<Item> STANDARD_FLASHLIGHT = REGISTER.register("standard_flashlight", () -> new SideRailItem(SideRail.create(), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
 
-    public static final RegistryObject<Item> LIGHT_GRENADE = REGISTER.register("light_grenade", () ->  new GrenadeItem(new Item.Properties().group(GunMod.GROUP), 20 * 4, 1.1f));
+    public static final RegistryObject<Item> LIGHT_GRENADE = REGISTER.register("light_grenade", () ->  new LightGrenadeItem(new Item.Properties().group(GunMod.GROUP), 18 * 4, 0.875f));
+    public static final RegistryObject<Item> BASEBALL_GRENADE = REGISTER.register("baseball_grenade", () ->  new BaseballGrenadeItem(new Item.Properties().group(GunMod.GROUP), 20 * 5, 1.225f));
+    //public static final RegistryObject<Item> LIGHT_GRENADE = REGISTER.register("light_grenade", () ->  new GrenadeItem(new Item.Properties().group(GunMod.GROUP), 20 * 4, 1.1f));
 }

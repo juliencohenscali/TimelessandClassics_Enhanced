@@ -7,9 +7,13 @@ import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.Gun;
+import com.tac.guns.init.ModEnchantments;
+import com.tac.guns.init.ModItems;
+import com.tac.guns.item.attachment.IAttachment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
@@ -45,29 +49,47 @@ public class x95r_animation implements IOverrideModel {
         {
             RenderUtil.renderModel(SpecialModels.X95R_SIGHT.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
-
-        /*if(Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.SILENCER.orElse(ItemStack.EMPTY.getItem()))
+        else
         {
-            //int overlayTmp = Gun.getAttachment(IAttachment.Type.BARREL, stack).getStack().serializeNBT().getInt("Color");
-            //int overlayTmp = Minecraft.getInstance().getItemColors().getColor(Gun.getAttachment(IAttachment.Type.BARREL, stack).getStack(), 0);
-            //if(overlayTmp == -1)
-            //{
-            //    overlayTmp = overlay;
-            //}
-            *//*
-                Hm, it seems like the getAttachment().stack() method chain does not actually grab the color of the specific attachment
-                I will be making a bug report as I don't think this behavior is correct and something wrong is on either side as this should be clearly possible
-            *//*
-            RenderUtil.renderModel(SpecialModels.QBZ_95_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
+            RenderUtil.renderModel(SpecialModels.X95R_SIGHT_FOLDED.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+
+        if(Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.SILENCER.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        else if(Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.MUZZLE_COMPENSATOR.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_COMPENSATOR.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        else if(Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.MUZZLE_BRAKE.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_BRAKE.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
         else
         {
-            RenderUtil.renderModel(SpecialModels.QBZ_95_MUZZLE.getModel(), stack, matrices, renderBuffer, light, overlay);
-        }*/
+            RenderUtil.renderModel(SpecialModels.X95R_DEFAULT_MUZZLE.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+
+        if(Gun.getAttachment(IAttachment.Type.UNDER_BARREL, stack).getItem() == ModItems.SPECIALISED_GRIP.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_TACTICAL_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        if(Gun.getAttachment(IAttachment.Type.UNDER_BARREL, stack).getItem() == ModItems.LIGHT_GRIP.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_LIGHT_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
 
         RenderUtil.renderModel(SpecialModels.X95R.getModel(), stack, matrices, renderBuffer, light, overlay);
 
-        RenderUtil.renderModel(SpecialModels.X95R_STANDARD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay); // TMP
+        if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0)
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_EXTENDED_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        else
+        {
+            RenderUtil.renderModel(SpecialModels.X95R_STANDARD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
 
         matrices.push();
         CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();

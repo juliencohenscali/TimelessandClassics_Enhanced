@@ -15,7 +15,7 @@
     "weaponRecoilDuration": 0.875,
     "cameraRecoilModifier": 1.75,
     "alwaysSpread": true,
-    "spread": 7.35
+    "spread": 7.05
   },
   "reloads": {
     "magFed": true,
@@ -53,7 +53,20 @@
       "yOffset": 11.965,
       "zOffset": -15.6
     }],
-    "attachments": {
+    "attachments":
+    {
+      "pistolBarrel": {
+        "yOffset": -100829.84,
+        "zOffset": -11.55,
+        "scale": 1.00
+      },
+      "pistolScope": {
+        "yOffset": 10.25,
+        "zOffset": 4.715,
+        "scale": 1.80,
+        "doRenderMount": false,
+        "doOnSlideMovement": true
+      }
     }
   }
 }
