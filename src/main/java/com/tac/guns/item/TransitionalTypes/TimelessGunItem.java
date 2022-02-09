@@ -4,6 +4,7 @@ package com.tac.guns.item.TransitionalTypes;
 import com.tac.guns.Config;
 import com.tac.guns.GunMod;
 import com.tac.guns.common.Gun;
+import com.tac.guns.interfaces.IGunModifier;
 import com.tac.guns.item.GunItem;
 import com.tac.guns.item.IColored;
 import com.tac.guns.util.GunEnchantmentHelper;
@@ -26,10 +27,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 
-public class TimelessGunItem extends GunItem implements IColored {
-    public TimelessGunItem(Process<Item.Properties> properties)
+public class TimelessGunItem extends GunItem
+{
+    public TimelessGunItem(Process<Item.Properties> properties, IGunModifier... modifiers)
     {
         super(properties.process(new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+        this.modifiers = modifiers;
     }
     
     public TimelessGunItem() {
@@ -81,6 +84,13 @@ public class TimelessGunItem extends GunItem implements IColored {
         }
         tooltip.add((new TranslationTextComponent("info.tac.attachment_help", new Object[]{(new KeybindTextComponent("key.tac.attachments")).getString().toUpperCase(Locale.ENGLISH)})).mergeStyle(TextFormatting.YELLOW));
 
+    }
+
+    private final IGunModifier[] modifiers;
+
+    public IGunModifier[] getModifiers()
+    {
+        return this.modifiers;
     }
 
     @Override

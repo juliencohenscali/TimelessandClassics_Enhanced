@@ -221,4 +221,21 @@ public interface IGunModifier
     {
         return 0F;
     }
+
+    /**
+     * Modifies the weight of a weapon.
+     *
+     * @return the percentage modifier towards default weapon weight
+     */
+    default float modifyWeaponWeight() {return 0F;}
+
+    /**
+     * Add additional gravity to the projectile without changing the base gravity.
+     *
+     * @return additional gravity to add to the projectile
+     */
+    default float additionalWeaponWeight()
+    {
+        return 0F;
+    }
 }

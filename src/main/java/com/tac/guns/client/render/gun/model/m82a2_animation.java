@@ -76,7 +76,7 @@ public class m82a2_animation implements IOverrideModel {
             }
             else
             {
-                matrices.translate(0, 0, 0.175f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                matrices.translate(0, 0, 0.175f * (-4.5 * Math.pow(cooldownOg-0.5, 2) + 1.0));
             }
         }
         RenderUtil.renderModel(SpecialModels.M82A2_BARREL.getModel(), stack, matrices, renderBuffer, light, overlay);
@@ -94,7 +94,7 @@ public class m82a2_animation implements IOverrideModel {
             }
             else
             {
-                matrices.translate(0, 0, 0.175f * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
+                matrices.translate(0, 0, 0.175f * 2 * (-4.5 * Math.pow(0.5-0.5, 2) + 1.0));
             }
         }
 

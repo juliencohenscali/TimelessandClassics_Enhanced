@@ -5,13 +5,16 @@ import com.tac.guns.GunMod;
 import com.tac.guns.client.BulletTrail;
 import com.tac.guns.client.CustomGunManager;
 import com.tac.guns.client.audio.GunShotSound;
-import com.tac.guns.client.handler.BulletTrailRenderingHandler;
-import com.tac.guns.client.handler.GunRenderingHandler;
+import com.tac.guns.client.handler.*;
+import com.tac.guns.common.Gun;
+import com.tac.guns.common.GunModifiers;
 import com.tac.guns.common.NetworkGunManager;
 import com.tac.guns.init.ModParticleTypes;
 import com.tac.guns.init.ModSounds;
+import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
 import com.tac.guns.network.message.*;
 import com.tac.guns.particles.BulletHoleData;
+import com.tac.guns.util.GunModifierHelper;
 import mod.chiselsandbits.ChiselsAndBits;
 import mod.chiselsandbits.api.ChiselsAndBitsAPI;
 import mod.chiselsandbits.api.chiseling.ChiselingOperation;
@@ -32,9 +35,16 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SimpleSound;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -48,12 +58,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.Level;
 //import mod.chiselsandbits.chiseling.
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
+
+import static net.minecraft.entity.ai.attributes.Attributes.MOVEMENT_SPEED;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -228,7 +241,6 @@ public class ClientPlayHandler
         return null;
     }
 
-
     public static void handleRemoveProjectile(MessageRemoveProjectile message)
     {
         BulletTrailRenderingHandler.get().remove(message.getEntityId());
@@ -238,5 +250,55 @@ public class ClientPlayHandler
     {
         NetworkGunManager.updateRegisteredGuns(message);
         CustomGunManager.updateCustomGuns(message);
+    }
+
+    public static void handleMovementUpdate(ServerPlayerEntity player)
+    {
+        if (player == null)
+            return;
+        if(player.isSpectator())
+            return;
+        if(!player.isAlive())
+            return;
+
+        if (AimingHandler.get().isAiming())
+            player.setSprinting(false);
+        if (ShootingHandler.get().isShooting())
+            player.setSprinting(false);
+
+        ItemStack heldItem = player.getHeldItemMainhand();
+        if(player.getAttribute(MOVEMENT_SPEED) != null && MovementAdaptationsHandler.get().readyToReset)
+        {
+            player.getAttribute(MOVEMENT_SPEED).removeAllModifiers();
+            //if(player.isSprinting() && !(heldItem.getItem() instanceof TimelessGunItem))
+            //    player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.13F);
+            //else
+                player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.1F);
+            MovementAdaptationsHandler.get().readyToReset = false;
+            MovementAdaptationsHandler.get().readyToUpdate = true;
+        }
+        player.sendPlayerAbilities();
+
+        if (!(heldItem.getItem() instanceof TimelessGunItem))
+            return;
+        Gun gun = ((TimelessGunItem) heldItem.getItem()).getGun();
+
+        if ((gun.getGeneral().getWeightKilo() > 0) && MovementAdaptationsHandler.get().readyToUpdate)
+        {
+            float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (( (gun.getGeneral().getWeightKilo() * (1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.725F));
+            speed*=1.225;
+            player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.105F), 0.0725F));
+            if(player.isSprinting()) {
+                player.getAttribute(MOVEMENT_SPEED).setBaseValue(player.getAttribute(MOVEMENT_SPEED).getValue() * 1.3F);
+            }
+            MovementAdaptationsHandler.get().readyToReset = true;
+            MovementAdaptationsHandler.get().readyToUpdate = false;
+            MovementAdaptationsHandler.get().speed = speed;
+        }
+        else
+            MovementAdaptationsHandler.get().speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue();
+        player.sendPlayerAbilities();
+        //GunMod.LOGGER.log(Level.FATAL, );
+        MovementAdaptationsHandler.get().previousWeight = gun.getGeneral().getWeightKilo();
     }
 }

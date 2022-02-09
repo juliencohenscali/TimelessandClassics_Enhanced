@@ -3,11 +3,14 @@ package com.tac.guns.entity;
 import com.tac.guns.Config;
 import com.tac.guns.common.Gun;
 import com.tac.guns.item.GunItem;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
@@ -16,14 +19,16 @@ import net.minecraft.world.World;
  */
 public class MissileEntity extends ProjectileEntity
 {
+    private float power;
     public MissileEntity(EntityType<? extends ProjectileEntity> entityType, World worldIn)
     {
         super(entityType, worldIn);
     }
 
-    public MissileEntity(EntityType<? extends ProjectileEntity> entityType, World worldIn, LivingEntity shooter, ItemStack weapon, GunItem item, Gun modifiedGun)
+    public MissileEntity(EntityType<? extends ProjectileEntity> entityType, World worldIn, LivingEntity shooter, ItemStack weapon, GunItem item, Gun modifiedGun, float power)
     {
         super(entityType, worldIn, shooter, weapon, item, modifiedGun);
+        this.power = power;
     }
 
     @Override
@@ -46,18 +51,18 @@ public class MissileEntity extends ProjectileEntity
     @Override
     protected void onHitEntity(Entity entity, Vector3d hitVec, Vector3d startVec, Vector3d endVec, boolean headshot)
     {
-        createExplosion(this, Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
+        createExplosion(this, this.power*Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
     }
 
-    /*@Override
+    @Override
     protected void onHitBlock(BlockState state, BlockPos pos, Direction face, double x, double y, double z)
     {
-        createExplosion(this, Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
-    }*/
+        createExplosion(this, this.power*Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
+    }
 
     @Override
     public void onExpired()
     {
-        createExplosion(this, Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
+        createExplosion(this, this.power*Config.COMMON.missiles.explosionRadius.get().floatValue(), false);
     }
 }

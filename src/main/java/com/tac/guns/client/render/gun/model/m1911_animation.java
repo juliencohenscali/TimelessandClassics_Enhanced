@@ -59,9 +59,9 @@ public class m1911_animation implements IOverrideModel {
         if(Gun.getAttachment(IAttachment.Type.PISTOL_BARREL,stack).getItem() == ModItems.PISTOL_SILENCER.get())
         {
             matrices.push();
-            matrices.translate(0,0,-0.0425);
+            matrices.translate(0,0,-0.0475);
             RenderUtil.renderModel(SpecialModels.M1911_SUPPRESSOR.getModel(), stack, matrices, renderBuffer, light, overlay);
-            matrices.translate(0,0,0.0425);
+            matrices.translate(0,0,0.0475);
             matrices.pop();
         }
         // if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), entity) > 0)

@@ -1,21 +1,21 @@
 {
   "general": {
     "auto": true,
-    "rate": 1,
+    "rate": 2,
     "rateSelector": [
       0,
       1,
       2
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 2.625,
-    "horizontalRecoilAngle": 0.425,
-    "recoilKick": 1.115,
-    "recoilAdsReduction": 0.15,
+    "recoilAngle": 1.925,
+    "horizontalRecoilAngle": 0.4125,
+    "recoilKick": 1.1,
+    "recoilAdsReduction": 0.20,
     "weaponRecoilDuration": 0.875,
     "cameraRecoilModifier": 1.75,
     "alwaysSpread": true,
-    "spread": 7.05
+    "spread": 6.15
   },
   "reloads": {
     "magFed": true,

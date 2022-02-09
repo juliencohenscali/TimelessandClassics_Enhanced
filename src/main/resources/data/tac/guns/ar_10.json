@@ -4,12 +4,14 @@
     "rate": 4,
     "rateSelector": [0,1],
     "gripType": "tac:two_handed_ak47",
-    "recoilAngle": 7.825,
+    "recoilAngle": 7.375,
     "horizontalRecoilAngle": 2.075,
     "recoilKick": 1.450,
     "recoilAdsReduction": 0.3,
+    "weaponRecoilDuration": 0.95,
+    "cameraRecoilModifier": 1.625,
     "alwaysSpread": true,
-    "spread": 4.75
+    "spread": 3.875
   },
   "reloads": {
     "magFed": true,

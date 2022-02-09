@@ -5,9 +5,11 @@
       1
     ],
     "gripType": "tac:two_handed_ak47",
-    "recoilAngle": 7.385,
+    "recoilAngle": 6.085,
     "recoilKick": 1.155,
     "recoilAdsReduction": 0.28,
+    "weaponRecoilDuration": 0.725,
+    "cameraRecoilModifier": 2.375,
     "alwaysSpread": true,
     "spread": 11.25,
     "projectileAmount": 11

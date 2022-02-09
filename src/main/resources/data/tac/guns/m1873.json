@@ -6,7 +6,7 @@
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 2.75,
+    "recoilAngle": 2.35,
     "horizontalRecoilAngle": 0.425,
     "recoilKick": 2.35,
     "recoilAdsReduction": 0.35,
@@ -26,8 +26,8 @@
     "visible": false,
     "damage": 14,
     "size": 0.2,
-    "speed": 6.0,
-    "life": 18
+    "speed": 8.0,
+    "life": 12
   },
   "sounds": {
     "fire": "tac:item.fire_m1911",

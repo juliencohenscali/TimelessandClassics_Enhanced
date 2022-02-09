@@ -19,7 +19,6 @@ import org.apache.logging.log4j.core.config.plugins.validation.constraints.Requi
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public final class Gun implements INBTSerializable<CompoundNBT>
@@ -82,7 +81,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         @Optional
         private float cameraRecoilModifier = 1.75F; // How much to divide out of camera recoil, use for either softening camera shake while keeping high recoil feeling weapons
         @Optional
-        private float recoilDurationOffset;
+        private float recoilDuration = 0.25F;
         @Optional
         private float weaponRecoilDuration = 0.5F; // Recoil up until the weapon cooldown is under this value (0.1 == 10% recoil time left, use to help scale with high firerate weapons and their weapon recoil feel)
         @Optional
@@ -93,6 +92,8 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         private boolean alwaysSpread = true;
         @Optional
         private float spread;
+        @Optional
+        private float weightKilo = 0.0F;
 
         @Override
         public CompoundNBT serializeNBT()
@@ -107,12 +108,13 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             tag.putFloat("RecoilKick", this.recoilKick);
             tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*1.75F); // x2 for quick camera recoil reduction balancing
             tag.putFloat("CameraRecoilModifier", this.cameraRecoilModifier);
-            tag.putFloat("RecoilDurationOffset", this.recoilDurationOffset);
+            tag.putFloat("RecoilDurationOffset", this.recoilDuration);
             tag.putFloat("WeaponRecoilDuration", this.weaponRecoilDuration);
             tag.putFloat("RecoilAdsReduction", this.recoilAdsReduction);
             tag.putInt("ProjectileAmount", this.projectileAmount);
             tag.putBoolean("AlwaysSpread", this.alwaysSpread);
             tag.putFloat("Spread", this.spread);
+            tag.putFloat("WeightKilo", this.weightKilo);
             return tag;
         }
 
@@ -157,7 +159,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             }
             if(tag.contains("RecoilDurationOffset", Constants.NBT.TAG_ANY_NUMERIC))
             {
-                this.recoilDurationOffset = tag.getFloat("RecoilDurationOffset");
+                this.recoilDuration = tag.getFloat("RecoilDurationOffset");
             }
             if(tag.contains("WeaponRecoilDuration", Constants.NBT.TAG_ANY_NUMERIC))
             {
@@ -179,6 +181,10 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             {
                 this.spread = tag.getFloat("Spread");
             }
+            if(tag.contains("WeightKilo", Constants.NBT.TAG_ANY_NUMERIC))
+            {
+                this.weightKilo = tag.getFloat("WeightKilo");
+            }
         }
 
         /**
@@ -196,12 +202,13 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             general.recoilKick = this.recoilKick;
             general.horizontalRecoilAngle = this.horizontalRecoilAngle;
             general.cameraRecoilModifier = this.cameraRecoilModifier;
-            general.recoilDurationOffset = this.recoilDurationOffset;
+            general.recoilDuration = this.recoilDuration;
             general.weaponRecoilDuration = this.weaponRecoilDuration;
             general.recoilAdsReduction = this.recoilAdsReduction;
             general.projectileAmount = this.projectileAmount;
             general.alwaysSpread = this.alwaysSpread;
             general.spread = this.spread;
+            general.weightKilo = this.weightKilo;
             return general;
         }
 
@@ -280,9 +287,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         /**
          * @return The duration offset for recoil. This reduces the duration of recoil animation
          */
-        public float getRecoilDurationOffset()
+        public float getRecoilDuration()
         {
-            return this.recoilDurationOffset;
+            return this.recoilDuration;
         }
 
         /**
@@ -324,6 +331,15 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         public float getSpread()
         {
             return this.spread;
+        }
+
+        /**
+         * @return The maximum amount of degrees applied to the initial pitch and yaw direction of
+         * the fired projectile.
+         */
+        public float getWeightKilo()
+        {
+            return this.weightKilo;
         }
     }
 

@@ -9,6 +9,7 @@
     "recoilKick": 0.820,
     "recoilAdsReduction": 0.35,
     "weaponRecoilDuration": 0.325,
+    "recoilDuration": 0.275,
     "alwaysSpread": true,
     "spread": 5.15
   },

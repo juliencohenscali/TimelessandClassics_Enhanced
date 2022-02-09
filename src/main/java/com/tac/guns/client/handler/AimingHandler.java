@@ -36,6 +36,7 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.logging.log4j.Level;
@@ -150,7 +151,7 @@ public class AimingHandler
         this.localTracker.handleAiming(player, player.getHeldItem(Hand.MAIN_HAND));
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onFovUpdate(FOVUpdateEvent event)
     {
         Minecraft mc = Minecraft.getInstance();

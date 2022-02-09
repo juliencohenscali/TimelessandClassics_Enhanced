@@ -7,8 +7,10 @@ import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.render.pose.*;
 import com.tac.guns.common.BoundingBoxManager;
 import com.tac.guns.common.GripType;
+import com.tac.guns.common.ProjectileManager;
 import com.tac.guns.datagen.*;
 import com.tac.guns.enchantment.EnchantmentTypes;
+import com.tac.guns.entity.MissileEntity;
 import com.tac.guns.init.*;
 import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
 import com.tac.guns.network.PacketHandler;
@@ -62,6 +64,7 @@ public class GunMod
             CustomGunManager.fill(items);
         }
     }.setRelevantEnchantmentTypes(EnchantmentTypes.GUN, EnchantmentTypes.SEMI_AUTO_GUN);
+
     public static final ItemGroup PISTOL = new  ItemGroup("Pistols")
     {
         @Override
@@ -180,6 +183,23 @@ public class GunMod
             CustomGunManager.fill(items);
         }
     };
+    public static final ItemGroup EXPLOSIVES = new  ItemGroup(Reference.MOD_ID)
+    {
+        @Override
+        public ItemStack createIcon()
+        {
+            ItemStack stack = new ItemStack(ModItems.RPG7.get());
+            stack.getOrCreateTag().putInt("AmmoCount", ModItems.RPG7.get().getGun().getReloads().getMaxAmmo());
+            return stack;
+        }
+
+        @Override
+        public void fill(NonNullList<ItemStack> items)
+        {
+            super.fill(items);
+            CustomGunManager.fill(items);
+        }
+    };
     public GunMod()
     {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.clientSpec);
@@ -206,7 +226,7 @@ public class GunMod
     private void onCommonSetup(FMLCommonSetupEvent event)
     {
         //ProjectileManager.getInstance().registerFactory(ModItems.GRENADE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new GrenadeEntity(ModEntities.GRENADE.get(), worldIn, entity, weapon, item, modifiedGun));
-        //ProjectileManager.getInstance().registerFactory(ModItems.MISSILE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new MissileEntity(ModEntities.MISSILE.get(), worldIn, entity, weapon, item, modifiedGun));
+        ProjectileManager.getInstance().registerFactory(ModItems.RPG7_MISSILE.get(), (worldIn, entity, weapon, item, modifiedGun) -> new MissileEntity(ModEntities.RPG7_MISSILE.get(), worldIn, entity, weapon, item, modifiedGun, 1.5F));
         PacketHandler.init();
 
         if(Config.COMMON.gameplay.improvedHitboxes.get())

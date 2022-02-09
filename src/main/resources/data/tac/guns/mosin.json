@@ -7,11 +7,12 @@
       1
     ],
     "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 13.5,
-    "recoilKick": 1.5,
-    "recoilAdsReduction": 0.55,
+    "recoilAngle": 2.45,
+    "horizontalRecoilAngle": 0.125,
+    "recoilKick": 1.625,
+    "recoilAdsReduction": 0.575,
     "alwaysSpread": true,
-    "spread": 2.25
+    "spread": 1.35
   },
   "reloads": {
     "magFed": false,

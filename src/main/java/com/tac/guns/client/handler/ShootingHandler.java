@@ -35,6 +35,14 @@ public class  ShootingHandler
         return instance;
     }
 
+    public boolean isShooting() {
+        return shooting;
+    }
+
+    public void setShooting(boolean shooting) {
+        this.shooting = shooting;
+    }
+
     private boolean shooting;
 
     private ShootingHandler() {}

@@ -3,10 +3,10 @@
     "boltAction": true,
     "rate": 26,
     "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 2.25,
+    "recoilAngle": 1.65,
     "horizontalRecoilAngle": 0.125,
-    "recoilKick": 1.65,
-    "recoilAdsReduction": 0.875,
+    "recoilKick": 1.55,
+    "recoilAdsReduction": 0.575,
     "alwaysSpread": true,
     "spread": 0.55
   },

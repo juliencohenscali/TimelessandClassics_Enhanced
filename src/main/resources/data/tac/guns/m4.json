@@ -4,15 +4,15 @@
     "rate": 2,
     "rateSelector": [0,1,2],
     "gripType": "tac:two_handed_ak47",
-    "maxAmmo": 30,
-    "reloadAmount": 5,
-    "recoilAngle": 6.325,
-    "horizontalRecoilAngle": 2.655,
-    "recoilKick": 1.100,
-    "recoilAdsReduction": 0.42,
-    "weaponRecoilDuration": 0.525,
+    "recoilAngle": 3.425,
+    "horizontalRecoilAngle": 1.375,
+    "recoilKick": 0.8275,
+    "recoilAdsReduction": 0.245,
+    "weaponRecoilDuration": 0.9975,
+    "cameraRecoilModifier": 1.015,
+    "recoilDuration": 0.375,
     "alwaysSpread": true,
-    "spread": 5.425
+    "spread": 3.925
   },
   "reloads": {
     "magFed": true,
@@ -54,7 +54,7 @@
     "attachments": {
       "scope": {
         "yOffset": 10.125,
-        "zOffset": 5.4,
+        "zOffset": 4.925,
         "scale": 1.00
       },
       "barrel": {

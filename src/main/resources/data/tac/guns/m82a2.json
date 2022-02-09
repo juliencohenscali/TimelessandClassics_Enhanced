@@ -6,7 +6,7 @@
       1
     ],
     "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 2.25,
+    "recoilAngle": 2.125,
     "horizontalRecoilAngle": 0.275,
     "recoilKick": 2.375,
     "recoilAdsReduction": 0.35,
@@ -49,7 +49,7 @@
   "modules": {
     "zoom": [{
       "fovModifier": 0.6,
-      "yOffset": 11.7175,
+      "yOffset": 11.7625,
       "zOffset": -7.5
     }],
     "attachments":
