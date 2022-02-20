@@ -55,6 +55,7 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.LightType;
@@ -97,15 +98,6 @@ public class GunRenderingHandler {
 
     private Field equippedProgressMainHandField;
     private Field prevEquippedProgressMainHandField;
-
-    public float immersiveWeaponRoll;
-    private float immersiveRoll; //TEST FROM CGM
-
-    public float walkingDistance;
-    public float walkingCrouch;
-    public float walkingCameraYaw;
-
-    public double opticMovement;
 
     private GunRenderingHandler() {
     }
@@ -217,12 +209,44 @@ public class GunRenderingHandler {
         event.setRoll(-this.immersiveRoll);
     }*/
 
+    public float immersiveWeaponRoll;
+
+    public float walkingDistance;
+    public float walkingCrouch;
+    public float walkingCameraYaw;
+    public float zoomProgressInv;
+
+    public double xOffset = 0.0;
+    public double yOffset = 0.0;
+    public double zOffset = 0.0;
+
+    public double opticMovement;
+
     @SubscribeEvent
-    public void onRenderOverlay(RenderHandEvent event) {
+    public void onRenderOverlay(RenderHandEvent event)
+    {
         boolean isAnimated = GunAnimationController.fromItem(event.getItemStack().getItem()) != null;
-        Minecraft mc = Minecraft.getInstance();
         MatrixStack matrixStack = event.getMatrixStack();
-        if (mc.gameSettings.viewBobbing && mc.getRenderViewEntity() instanceof PlayerEntity) {
+
+        boolean right = Minecraft.getInstance().gameSettings.mainHand == HandSide.RIGHT ? event.getHand() == Hand.MAIN_HAND : event.getHand() == Hand.OFF_HAND;
+        ItemStack heldItem = event.getItemStack();
+
+        if (!(heldItem.getItem() instanceof GunItem)) {
+            return;
+        }
+
+        /* Cancel it because we are doing our own custom render */
+        event.setCanceled(true);
+
+        ItemStack overrideModel = ItemStack.EMPTY;
+        if (heldItem.getTag() != null) {
+            if (heldItem.getTag().contains("Model", Constants.NBT.TAG_COMPOUND)) {
+                overrideModel = ItemStack.read(heldItem.getTag().getCompound("Model"));
+            }
+        }
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.gameSettings.viewBobbing && mc.getRenderViewEntity() instanceof PlayerEntity)
+        {
             PlayerEntity playerentity = (PlayerEntity) mc.getRenderViewEntity();
             float deltaDistanceWalked = playerentity.distanceWalkedModified - playerentity.prevDistanceWalkedModified;
             float distanceWalked = -(playerentity.distanceWalkedModified + deltaDistanceWalked * event.getPartialTicks());
@@ -246,6 +270,7 @@ public class GunRenderingHandler {
             this.walkingDistance = distanceWalked;
             this.walkingCrouch = crouch;
             this.walkingCameraYaw = cameraYaw;
+            this.zoomProgressInv = (float)invertZoomProgress;
 
             //matrixStack.translate((double) (MathHelper.sin(distanceWalked * (float) Math.PI) * cameraYaw * 0.5F) * invertZoomProgress, ((double) (-Math.abs(MathHelper.cos(distanceWalked * (float) Math.PI) * cameraYaw)) * invertZoomProgress) * (1.285 * crouch), 0.0D);
             matrixStack.translate((double) (MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 0.5F) * invertZoomProgress, ((double) (-Math.abs(MathHelper.cos(distanceWalked*crouch * (float) Math.PI) * cameraYaw)) * invertZoomProgress) * 1.140, 0.0D);// * 1.140, 0.0D);
@@ -253,12 +278,21 @@ public class GunRenderingHandler {
             matrixStack.rotate(Vector3f.ZP.rotationDegrees((MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 3.0F) * (float) invertZoomProgress));
             matrixStack.rotate(Vector3f.XP.rotationDegrees((Math.abs(MathHelper.cos(distanceWalked*crouch * (float) Math.PI - 0.2F) * cameraYaw) * 5.0F) * (float) invertZoomProgress));
 
-    }
+            // Weapon movement clanting
+            float rollingForceCrouch = mc.player.isCrouching() ? 4f : 1f;
+            float rollingForceAim = AimingHandler.get().isAiming() ? 0.425f : 1f;
+            /*
+                Pretty much from CGM, was going to build something very similar for 0.3, movement update comes early I guess,
+                all credit to Mr.Crayfish who developed this weapon roll code for CGM,
+                all I added was scaling for other game actions and adjusted rolling values
+            */
+            float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * (6.25F * rollingForceCrouch * rollingForceAim) : 0F;
+            this.immersiveWeaponRoll = MathHelper.approach(this.immersiveWeaponRoll, targetAngle, 0.335F);
+            matrixStack.rotate(Vector3f.ZP.rotationDegrees(this.immersiveWeaponRoll));
+        }
 
-        boolean right = Minecraft.getInstance().gameSettings.mainHand == HandSide.RIGHT ? event.getHand() == Hand.MAIN_HAND : event.getHand() == Hand.OFF_HAND;
-        ItemStack heldItem = event.getItemStack();
-
-        if (event.getHand() == Hand.OFF_HAND) {
+        if (event.getHand() == Hand.OFF_HAND)
+        {
             if (heldItem.getItem() instanceof GunItem) {
                 event.setCanceled(true);
                 return;
@@ -276,35 +310,7 @@ public class GunRenderingHandler {
             }
 
             /* Makes the off hand item move out of view */
-            matrixStack.translate(0, -1 * AimingHandler.get().getNormalisedAdsProgress(), 0);
-        }
-
-        if (!(heldItem.getItem() instanceof GunItem)) {
-            return;
-        }
-
-        /* Cancel it because we are doing our own custom render */
-        event.setCanceled(true);
-
-        // Weapon movement clanting
-        float rollingForceCrouch = mc.player.isCrouching() ? 4f : 1f;
-        float rollingForceAim = AimingHandler.get().isAiming() ? 0.5f : 1f;
-        /*
-            Pretty much from CGM, was going to build something very similar for 0.3, movement update comes early I guess,
-            all credit to Mr.Crayfish who developed this weapon roll code for CGM,
-            all I added was scaling for other game actions and adjusted rolling values
-        */
-        float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * (6.25F * rollingForceCrouch * rollingForceAim) : 0F;
-        this.immersiveWeaponRoll = MathHelper.approach(this.immersiveWeaponRoll, targetAngle, 0.335F);
-        matrixStack.rotate(Vector3f.ZP.rotationDegrees(this.immersiveWeaponRoll));
-
-        //mc.player.chasingPosX
-
-        ItemStack overrideModel = ItemStack.EMPTY;
-        if (heldItem.getTag() != null) {
-            if (heldItem.getTag().contains("Model", Constants.NBT.TAG_COMPOUND)) {
-                overrideModel = ItemStack.read(heldItem.getTag().getCompound("Model"));
-            }
+            matrixStack.translate(0, -2 * AimingHandler.get().getNormalisedAdsProgress(), 0);
         }
 
         LivingEntity entity = Minecraft.getInstance().player;
@@ -317,16 +323,16 @@ public class GunRenderingHandler {
         float translateZ = model.getItemCameraTransforms().firstperson_right.translation.getZ();
 
         matrixStack.push();
-
         GunItem gunItem = (GunItem) heldItem.getItem();
         Gun modifiedGun = gunItem.getModifiedGun(heldItem);
         int gunZoom = heldItem.getTag().getInt("currentZoom");
 
-        if (AimingHandler.get().getNormalisedAdsProgress() > 0 && modifiedGun.canAimDownSight()) {
+        if (AimingHandler.get().getNormalisedAdsProgress() > 0 && modifiedGun.canAimDownSight())
+        {
             if (event.getHand() == Hand.MAIN_HAND) {
-                double xOffset = 0.0;
-                double yOffset = 0.0;
-                double zOffset = 0.0;
+                this.xOffset = 0.0;
+                this.yOffset = 0.0;
+                this.zOffset = 0.0;
                 Scope scope = Gun.getScope(heldItem);
                 boolean isScopeOffsetType = Config.COMMON.gameplay.gameplayEnchancedScopeOffset.get();
                 boolean isScopeRenderType = Config.COMMON.gameplay.scopeDoubleRender.get();
@@ -406,15 +412,13 @@ public class GunRenderingHandler {
             }
         }
 
-        /* Applies equip progress animation translations */
         float equipProgress = this.getEquipProgress(event.getPartialTicks());
-        //matrixStack.translate(0, equipProgress * -0.6F, 0);
         matrixStack.rotate(Vector3f.XP.rotationDegrees(equipProgress * -50F));
 
         HandSide hand = right ? HandSide.RIGHT : HandSide.LEFT;
         Objects.requireNonNull(entity);
         int blockLight = entity.isBurning() ? 15 : entity.world.getLightFor(LightType.BLOCK, new BlockPos(entity.getEyePosition(event.getPartialTicks())));
-        blockLight += (this.entityIdForMuzzleFlash.contains(entity.getEntityId()) ? 3 : 0);
+        blockLight += (this.entityIdForMuzzleFlash.contains(entity.getEntityId()) ? 3 : 0); // 3
         int packedLight = LightTexture.packLight(blockLight, entity.world.getLightFor(LightType.SKY, new BlockPos(entity.getEyePosition(event.getPartialTicks()))));
 
         /* Renders the reload arm. Will only render if actually reloading. This is applied before
@@ -426,7 +430,6 @@ public class GunRenderingHandler {
         matrixStack.translate(0.56 * offset, -0.52, -0.72);
 
         this.applySprintingTransforms(gunItem, hand, matrixStack, event.getPartialTicks());
-
         /* Applies recoil and reload rotations */
         this.applyRecoilTransforms(matrixStack, heldItem, modifiedGun);
         if(!isAnimated) this.applyReloadTransforms(matrixStack, hand, event.getPartialTicks(), heldItem);
@@ -440,13 +443,12 @@ public class GunRenderingHandler {
         }
         matrixStack.pop();
 
+
         /* Renders the weapon */
         ItemCameraTransforms.TransformType transformType = right ? ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND : ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND;
         this.renderWeapon(Minecraft.getInstance().player, heldItem, transformType, event.getMatrixStack(), event.getBuffers(), packedLight, event.getPartialTicks());
-
         matrixStack.pop();
     }
-
     private void applySprintingTransforms(GunItem modifiedGun, HandSide hand, MatrixStack matrixStack, float partialTicks)
     {
         GunAnimationController controller = GunAnimationController.fromItem(modifiedGun.getItem());
@@ -493,6 +495,7 @@ public class GunRenderingHandler {
     public float recoilSwayAmount = 0;
     public float recoilSway = 0;
     public float weaponsHorizontalAngle = 0;
+
     private void applyRecoilTransforms(MatrixStack matrixStack, ItemStack item, Gun gun)
     {
         Minecraft mc = Minecraft.getInstance();
@@ -544,7 +547,8 @@ public class GunRenderingHandler {
         if (heldItem.isEmpty())
             return;
 
-        if (player.isHandActive() && player.getActiveHand() == Hand.MAIN_HAND && heldItem.getItem() instanceof GrenadeItem) {
+        if (player.isHandActive() && player.getActiveHand() == Hand.MAIN_HAND && heldItem.getItem() instanceof GrenadeItem)
+        {
             if (!((GrenadeItem) heldItem.getItem()).canCook())
                 return;
 
@@ -768,7 +772,7 @@ public class GunRenderingHandler {
 
             RenderUtil.applyTransformType(model.isEmpty() ? stack : model, matrixStack, transformType, entity);
 
-            this.renderGun(entity, transformType, model.isEmpty() ? stack : model, matrixStack, renderTypeBuffer, light, partialTicks);
+            this.renderGun(entity, transformType, model.isEmpty() ? stack : model, matrixStack, renderTypeBuffer, light, partialTicks);//matrixStack, renderTypeBuffer, light, partialTicks);
             //this.renderAttachments(entity, transformType, stack, matrixStack, renderTypeBuffer, light, partialTicks);
             //this.renderMuzzleFlash(entity, matrixStack, renderTypeBuffer, stack, transformType);
 
@@ -777,7 +781,6 @@ public class GunRenderingHandler {
         }
         return false;
     }
-
     private void renderGun(LivingEntity entity, ItemCameraTransforms.TransformType transformType, ItemStack stack, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, float partialTicks)
     {
         /*if(ModelOverrides.hasModel(stack) && transformType.equals(ItemCameraTransforms.TransformType.GUI))

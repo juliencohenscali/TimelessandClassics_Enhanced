@@ -33,7 +33,7 @@ public class m16a1_animation implements IOverrideModel {
     @Override
     public void render(float v, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrices, IRenderTypeBuffer renderBuffer, int light, int overlay)
     {
-        if(ModelOverrides.hasModel(stack) && transformType.equals(ItemCameraTransforms.TransformType.GUI) && Config.CLIENT.quality.reducedGuiWeaponQuality.get())
+        /*if(ModelOverrides.hasModel(stack) && transformType.equals(ItemCameraTransforms.TransformType.GUI) && Config.CLIENT.quality.reducedGuiWeaponQuality.get())
         {
             matrices.push();
             matrices.rotate(Vector3f.XP.rotationDegrees(-60.0F));
@@ -44,7 +44,7 @@ public class m16a1_animation implements IOverrideModel {
             RenderUtil.renderModel(stack, stack, matrices, renderBuffer, light, overlay);
             matrices.pop();
             return;
-        }
+        }*/
 
         if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0)
         {
@@ -95,6 +95,6 @@ public class m16a1_animation implements IOverrideModel {
             }
         }
         RenderUtil.renderModel(SpecialModels.M16_A1_BOLT.getModel(), stack, matrices, renderBuffer, light, overlay);
-        matrices.push();
+        matrices.pop();
     }
 }

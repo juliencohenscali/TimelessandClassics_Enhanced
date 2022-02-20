@@ -9,6 +9,8 @@ import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.handler.RecoilHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.util.RenderUtil;
+import com.tac.guns.common.Gun;
+import com.tac.guns.item.TransitionalTypes.TimelessGunItem;
 import com.tac.guns.item.attachment.IAttachment;
 import com.tac.guns.util.OptifineHelper;
 import net.minecraft.client.Minecraft;
@@ -45,33 +47,36 @@ public class EotechShortSightModel implements IOverrideModel
         float green = ((glassGlowColor >> 8) & 0xFF) / 255F;
         float blue = ((glassGlowColor >> 0) & 0xFF) / 255F;
 
-
-
         matrixStack.translate(0, 0.055, 0);
 
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
 
         matrixStack.translate(0, -0.049, 0);
 
+        Gun gun = ((TimelessGunItem)parent.getItem()).getGun();
+
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
             matrixStack.push();
             {
+                // Walking bobbing
+                boolean aimed = false;
+                if(AimingHandler.get().isAiming())
+                    aimed = true;
+
+                double invertZoomProgress = aimed ? 0.085 : 0.68;//double invertZoomProgress = aimed ? 0.135 : 0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
+
+                double invertProgress = (1.0 - AimingHandler.get().getNormalisedAdsProgress());
                 Matrix4f matrix = matrixStack.getLast().getMatrix();
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
+                //matrixStack.translate(0, 0, -0.2);
                 float size = 1.4F / 16.0F;
                 matrixStack.translate(-size / 2, 1.38 * 0.0625, -0.3 * 0.0625);
 
                 IVertexBuilder builder;
 
-                double invertProgress = (1.0 - AimingHandler.get().getNormalisedAdsProgress());
                 matrixStack.translate(-0.04 * invertProgress, 0.01 * invertProgress, 0);
-
-                double scale = 3.75;
-                matrixStack.translate(size / 2, size / 2, 0);
-                matrixStack.translate(-(size / scale) / 2, -(size / scale) / 2, 0);
-                matrixStack.translate(0, 0, 0.0001);
 
                 int reticleGlowColor = RenderUtil.getItemStackColor(stack, parent, IAttachment.Type.SCOPE_RETICLE_COLOR, 1);
 
@@ -83,25 +88,38 @@ public class EotechShortSightModel implements IOverrideModel
                 alpha = AimingHandler.get().getNormalisedAdsProgress() != 0 &&  AimingHandler.get().getNormalisedAdsProgress() != 1 ? (float) (0.5F * AimingHandler.get().getNormalisedAdsProgress()) : (float) AimingHandler.get().getNormalisedAdsProgress();
 
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
-                // Walking bobbing
-                boolean aimed = false;
-                /* The new controlled bobbing */
-                if(AimingHandler.get().isAiming())
-                    aimed = true;
 
-                double invertZoomProgress = aimed ? 0.085 : 0.68;//double invertZoomProgress = aimed ? 0.135 : 0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
-                matrixStack.translate(-1.00*Math.asin(((double) (MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI)) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * invertZoomProgress), 1.00*(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140),0);//(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140), 0.0D);// * 1.140, 0.0D);
-                matrixStack.rotate(Vector3f.ZN.rotationDegrees((float)(MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 3.0F) * (float) invertZoomProgress));
-                matrixStack.rotate(Vector3f.XN.rotationDegrees((float)(Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI - 0.2F) * GunRenderingHandler.get().walkingCameraYaw) * 5.0F) * (float) invertZoomProgress));
+                //matrixStack.translate((double) (MathHelper.sin(GunRenderingHandler.get().walkingDistance * GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * GunRenderingHandler.get().zoomProgressInv, ((double) (-Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw)) * GunRenderingHandler.get().zoomProgressInv) * 1.140, 0.0D);// * 1.140, 0.0D);
+                //matrixStack.translate((double) (Math.asin(-MathHelper.sin(distanceWalked*crouch * (float) Math.PI) * cameraYaw * 0.5F)) * invertZoomProgress, ((double) (Math.asin((-Math.abs(-MathHelper.cos(distanceWalked*crouch * (float) Math.PI) * cameraYaw))) * invertZoomProgress)) * 1.140, 0.0D);// * 1.140, 0.0D);
 
-                matrixStack.translate(0, 0, (GunRenderingHandler.get().kick * -GunRenderingHandler.get().kickReduction)*0.75);
+                //matrixStack.rotate(Vector3f.ZP.rotationDegrees(-(MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 3.0F) * (float) GunRenderingHandler.get().zoomProgressInv));
+                //matrixStack.rotate(Vector3f.XP.rotationDegrees(-(Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI - 0.2F) * GunRenderingHandler.get().walkingCameraYaw) * 5.0F) * (float) GunRenderingHandler.get().zoomProgressInv));
+                //matrixStack.rotate(Vector3f.ZP.rotationDegrees(-GunRenderingHandler.get().immersiveWeaponRoll));
+
+                matrixStack.translate(0, gun.getModules().getAttachments().getScope().getYOffset(), -gun.getModules().getAttachments().getScope().getZOffset());
+
+                matrixStack.translate( -1 * (double) (Math.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * invertZoomProgress,
+                        ((double) (Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw)) * invertZoomProgress) * 1.140,0);//(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140), 0.0D);// * 1.140, 0.0D);
+                /*matrixStack.translate( -1 * (double) (Math.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 0.5F) * invertZoomProgress,
+                        (Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress),0);//(Math.asin((double) (Math.abs(-MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw))) * invertZoomProgress * 1.140), 0.0D);// * 1.140, 0.0D);
+                */matrixStack.rotate(Vector3f.ZP.rotationDegrees(( 1.125f*( MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 3.0F) * (float) invertZoomProgress)) );
+                matrixStack.rotate(Vector3f.XP.rotationDegrees(-1f*(Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI - 0.2F) * GunRenderingHandler.get().walkingCameraYaw) * 5.0F) * (float) invertZoomProgress));
+
+                matrixStack.translate(0, -gun.getModules().getAttachments().getScope().getYOffset(), gun.getModules().getAttachments().getScope().getZOffset());
+
+                matrixStack.translate(0, 0, -0.75f*(GunRenderingHandler.get().kick * GunRenderingHandler.get().kickReduction));
                 matrixStack.translate(0, 0, -0.35);
-                matrixStack.rotate(Vector3f.YN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().recoilReduction)*0.5f));
-                matrixStack.rotate(Vector3f.ZN.rotationDegrees((GunRenderingHandler.get().recoilSway * RecoilHandler.get().horizontalCameraRecoil * 0.65f * GunRenderingHandler.get().recoilReduction)*0.5f)); // seems to be interesting to increase the force of
+                matrixStack.rotate(Vector3f.YP.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().recoilReduction)*0.625f));
+                matrixStack.rotate(Vector3f.ZN.rotationDegrees((GunRenderingHandler.get().recoilSway * RecoilHandler.get().horizontalCameraRecoil)*0.625f)); // seems to be interesting to increase the force of
                 //matrixStack.rotate(Vector3f.ZP.rotationDegrees(recoilSway * 2.5f * recoilReduction)); // seems to be interesting to increase the force of
-                matrixStack.rotate(Vector3f.XP.rotationDegrees((GunRenderingHandler.get().recoilLift * GunRenderingHandler.get().recoilReduction) * 0.75F));
+                matrixStack.rotate(Vector3f.XP.rotationDegrees((GunRenderingHandler.get().recoilLift * GunRenderingHandler.get().recoilReduction)*0.625f));
                 matrixStack.translate(0, 0, 0.35);
 
+                matrixStack.translate(0, 0, 0.010);
+                double scale = 3.75;
+                matrixStack.translate(size / 2, size / 2, 0);
+                matrixStack.translate(-(size / scale) / 2, -(size / scale) / 2, 0);
+                matrixStack.translate(0, 0, 0.0001);
 
                 builder.pos(matrix, 0, (float) (size / scale), 0).color(red, green, blue, alpha).tex(0.0F, 0.9375F).overlay(overlay).lightmap(15728880).normal(normal, 0.0F, 1.0F, 0.0F).endVertex();
                 builder.pos(matrix, 0, 0, 0).color(red, green, blue, alpha).tex(0.0F, 0.0F).overlay(overlay).lightmap(15728880).normal(normal, 0.0F, 1.0F, 0.0F).endVertex();
