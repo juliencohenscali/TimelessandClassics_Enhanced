@@ -14,7 +14,8 @@
     "weaponRecoilDuration": 0.775,
     "cameraRecoilModifier": 1.65,
     "alwaysSpread": true,
-    "spread": 4.22
+    "spread": 4.22,
+    "weightKilo": 10.3
   },
   "reloads": {
     "magFed": true,
@@ -49,7 +50,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.65,
+      "fovModifier": 0.8,
       "yOffset": 10,
       "zOffset": -3.7
     }],

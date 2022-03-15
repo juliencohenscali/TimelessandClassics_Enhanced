@@ -104,9 +104,9 @@ public final class Gun implements INBTSerializable<CompoundNBT>
             tag.putInt("Rate", this.rate);
             tag.putIntArray("RateSelector", this.rateSelector);
             tag.putString("GripType", this.gripType.getId().toString());
-            tag.putFloat("RecoilAngle", this.recoilAngle*1.75F); // x2 for quick camera recoil reduction balancing
-            tag.putFloat("RecoilKick", this.recoilKick);
-            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle*1.75F); // x2 for quick camera recoil reduction balancing
+            tag.putFloat("RecoilAngle", this.recoilAngle); // x2 for quick camera recoil reduction balancing
+            tag.putFloat("RecoilKick", this.recoilKick/1.5f);
+            tag.putFloat("HorizontalRecoilAngle", this.horizontalRecoilAngle/1.5f); // x2 for quick camera recoil reduction balancing
             tag.putFloat("CameraRecoilModifier", this.cameraRecoilModifier);
             tag.putFloat("RecoilDurationOffset", this.recoilDuration);
             tag.putFloat("WeaponRecoilDuration", this.weaponRecoilDuration);
@@ -339,7 +339,7 @@ public final class Gun implements INBTSerializable<CompoundNBT>
          */
         public float getWeightKilo()
         {
-            return this.weightKilo;
+            return this.weightKilo;//*1.25f;
         }
     }
 

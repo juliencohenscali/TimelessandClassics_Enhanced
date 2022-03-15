@@ -12,7 +12,8 @@
     "cameraRecoilModifier": 2.375,
     "alwaysSpread": true,
     "spread": 11.25,
-    "projectileAmount": 11
+    "projectileAmount": 11,
+    "weightKilo": 3.0
   },
   "reloads": {
     "magFed": false,
@@ -47,7 +48,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.75,
+      "fovModifier": 0.8,
       "yOffset": 8.18,
       "zOffset": 1.2
     }],

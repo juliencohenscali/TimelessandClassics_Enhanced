@@ -4,21 +4,21 @@
     "rate": 3,
     "rateSelector": [0,1,2],
     "gripType":  "tac:two_handed_ak47",
-    "recoilAngle": 3.225,
-    "horizontalRecoilAngle": 1.425,
-    "recoilKick": 2.25,
-    "recoilAdsReduction": 0.2275,
-    "weaponRecoilDuration": 0.9875,
-    "cameraRecoilModifier": 0.525,
-    "recoilDuration": 0.1725,
+    "recoilAngle": 3.325,
+    "horizontalRecoilAngle": 1.475,
+    "recoilKick": 1.65,
+    "recoilAdsReduction": 0.2775,
+    "weaponRecoilDuration": 0.9625,
+    "cameraRecoilModifier": 0.55,
+    "recoilDuration": 0.1775,
     "alwaysSpread": true,
-    "spread": 2.225,
+    "spread": 2.525,
     "weightKilo": 3.80
   },
   "projectile": {
     "item":  "tac:762x39",
     "visible": true,
-    "damage": 12,
+    "damage": 13,
     "size": 0.2,
     "speed": 29.5,
     "life": 12
@@ -26,10 +26,10 @@
   "reloads": {
     "magFed": true,
     "maxAmmo": 10,
-    "reloadMagTimer": 42,
+    "reloadMagTimer": 68,
     "additionalReloadEmptyMagTimer": 22,
-    "maxAdditionalAmmoPerOC": [10, 15, 20],
-    "preReloadPauseTicks": 28
+    "maxAdditionalAmmoPerOC": [5, 10, 20],
+    "preReloadPauseTicks": 8
   },
   "sounds": {
     "fire":  "tac:item.fire_ak47",
@@ -52,9 +52,9 @@
   "modules": {
     "zoom": [
       {
-      "fovModifier": 0.65,
+      "fovModifier": 0.7,
       "yOffset": 11.185,
-      "zOffset": -8.875
+      "zOffset": -6.125
       }
     ],
     "attachments": {
@@ -65,7 +65,7 @@
       },
       "scope": {
         "yOffset": 10.45,
-        "zOffset": 8.475,
+        "zOffset": 7.275,
         "scale": 1.0
       },
       "underBarrel": {

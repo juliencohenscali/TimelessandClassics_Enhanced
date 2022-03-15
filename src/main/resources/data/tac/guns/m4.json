@@ -12,7 +12,8 @@
     "cameraRecoilModifier": 1.015,
     "recoilDuration": 0.375,
     "alwaysSpread": true,
-    "spread": 3.925
+    "spread": 3.925,
+    "weightKilo": 3.2
   },
   "reloads": {
     "magFed": true,
@@ -47,7 +48,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.60,
+      "fovModifier": 0.8,
       "yOffset": 11.98,
       "zOffset": -1.2
     }],

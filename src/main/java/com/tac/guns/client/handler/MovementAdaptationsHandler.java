@@ -53,10 +53,10 @@ public class MovementAdaptationsHandler
             }
         }
     }
-    private float revisionFov(float speed)
-    {
-        return speed > 0.1 ? speed : 1f;
-    }
+    //private float revisionFov(float speed)
+    //{
+    //    return speed > 0.1 ? speed : 1f;
+    //}
 
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public void onJump(LivingEvent.LivingJumpEvent event)
@@ -65,8 +65,8 @@ public class MovementAdaptationsHandler
             return;
         if(speed < 0.077f)
             event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/2,event.getEntityLiving().getMotion().getY()/1.125,event.getEntityLiving().getMotion().getZ()/2);
-        else if(speed < 0.1f)
-            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/1.6,event.getEntityLiving().getMotion().getY()/1.125,event.getEntityLiving().getMotion().getZ()/1.6);
+        else if(speed < 0.9f)
+            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/1.5,event.getEntityLiving().getMotion().getY()/1.1125,event.getEntityLiving().getMotion().getZ()/1.5);
     }
 
     @SubscribeEvent//(priority = EventPriority.HIGH)

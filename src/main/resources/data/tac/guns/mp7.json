@@ -4,28 +4,30 @@
     "rate": 2,
     "rateSelector": [0,1,2],
     "gripType": "tac:two_handed_vector",
-    "recoilAngle": 0.825,
-    "horizontalRecoilAngle": 0.425,
-    "recoilKick": 0.745,
-    "recoilAdsReduction": 0.30,
-    "weaponRecoilDuration": 0.925,
+    "recoilAngle": 1.625,
+    "horizontalRecoilAngle": 1.425,
+    "recoilKick": 0.945,
+    "recoilAdsReduction": 0.20,
+    "weaponRecoilDuration": 0.935,
+    "cameraRecoilModifier": 2.0,
     "alwaysSpread": true,
-    "spread": 4.15
+    "spread": 3.925,
+    "weightKilo": 2.1
   },
   "reloads": {
     "magFed": true,
     "maxAmmo": 20,
-    "reloadMagTimer": 38,
-    "additionalReloadEmptyMagTimer": 14,
-    "maxAdditionalAmmoPerOC": [20, 30, 45],
+    "reloadMagTimer": 44,
+    "additionalReloadEmptyMagTimer": 16,
+    "maxAdditionalAmmoPerOC": [10, 20, 30],
     "preReloadPauseTicks": 4
   },
   "projectile": {
     "item": "tac:9mm_round",
     "visible": true,
-    "damage": 3,
+    "damage": 5,
     "size": 0.1,
-    "speed": 44.5,
+    "speed": 48.5,
     "life": 2,
     "ricochet": true
   },
@@ -49,7 +51,7 @@
   "modules": {
     "zoom": [
       {
-        "fovModifier": 0.65,
+        "fovModifier": 0.9,
         "yOffset": 12.2375,
         "zOffset": -0.85
       }
@@ -61,8 +63,8 @@
         "scale": 1.00
       },
       "scope": {
-        "yOffset": 10.025,
-        "zOffset": 1.325,
+        "yOffset": 9.9,
+        "zOffset": 1.125,
         "scale": 1.00
       }
     }

@@ -239,7 +239,7 @@ public class ReloadHandler
             return;
         }
 
-        if(KeyBinds.KEY_RELOAD.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS)
+        if(KeyBinds.KEY_RELOAD.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS && player.getHeldItemMainhand().getItem() instanceof GunItem)
         {
             ItemStack stack = player.getHeldItemMainhand();
             if(!SyncedPlayerData.instance().get(player, ModSyncedDataKeys.RELOADING))
@@ -257,7 +257,7 @@ public class ReloadHandler
                 PacketHandler.getPlayChannel().send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), (player.getPosY() + 1.0), player.getPosZ(), 16.0, player.world.getDimensionKey())), message);
             }
         }
-        if(KeyBinds.KEY_UNLOAD.isPressed() && event.getAction() == GLFW.GLFW_PRESS)
+        if(KeyBinds.KEY_UNLOAD.isPressed() && event.getAction() == GLFW.GLFW_PRESS && player.getHeldItemMainhand().getItem() instanceof GunItem)
         {
             this.setReloading(false);
             PacketHandler.getPlayChannel().sendToServer(new MessageUnload());

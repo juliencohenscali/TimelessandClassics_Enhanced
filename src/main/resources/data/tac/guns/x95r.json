@@ -13,7 +13,8 @@
     "horizontalRecoilAngle": 0.325,
     "recoilAdsReduction": 0.325,
     "alwaysSpread": true,
-    "spread": 4.05
+    "spread": 4.05,
+    "weightKilo": 3.15
   },
   "reloads": {
     "magFed": true,
@@ -47,7 +48,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.60,
+      "fovModifier": 0.8,
       "yOffset": 12.125,
       "zOffset": 2.25
     }],

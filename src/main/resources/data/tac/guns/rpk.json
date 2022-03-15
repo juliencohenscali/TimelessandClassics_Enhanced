@@ -12,7 +12,8 @@
     "cameraRecoilModifier": 1.35,
     "recoilDuration": 0.205,
     "alwaysSpread": true,
-    "spread": 3.75
+    "spread": 3.75,
+    "weightKilo": 5.0
   },
   "projectile": {
     "item":  "tac:762x39",
@@ -51,7 +52,7 @@
   "modules": {
     "zoom": [
       {
-      "fovModifier": 0.65,
+      "fovModifier": 0.8,
       "yOffset": 13.775,
       "zOffset": -7.75
       }

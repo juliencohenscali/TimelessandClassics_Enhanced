@@ -2,6 +2,7 @@ package com.tac.guns.client.network;
 
 import com.tac.guns.Config;
 import com.tac.guns.GunMod;
+import com.tac.guns.Reference;
 import com.tac.guns.client.BulletTrail;
 import com.tac.guns.client.CustomGunManager;
 import com.tac.guns.client.audio.GunShotSound;
@@ -54,6 +55,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.KeybindTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.ModList;
@@ -62,6 +66,7 @@ import org.apache.logging.log4j.Level;
 //import mod.chiselsandbits.chiseling.
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -273,7 +278,7 @@ public class ClientPlayHandler
             //if(player.isSprinting() && !(heldItem.getItem() instanceof TimelessGunItem))
             //    player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.13F);
             //else
-                player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.1F);
+            player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.1F);
             MovementAdaptationsHandler.get().readyToReset = false;
             MovementAdaptationsHandler.get().readyToUpdate = true;
         }
@@ -286,7 +291,7 @@ public class ClientPlayHandler
         if ((gun.getGeneral().getWeightKilo() > 0) && MovementAdaptationsHandler.get().readyToUpdate)
         {
             float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (( (gun.getGeneral().getWeightKilo() * (1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.725F));
-            speed*=1.225;
+            speed*=0.9625;
             player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.105F), 0.0725F));
             if(player.isSprinting()) {
                 player.getAttribute(MOVEMENT_SPEED).setBaseValue(player.getAttribute(MOVEMENT_SPEED).getValue() * 1.3F);
@@ -298,7 +303,7 @@ public class ClientPlayHandler
         else
             MovementAdaptationsHandler.get().speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue();
         player.sendPlayerAbilities();
-        //GunMod.LOGGER.log(Level.FATAL, );
+        player.sendStatusMessage(new TranslationTextComponent("Speed is: " + player.getAttribute(MOVEMENT_SPEED).getValue()) ,true);
         MovementAdaptationsHandler.get().previousWeight = gun.getGeneral().getWeightKilo();
     }
 }

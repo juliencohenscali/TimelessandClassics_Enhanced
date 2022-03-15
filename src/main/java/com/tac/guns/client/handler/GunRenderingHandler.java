@@ -245,6 +245,7 @@ public class GunRenderingHandler {
             }
         }
         Minecraft mc = Minecraft.getInstance();
+        GunItem gunItem = (GunItem) heldItem.getItem();
         if (mc.gameSettings.viewBobbing && mc.getRenderViewEntity() instanceof PlayerEntity)
         {
             PlayerEntity playerentity = (PlayerEntity) mc.getRenderViewEntity();
@@ -264,7 +265,8 @@ public class GunRenderingHandler {
             if(AimingHandler.get().isAiming())
                 aimed = true;
 
-            double invertZoomProgress = aimed ? 0.085 : 0.68; //0.135 : 0.44;//0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
+            //double invertZoomProgress = aimed ? 0.0575 : 0.468; //0.135 : 0.44;//0.94;//aimed ? 1.0 - AimingHandler.get().getNormalisedAdsProgress() : ;
+            double invertZoomProgress = aimed ? (Gun.getScope(heldItem) != null ? 0.0575 : 0.0725) : 0.468;
             float crouch = mc.player.isCrouching() ? 148f : 1f;
 
             this.walkingDistance = distanceWalked;
@@ -286,7 +288,7 @@ public class GunRenderingHandler {
                 all credit to Mr.Crayfish who developed this weapon roll code for CGM,
                 all I added was scaling for other game actions and adjusted rolling values
             */
-            float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * (6.25F * rollingForceCrouch * rollingForceAim) : 0F;
+            float targetAngle = heldItem.getItem() instanceof GunItem ? mc.player.movementInput.moveStrafe * (6.65F * rollingForceCrouch * rollingForceAim) : 0F;
             this.immersiveWeaponRoll = MathHelper.approach(this.immersiveWeaponRoll, targetAngle, 0.335F);
             matrixStack.rotate(Vector3f.ZP.rotationDegrees(this.immersiveWeaponRoll));
         }
@@ -323,7 +325,7 @@ public class GunRenderingHandler {
         float translateZ = model.getItemCameraTransforms().firstperson_right.translation.getZ();
 
         matrixStack.push();
-        GunItem gunItem = (GunItem) heldItem.getItem();
+
         Gun modifiedGun = gunItem.getModifiedGun(heldItem);
         int gunZoom = heldItem.getTag().getInt("currentZoom");
 

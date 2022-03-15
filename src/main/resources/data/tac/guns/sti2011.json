@@ -6,12 +6,13 @@
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 3.85,
-    "horizontalRecoilAngle": 1.025,
-    "recoilKick": 1.95,
-    "recoilAdsReduction": 0.50,
+    "recoilAngle": 7.35,
+    "horizontalRecoilAngle": 1.925,
+    "recoilKick": 1.85,
+    "recoilAdsReduction": 0.30,
     "alwaysSpread": true,
-    "spread": 1.75
+    "spread": 1.75,
+    "weightKilo": 1.1
   },
   "reloads": {
     "magFed": true,
@@ -45,7 +46,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.7,
+      "fovModifier": 0.9,
       "yOffset": 13.685,
       "zOffset": -12.6
     }],

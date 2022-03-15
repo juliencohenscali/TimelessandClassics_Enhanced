@@ -59,7 +59,7 @@ public class ModItems
     public static final RegistryObject<Item> M1A1_SMG = REGISTER.register("m1a1_smg", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> MK14 = REGISTER.register("mk14", () -> new TimelessGunItem(properties -> properties.group(GunMod.RIFLE)));
     public static final RegistryObject<Item> SPAS_12 = REGISTER.register("spas_12", () -> new TimelessGunItem(properties -> properties.group(GunMod.SHOTGUN)));
-    public static final RegistryObject<Item> DEAGLE_50 = REGISTER.register("deagle_50", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
+    public static final RegistryObject<Item> DEAGLE_50 = REGISTER.register("deagle_50", () -> new TimelessGunItem(properties -> properties.group(GunMod.PISTOL)));
     public static final RegistryObject<Item> HK_MP5A5 = REGISTER.register("hk_mp5a5", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> STEN_MK_II = REGISTER.register("sten_mk_ii", () -> new TimelessGunItem(properties -> properties.group(GunMod.SMG)));
     public static final RegistryObject<Item> GLOCK_18 = REGISTER.register("glock_18", () -> new TimelessPistolGunItem(properties -> properties.group(GunMod.PISTOL)));
@@ -103,7 +103,7 @@ public class ModItems
     public static final RegistryObject<Item> COYOTE_SIGHT = REGISTER.register("coyote_sight", () -> new ScopeItem(Scope.create(0.00F, 2.275F, 0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> AIMPOINT_T1_SIGHT = REGISTER.register("aimpoint_t1", () -> new ScopeItem(Scope.create(0.0F, 1.875F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> EOTECH_N_SIGHT = REGISTER.register("eotech_n", () -> new ScopeItem(Scope.create(0.00F, 1.775F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.385).viewFinderOffsetSpecial(0.385), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
-    public static final RegistryObject<Item> VORTEX_UH_1 = REGISTER.register("vortex_uh_1", () -> new ScopeItem(Scope.create(0.00F, 2.3F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.415).viewFinderOffsetSpecial(0.415), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
+    public static final RegistryObject<Item> VORTEX_UH_1 = REGISTER.register("vortex_uh_1", () -> new ScopeItem(Scope.create(0.00F, 2.3F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.3725).viewFinderOffsetSpecial(0.3725), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> EOTECH_SHORT_SIGHT = REGISTER.register("eotech_short", () -> new ScopeItem(Scope.create(0.00F, 2.2F,0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.420).viewFinderOffsetSpecial(0.420), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
     public static final RegistryObject<Item> SRS_RED_DOT_SIGHT = REGISTER.register("srs_red_dot", () -> new ScopeItem(Scope.create(0.00F, 1.9325F, 0.325, GunModifiers.LOW_FOV_ADS).viewFinderOffset(0.355).viewFinderOffsetSpecial(0.355), new Item.Properties().maxStackSize(1).group(GunMod.GROUP)));
 

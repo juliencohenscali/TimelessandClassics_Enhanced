@@ -12,7 +12,8 @@
     "recoilKick": 1.625,
     "recoilAdsReduction": 0.575,
     "alwaysSpread": true,
-    "spread": 1.35
+    "spread": 1.35,
+    "weightKilo": 4.35
   },
   "reloads": {
     "magFed": false,
@@ -47,7 +48,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.6,
+      "fovModifier": 0.7,
       "yOffset": 10.1,
       "zOffset": -8.85
     }],

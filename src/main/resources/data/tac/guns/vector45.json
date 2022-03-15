@@ -8,13 +8,16 @@
     ],
     "gripType": "tac:two_handed_vector",
     "maxAmmo": 20,
-    "reloadAmount": 5,
-    "recoilAngle": 6.545,
+    "recoilAngle": 2.225,
     "horizontalRecoilAngle": 0.85,
-    "recoilKick": 1.485,
-    "recoilAdsReduction": 0.28,
+    "recoilKick": 1.185,
+    "recoilAdsReduction": 0.24,
+    "weaponRecoilDuration": 0.9625,
+    "cameraRecoilModifier": 0.775,
+    "recoilDuration": 0.1775,
     "alwaysSpread": true,
-    "spread": 8.65
+    "spread": 6.65,
+    "weightKilo": 2.9
   },
   "reloads": {
     "magFed": true,
@@ -52,7 +55,7 @@
   },
   "modules": {
     "zoom": [{
-      "fovModifier": 0.60,
+      "fovModifier": 0.9,
       "yOffset": 14.80,
       "zOffset": 3.75
     }],
