@@ -10,43 +10,149 @@ public class GunModifiers
 {
     // All statics below this point are used for weaponDefault status's
 
-
-    // All statics below this point are used for attachments
-    public static final IGunModifier LOW_FOV_ADS = new IGunModifier()
+    public static final IGunModifier COYOTE_SIGHT_ADS = new IGunModifier()
     {
         @Override
         public double modifyAimDownSightSpeed(double speed)
         {
-            return speed * 0.95F;
+            return speed * 0.97F;
         }
+        @Override
+        public float additionalWeaponWeight() { return 0.10F; }
     };
-
-    public static final IGunModifier MIDRANGE_ADS = new IGunModifier()
+    public static final IGunModifier AIMPOINT_T1_SIGHT_ADS = new IGunModifier()
     {
         @Override
         public double modifyAimDownSightSpeed(double speed)
         {
-            return speed * 0.835F;
+            return speed * 0.925F;
         }
+        @Override
+        public float additionalWeaponWeight() { return 0.10F; }
     };
-
-    public static final IGunModifier LONGRANGE_ADS = new IGunModifier()
+    public static final IGunModifier EOTECH_N_SIGHT_ADS = new IGunModifier()
     {
         @Override
         public double modifyAimDownSightSpeed(double speed)
         {
-            return speed * 0.795F;
+            return speed * 0.93F;
         }
+        @Override
+        public float additionalWeaponWeight() { return 0.35F; }
+    };
+    public static final IGunModifier VORTEX_UH_1_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.97F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.25F; }
+    };
+    public static final IGunModifier EOTECH_SHORT_SIGHT_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.98F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.30F; }
+    };
+    public static final IGunModifier SRS_RED_DOT_SIGHT_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.90F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.30F; }
+    };
+    public static final IGunModifier ACOG_4_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.825F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.425F; }
+    };
+    public static final IGunModifier QMK152_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.80F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.5F; }
+    };
+    public static final IGunModifier VORTEX_LPVO_1_6_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.85F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.65F; }
+    };
+    public static final IGunModifier LONGRANGE_8x_SCOPE_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.75F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.7F; }
     };
 
-    public static final IGunModifier OLD_SCOPE_ADS = new IGunModifier()
+    public static final IGunModifier OLD_LONGRANGE_8x_SCOPE_ADS = new IGunModifier()
     {
         @Override
         public double modifyAimDownSightSpeed(double speed)
         {
             return speed * 0.625F;
         }
+        @Override
+        public float additionalWeaponWeight() { return 1.1F; }
     };
+    public static final IGunModifier OLD_LONGRANGE_4x_SCOPE_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.75F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.8F; }
+    };
+
+    public static final IGunModifier MINI_DOT_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.975F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.125F; }
+    };
+    public static final IGunModifier MICRO_HOLO_SIGHT_ADS = new IGunModifier()
+    {
+        @Override
+        public double modifyAimDownSightSpeed(double speed)
+        {
+            return speed * 0.975F;
+        }
+        @Override
+        public float additionalWeaponWeight() { return 0.125F; }
+    };
+
     public static final IGunModifier TACTICAL_STOCK_MODIFIER = new IGunModifier()
     {
         @Override

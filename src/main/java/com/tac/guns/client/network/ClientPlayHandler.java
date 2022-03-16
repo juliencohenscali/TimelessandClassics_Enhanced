@@ -278,7 +278,7 @@ public class ClientPlayHandler
             //if(player.isSprinting() && !(heldItem.getItem() instanceof TimelessGunItem))
             //    player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.13F);
             //else
-            player.getAttribute(MOVEMENT_SPEED).setBaseValue(0.1F);
+            player.getAttribute(MOVEMENT_SPEED).setBaseValue(player.isSprinting() ? 0.12F : 0.1F);
             MovementAdaptationsHandler.get().readyToReset = false;
             MovementAdaptationsHandler.get().readyToUpdate = true;
         }
@@ -290,12 +290,14 @@ public class ClientPlayHandler
 
         if ((gun.getGeneral().getWeightKilo() > 0) && MovementAdaptationsHandler.get().readyToUpdate)
         {
-            float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (( (gun.getGeneral().getWeightKilo() * (1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.725F));
-            speed*=0.9625;
-            player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.105F), 0.0725F));
-            if(player.isSprinting()) {
-                player.getAttribute(MOVEMENT_SPEED).setBaseValue(player.getAttribute(MOVEMENT_SPEED).getValue() * 1.3F);
-            }
+            //float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (( ((gun.getGeneral().getWeightKilo()*0.875f) * (1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.725F));
+            float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (1+((gun.getGeneral().getWeightKilo()*(1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) * 0.0275f)); //(1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.775F));
+
+            if(player.isSprinting())
+                player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.12F), 0.075F) * 1.125F); // * 1.225F
+            else
+                player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.095F), 0.075F));
+
             MovementAdaptationsHandler.get().readyToReset = true;
             MovementAdaptationsHandler.get().readyToUpdate = false;
             MovementAdaptationsHandler.get().speed = speed;
