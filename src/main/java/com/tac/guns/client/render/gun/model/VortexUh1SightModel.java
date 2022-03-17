@@ -33,6 +33,7 @@ public class VortexUh1SightModel implements IOverrideModel
 
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
+        matrixStack.push();
         if (Config.COMMON.gameplay.redDotSquish2D.get()) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.95D * (1.0D - transition);
@@ -44,7 +45,7 @@ public class VortexUh1SightModel implements IOverrideModel
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
 
         matrixStack.translate(0, -0.049, 0);
-
+        matrixStack.pop();
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
             matrixStack.push();
@@ -53,14 +54,14 @@ public class VortexUh1SightModel implements IOverrideModel
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
                 float size = 1.4F / 16.0F;
-                matrixStack.translate(-size / 2, 1.4865 * 0.0625, -0.3 * 0.0625);
+                matrixStack.translate(-size / 2, 1.5665 * 0.0625, 0.075 * 0.0625);  //0.3
 
                 IVertexBuilder builder;
 
                 double invertProgress = (1.0 - AimingHandler.get().getNormalisedAdsProgress());
                 matrixStack.translate(-0.04 * invertProgress, 0.01 * invertProgress, 0);
 
-                double scale = 4.45;
+                double scale = 4.775;
                 matrixStack.translate(size / 2, size / 2, 0);
                 matrixStack.translate(-(size / scale) / 2, -(size / scale) / 2, 0);
                 matrixStack.translate(0, 0, 0.0001);

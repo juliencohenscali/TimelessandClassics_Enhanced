@@ -290,11 +290,10 @@ public class ClientPlayHandler
 
         if ((gun.getGeneral().getWeightKilo() > 0) && MovementAdaptationsHandler.get().readyToUpdate)
         {
-            //float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (( ((gun.getGeneral().getWeightKilo()*0.875f) * (1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.725F));
             float speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue() / (1+((gun.getGeneral().getWeightKilo()*(1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) * 0.0275f)); //(1+GunModifierHelper.getModifierOfWeaponWeight(heldItem)) + GunModifierHelper.getAdditionalWeaponWeight(heldItem)) / 3.775F));
 
             if(player.isSprinting())
-                player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.12F), 0.075F) * 1.125F); // * 1.225F
+                player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.12F), 0.075F) * 1.125F);
             else
                 player.getAttribute(MOVEMENT_SPEED).setBaseValue(Math.max(Math.min(speed, 0.095F), 0.075F));
 
@@ -305,7 +304,7 @@ public class ClientPlayHandler
         else
             MovementAdaptationsHandler.get().speed = (float)player.getAttribute(MOVEMENT_SPEED).getValue();
         player.sendPlayerAbilities();
-        player.sendStatusMessage(new TranslationTextComponent("Speed is: " + player.getAttribute(MOVEMENT_SPEED).getValue()) ,true);
+        //player.sendStatusMessage(new TranslationTextComponent("Speed is: " + player.getAttribute(MOVEMENT_SPEED).getValue()) ,true);
         MovementAdaptationsHandler.get().previousWeight = gun.getGeneral().getWeightKilo();
     }
 }

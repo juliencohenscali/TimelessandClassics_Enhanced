@@ -131,6 +131,9 @@
     "info.tac.ignore_ammo": "Infinite Ammo",
     "info.tac.ammo": "Ammo: %s",
     "info.tac.ammo_type": "Ammo Type: %s",
+    "info.tac.oldRifleScope": "This weapon's scope slot accepts only %s",
+    "info.tac.pistolScope": "Scope slot only accepts %s",
+    "info.tac.pistolBarrel": "Barrel slot only accepts %s",
     "info.tac.attachment_help": "Press %s in-game for Attachments",
 
     "key.categories.tac": "Timeless and Classic Guns",

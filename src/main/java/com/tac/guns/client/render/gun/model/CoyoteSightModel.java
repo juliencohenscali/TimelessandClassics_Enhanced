@@ -36,6 +36,7 @@ public class CoyoteSightModel implements IOverrideModel
 
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
+
         if(Config.COMMON.gameplay.redDotSquish2D.get()) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.95D * (1.0D - transition);
@@ -58,7 +59,7 @@ public class CoyoteSightModel implements IOverrideModel
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
                 float size = 1.4F / 16.0F;
-                matrixStack.translate(-size / 2, 0.85 * 0.0625, -0.3 * 0.0625);
+                matrixStack.translate(-size / 2, 0.85 * 0.0625, 0.075 * 0.0625);
 
                 IVertexBuilder builder;
 

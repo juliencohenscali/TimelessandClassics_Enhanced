@@ -3,6 +3,7 @@ package com.tac.guns.item.TransitionalTypes;
 
 import com.tac.guns.Config;
 import com.tac.guns.GunMod;
+import com.tac.guns.client.handler.MovementAdaptationsHandler;
 import com.tac.guns.common.Gun;
 import com.tac.guns.interfaces.IGunModifier;
 import com.tac.guns.item.GunItem;
@@ -25,6 +26,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import static net.minecraft.entity.ai.attributes.Attributes.MOVEMENT_SPEED;
 
 
 public class TimelessGunItem extends GunItem
@@ -82,8 +85,21 @@ public class TimelessGunItem extends GunItem
             else if (tagCompound.getInt("CurrentFireMode") == 2)
                 tooltip.add((new TranslationTextComponent("info.tac.firemode_auto", new Object[]{(new KeybindTextComponent("key.tac.fireSelect")).getString().toUpperCase(Locale.ENGLISH)})).mergeStyle(TextFormatting.RED));
         }
-        tooltip.add((new TranslationTextComponent("info.tac.attachment_help", new Object[]{(new KeybindTextComponent("key.tac.attachments")).getString().toUpperCase(Locale.ENGLISH)})).mergeStyle(TextFormatting.YELLOW));
 
+        if(tagCompound != null)
+        {
+            GunItem gun = (GunItem)stack.getItem();
+            float speed = 0.1f / (1+((gun.getModifiedGun(stack).getGeneral().getWeightKilo()*(1+GunModifierHelper.getModifierOfWeaponWeight(stack)) + GunModifierHelper.getAdditionalWeaponWeight(stack)) * 0.0275f));
+            speed = Math.max(Math.min(speed, 0.095F), 0.075F);
+            if(speed > 0.09)
+                tooltip.add((new TranslationTextComponent("info.tac.lightWeightGun").mergeStyle(TextFormatting.DARK_AQUA)));
+            else if(speed < 0.09 && speed > 0.0825)
+                tooltip.add((new TranslationTextComponent("info.tac.standardWeightGun").mergeStyle(TextFormatting.DARK_GREEN)));
+            else
+                tooltip.add((new TranslationTextComponent("info.tac.heavyWeightGun").mergeStyle(TextFormatting.DARK_RED)));
+        }
+
+        tooltip.add((new TranslationTextComponent("info.tac.attachment_help", new Object[]{(new KeybindTextComponent("key.tac.attachments")).getString().toUpperCase(Locale.ENGLISH)})).mergeStyle(TextFormatting.YELLOW));
     }
 
     private final IGunModifier[] modifiers;

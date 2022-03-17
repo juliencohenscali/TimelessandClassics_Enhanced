@@ -42,7 +42,7 @@ public class LongRange8xScopeModel implements IOverrideModel
 
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
-
+        matrixStack.push();
         if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get()) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.95D * (1.0D - transition);
@@ -56,6 +56,8 @@ public class LongRange8xScopeModel implements IOverrideModel
 
         matrixStack.translate(0, 0.15, 0.42);
 
+        matrixStack.pop();
+        matrixStack.translate(0, 0, 0.04);
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
 
@@ -83,7 +85,7 @@ public class LongRange8xScopeModel implements IOverrideModel
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
                 //matrixStack.translate(-size / 2, 0.0595 , 4.55 * 0.0625);
-                matrixStack.translate(-size / 2, 0.08725  , 4.70 * 0.0625);
+                matrixStack.translate(-size / 2, 0.08725  , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.70 * 0.0625 : 2.37 * 0.0625); //4.70
 
                 float color = (float) AimingHandler.get().getNormalisedAdsProgress() * 0.8F + 0.2F;
 
@@ -118,7 +120,7 @@ public class LongRange8xScopeModel implements IOverrideModel
                 alpha = (float) (1F * AimingHandler.get().getNormalisedAdsProgress());
 
                 matrixStack.scale(10.0f,10.0f,10.0f);
-                matrixStack.translate(-0.00455715, -0.00456, 0.0000);
+                matrixStack.translate(-0.00455715, -0.00456, 0.0);
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
                 // Walking bobbing
                 boolean aimed = false;
