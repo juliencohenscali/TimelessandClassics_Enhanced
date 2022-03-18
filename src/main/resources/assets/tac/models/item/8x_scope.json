@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "tac:items/glock_slide_17",
-		"1": "tac:items/ppsh_bolt",
+		"1": "tac:items/shiny_brighter_color",
 		"2": "tac:items/8x_scope_glass",
 		"3": "tac:items/raythean",
 		"particle": "tac:items/glock_slide_17"
@@ -3084,7 +3084,6 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [8.11338, 12.44913, 13.84953]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#3", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 0], "texture": "#3"},
 				"south": {"uv": [0, 0, 0, 0], "texture": "#3", "tintindex": 0},
 				"west": {"uv": [0.0625, 6.34375, 15.96875, 9.90625], "texture": "#3", "tintindex": 0},
 				"up": {"uv": [0, 0, 0, 0], "texture": "#3"},
@@ -3148,8 +3147,8 @@
 		},
 		"gui": {
 			"rotation": [30, -145, 0],
-			"translation": [4.75, -9, 0],
-			"scale": [1.62, 1.62, 1.62]
+			"translation": [7, -12.5, 0],
+			"scale": [2, 2, 2]
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],

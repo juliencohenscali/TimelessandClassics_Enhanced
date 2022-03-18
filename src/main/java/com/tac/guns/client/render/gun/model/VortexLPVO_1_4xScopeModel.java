@@ -36,8 +36,8 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
 
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
-
-        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get()) {
+        matrixStack.push();
+        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get() && transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player)) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.75D * (1.0D - transition);
             matrixStack.translate(0,0,transition*0.12);
@@ -49,9 +49,9 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
 
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
 
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(180F));
         matrixStack.translate(0, -0.057, 0);
-
+        matrixStack.pop();
+        matrixStack.translate(0, 0.017, 0);
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
 
@@ -75,7 +75,7 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
                 Matrix4f matrix = matrixStack.getLast().getMatrix();
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
-                matrixStack.translate(-size / 2, 0.0685075 , 4.4 * 0.0625);
+                matrixStack.translate(-size / 2, 0.0685075 , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.4 * 0.0625 : 2.15 * 0.0625);
 
                 float color = (float) AimingHandler.get().getNormalisedAdsProgress() * 0.8F + 0.2F;
 

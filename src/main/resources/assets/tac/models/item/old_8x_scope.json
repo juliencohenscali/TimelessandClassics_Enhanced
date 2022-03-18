@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "tac:items/old_scope_lens",
 		"1": "tac:items/m60_body",
-		"2": "tac:items/ppsh_bolt",
+		"2": "tac:items/shiny_brighter_color",
 		"particle": "tac:items/m60_body"
 	},
 	"elements": [

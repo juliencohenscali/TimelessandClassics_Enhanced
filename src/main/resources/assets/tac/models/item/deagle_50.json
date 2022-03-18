@@ -5825,20 +5825,21 @@
 			"scale": [0.275, 0.275, 0.275]
 		},
 		"firstperson_righthand": {
-			"translation": [-0.5, 0.5, -19.25],
+			"translation": [-0.5, 0.5, -21],
 			"scale": [0.9, 0.9, 0.9]
 		},
 		"firstperson_lefthand": {
-			"translation": [-1.75, 0.5, -19.25]
+			"translation": [-0.5, 0.5, -21],
+			"scale": [0.9, 0.9, 0.9]
 		},
 		"ground": {
-			"translation": [0, -1.25, 0],
+			"translation": [0, 5, 0],
 			"scale": [0.275, 0.275, 0.275]
 		},
 		"gui": {
-			"rotation": [30, -145, 0],
-			"translation": [3.75, -3.75, 0],
-			"scale": [0.88, 0.88, 0.88]
+			"rotation": [45, 60, -30],
+			"translation": [-3.75, 2.5, 0],
+			"scale": [0.6, 0.6, 0.6]
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],

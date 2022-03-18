@@ -8317,14 +8317,13 @@
 			"scale": [-0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
-			"translation": [-4.75, 6.5, 1.5]
+			"translation": [-4, 6.25, -0.5]
 		},
 		"firstperson_lefthand": {
-			"translation": [-4.75, 6.5, 1.5],
-			"scale": [-1, 1, 1]
+			"translation": [-4, 6.25, -0.5]
 		},
 		"ground": {
-			"translation": [0, 1.5, 0],
+			"translation": [0, 3, 0],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"gui": {
@@ -8334,7 +8333,7 @@
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],
-			"translation": [0, 2.5, -2.25]
+			"translation": [0, 2.5, -2]
 		}
 	},
 	"groups": [

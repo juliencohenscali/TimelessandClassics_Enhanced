@@ -2452,9 +2452,9 @@
 			"scale": [0.75, 0.75, 0.75]
 		},
 		"gui": {
-			"rotation": [45, 45, -45],
-			"translation": [0, 2.25, 0],
-			"scale": [0.6, 0.6, 0.6]
+			"rotation": [30, -145, 0],
+			"translation": [0.75, 1.5, 0],
+			"scale": [0.55, 0.55, 0.55]
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],
@@ -2464,7 +2464,7 @@
 	},
 	"groups": [
 		{
-			"name": "枪身(Gun body)",
+			"name": "æžªèº«(Gun body)",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [
@@ -2527,7 +2527,7 @@
 			]
 		},
 		{
-			"name": "火箭(Rockets)",
+			"name": "ç�«ç®­(Rockets)",
 			"origin": [8, 8, 8],
 			"color": 4,
 			"children": [
@@ -2580,7 +2580,7 @@
 			]
 		},
 		{
-			"name": "瞄具(Sight)",
+			"name": "çž„å…·(Sight)",
 			"origin": [8, 8, 8],
 			"color": 3,
 			"children": [

@@ -43,7 +43,7 @@ public class LongRange8xScopeModel implements IOverrideModel
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
         matrixStack.push();
-        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get()) {
+        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get() && transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player)) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.95D * (1.0D - transition);
             matrixStack.translate(0,0,transition*0.18);
@@ -86,6 +86,7 @@ public class LongRange8xScopeModel implements IOverrideModel
 
                 //matrixStack.translate(-size / 2, 0.0595 , 4.55 * 0.0625);
                 matrixStack.translate(-size / 2, 0.08725  , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.70 * 0.0625 : 2.37 * 0.0625); //4.70
+                // matrixStack.translate(-size / 2, 0.08725  , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.70 * 0.0625 : 2.37 * 0.0625); //4.70
 
                 float color = (float) AimingHandler.get().getNormalisedAdsProgress() * 0.8F + 0.2F;
 

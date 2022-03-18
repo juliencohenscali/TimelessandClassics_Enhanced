@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "tac:items/raythean",
 		"1": "tac:items/glock_slide_17",
-		"3": "tac:items/ppsh_bolt",
+		"3": "tac:items/shiny_brighter_color",
 		"particle": "tac:items/vortex_green_glass"
 	},
 	"elements": [
@@ -13,12 +13,8 @@
 			"to": [8.65525, 9.93751, 6.21985],
 			"rotation": {"angle": 0, "axis": "y", "origin": [6.38181, 9.84376, 6.46204]},
 			"faces": {
-				"north": {"uv": [0, 0, 10.5, 10], "texture": "#particle", "tintindex": 1},
-				"east": {"uv": [0, 0, 10.5, 10], "texture": "#particle", "tintindex": 1},
-				"south": {"uv": [0, 0, 10.5, 10], "texture": "#particle", "tintindex": 1},
-				"west": {"uv": [0, 0, 10.5, 10], "texture": "#particle", "tintindex": 1},
-				"up": {"uv": [0, 0, 10.5, 10], "rotation": 270, "texture": "#particle", "tintindex": 1},
-				"down": {"uv": [0, 0, 10.5, 10], "rotation": 90, "texture": "#particle", "tintindex": 1}
+				"north": {"uv": [0, 0, 8, 8], "texture": "#particle", "tintindex": 1},
+				"south": {"uv": [8, 0, 0, 8], "texture": "#particle", "tintindex": 1}
 			}
 		},
 		{
@@ -3239,14 +3235,13 @@
 		{
 			"name": "pattern",
 			"from": [8.8612, 9.13952, 5.9338],
-			"to": [8.8612, 9.53014, 7.59395],
+			"to": [8.8622, 9.53014, 7.59395],
 			"shade": false,
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.35729, -9.06361, -3.32401]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0], "texture": "#0"},
 				"east": {"uv": [0, 6.1875, 16, 9.90625], "texture": "#0"},
 				"south": {"uv": [0, 0, 0, 0], "texture": "#0"},
-				"west": {"uv": [0, 0, 0, 0], "texture": "#0"},
 				"up": {"uv": [0, 0, 0, 0], "texture": "#0"},
 				"down": {"uv": [0, 0, 0, 0], "texture": "#0"}
 			}
@@ -3254,7 +3249,7 @@
 		{
 			"name": "pattern",
 			"from": [7.1412, 9.13952, 5.9338],
-			"to": [7.1412, 9.53014, 7.59395],
+			"to": [7.1422, 9.53014, 7.59395],
 			"shade": false,
 			"rotation": {"angle": 0, "axis": "y", "origin": [9.28964, -8.59486, -3.40213]},
 			"faces": {

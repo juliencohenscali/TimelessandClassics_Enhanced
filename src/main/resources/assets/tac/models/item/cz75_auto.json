@@ -5282,20 +5282,20 @@
 			"translation": [-0.5, 1.75, -15]
 		},
 		"firstperson_lefthand": {
-			"translation": [-0.5, 0.5, -15.75]
+			"translation": [-0.5, 1.75, -15]
 		},
 		"ground": {
-			"translation": [0, 3, 0],
+			"translation": [0, 5, 0],
 			"scale": [0.275, 0.275, 0.275]
 		},
 		"gui": {
-			"rotation": [30, -145, 0],
-			"translation": [-0.25, 2.25, 0],
+			"rotation": [45, 60, -30],
+			"translation": [-0.5, 3, 0],
 			"scale": [0.75, 0.75, 0.75]
 		},
 		"fixed": {
 			"rotation": [0, 90, 0],
-			"translation": [-1.75, 0.25, -0.75],
+			"translation": [-1.75, 0.25, -1],
 			"scale": [0.55, 0.55, 0.55]
 		}
 	},
@@ -5439,7 +5439,7 @@
 			]
 		},
 		{
-			"name": "弹匣(Magazine)",
+			"name": "å¼¹åŒ£(Magazine)",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400]

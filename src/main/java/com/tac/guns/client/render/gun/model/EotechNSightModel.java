@@ -33,7 +33,8 @@ public class EotechNSightModel implements IOverrideModel
 
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
-        if (Config.COMMON.gameplay.redDotSquish2D.get()) {
+        matrixStack.push();
+        if (Config.COMMON.gameplay.redDotSquish2D.get() && transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player)) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             double zScale = 0.05D + 0.95D * (1.0D - transition);
             matrixStack.scale(1.0F, 1.0F, (float)zScale);
@@ -44,7 +45,8 @@ public class EotechNSightModel implements IOverrideModel
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
 
         matrixStack.translate(0, -0.049, 0);
-
+        matrixStack.pop();
+        matrixStack.translate(0, 0.006, 0);
         if(transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player))
         {
             matrixStack.push();
@@ -53,7 +55,7 @@ public class EotechNSightModel implements IOverrideModel
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
                 float size = 1.4F / 16.0F;
-                matrixStack.translate(-size / 2, 0.975 * 0.0625, -0.3 * 0.0625);
+                matrixStack.translate(-size / 2, 0.975 * 0.0625, 0.075 * 0.0625);
 
                 IVertexBuilder builder;
 

@@ -4902,21 +4902,21 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 0.5, -7.75],
+			"translation": [0, 0.5, -7.5],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, 0.5, -7.75],
+			"translation": [0, 0.5, -7.5],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
-			"translation": [-3, 1.75, -10]
+			"translation": [-4, 2.5, -12.25]
 		},
 		"firstperson_lefthand": {
-			"translation": [-3, 1.75, -14]
+			"translation": [-4, 2.5, -12.25]
 		},
 		"ground": {
-			"translation": [0, 0.5, 0],
+			"translation": [0, 3, 0],
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"gui": {

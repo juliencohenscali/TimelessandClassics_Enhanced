@@ -1,7 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "tac:items/ppsh_bolt",
+		"0": "tac:items/shiny_brighter_color",
 		"1": "tac:items/raythean",
 		"2": "tac:items/glock_slide_17",
 		"3": "tac:items/eotech_violet_glass",

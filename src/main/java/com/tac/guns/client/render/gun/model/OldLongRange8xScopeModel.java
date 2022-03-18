@@ -37,7 +37,7 @@ public class OldLongRange8xScopeModel implements IOverrideModel
     @Override
     public void render(float partialTicks, ItemCameraTransforms.TransformType transformType, ItemStack stack, ItemStack parent, LivingEntity entity, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, int overlay) {
 
-        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get()) {
+        if (OptifineHelper.isShadersEnabled() || !Config.COMMON.gameplay.scopeDoubleRender.get() && transformType.isFirstPerson() && entity.equals(Minecraft.getInstance().player)) {
             double transition = 1.0D - Math.pow(1.0D - AimingHandler.get().getNormalisedAdsProgress(), 2.0D);
             //double zScale = AimingHandler.get().getNormalisedAdsProgress() >= 0.125 ? 0.375D + 0.95D * (1.0D - transition) : 0.05D + 0.95D * (1.0D - transition);
             double zScale = 0.05D + 0.75D * (1.0D - transition);
