@@ -317,7 +317,7 @@ public class ReloadHandler
                     Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
 
                     if (this.startUpReloadTimer == -1)
-                        this.startUpReloadTimer = gun.getReloads().getPreReloadPauseTicks();
+                        this.startUpReloadTimer = 0; // gun.getReloads().getPreReloadPauseTicks();
 
                     if (gun.getReloads().isMagFed())
                     {

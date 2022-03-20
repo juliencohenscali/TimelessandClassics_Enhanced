@@ -110,8 +110,8 @@ public class Config
         public final ForgeConfigSpec.BooleanValue showWeaponIcon;
         public final ForgeConfigSpec.DoubleValue weaponIconSize;
 
-        public final ForgeConfigSpec.IntValue x;
-        public final ForgeConfigSpec.IntValue y;
+        public final ForgeConfigSpec.DoubleValue x;
+        public final ForgeConfigSpec.DoubleValue y;
 
         public WeaponTypeIcon(ForgeConfigSpec.Builder builder)
         {
@@ -120,8 +120,8 @@ public class Config
                 this.showWeaponIcon = builder.comment("Display the weapon type Icon on your HUD.").define("showWeaponIcon", true);
                 this.weaponIconSize = builder.comment("Size of the weapon type Icon on your HUD").defineInRange("weaponIconSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -3000d, 3000d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -3000d, 3000d);
             }
             builder.pop();
         }
@@ -132,8 +132,8 @@ public class Config
         public final ForgeConfigSpec.BooleanValue showWeaponAmmoCounter;
         public final ForgeConfigSpec.DoubleValue weaponAmmoCounterSize;
 
-        public final ForgeConfigSpec.IntValue x;
-        public final ForgeConfigSpec.IntValue y;
+        public final ForgeConfigSpec.DoubleValue x;
+        public final ForgeConfigSpec.DoubleValue y;
 
         public WeaponAmmoCounter(ForgeConfigSpec.Builder builder)
         {
@@ -142,8 +142,8 @@ public class Config
                 this.showWeaponAmmoCounter = builder.comment("Display the amount of ammunition your weapon holds and can hold on your HUD.").define("showWeaponAmmoCounter", true);
                 this.weaponAmmoCounterSize = builder.comment("Size of the weapon ammunition counter on your HUD").defineInRange("weaponAmmoCounterSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0,-3000d, 3000d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0,-3000d, 3000d);
             }
             builder.pop();
         }
@@ -153,8 +153,8 @@ public class Config
         public final ForgeConfigSpec.BooleanValue showWeaponFireMode;
         public final ForgeConfigSpec.DoubleValue weaponFireModeSize;
 
-        public final ForgeConfigSpec.IntValue x;
-        public final ForgeConfigSpec.IntValue y;
+        public final ForgeConfigSpec.DoubleValue x;
+        public final ForgeConfigSpec.DoubleValue y;
 
         public WeaponFireMode(ForgeConfigSpec.Builder builder)
         {
@@ -163,8 +163,8 @@ public class Config
                 this.showWeaponFireMode = builder.comment("Display the weapon's fire mode on your HUD.").define("showWeaponFireMode", true);
                 this.weaponFireModeSize = builder.comment("Size of the weapon's fire mode on your HUD").defineInRange("weaponFireModeSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -3000d, 3000d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -3000d, 3000d);
             }
             builder.pop();
         }

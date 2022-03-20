@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Level;
  */
 public class GunEnchantmentHelper
 {
-    public static int getReloadInterval(ItemStack weapon)
+    /*public static int getReloadInterval(ItemStack weapon)
     {
         int interval = ((GunItem)weapon.getItem()).getGun().getReloads().getinterReloadPauseTicks();//10;
         int level = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.QUICK_HANDS.get(), weapon);
@@ -23,7 +23,7 @@ public class GunEnchantmentHelper
             interval -= 3 * level;
         }
         return Math.max(interval, 1);
-    }
+    }*/
 
     public static int getRate(ItemStack weapon, Gun modifiedGun)
     {

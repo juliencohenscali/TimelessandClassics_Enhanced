@@ -13,7 +13,7 @@
     "recoilDuration": 0.1775,
     "alwaysSpread": true,
     "spread": 2.525,
-    "weightKilo": 3.80
+    "weightKilo": 4.10
   },
   "projectile": {
     "item":  "tac:762x39",

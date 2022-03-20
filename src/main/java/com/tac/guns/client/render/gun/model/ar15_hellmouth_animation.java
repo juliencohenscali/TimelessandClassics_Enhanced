@@ -138,10 +138,10 @@ public class ar15_hellmouth_animation implements IOverrideModel {
         {
             RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_LIGHTWEIGHT_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
-        if(Gun.getAttachment(IAttachment.Type.SIDE_RAIL, stack).getItem() == ModItems.STANDARD_FLASHLIGHT.orElse(ItemStack.EMPTY.getItem()))
+        /*if(Gun.getAttachment(IAttachment.Type.SIDE_RAIL, stack).getItem() == ModItems.STANDARD_FLASHLIGHT.orElse(ItemStack.EMPTY.getItem()))
         {
             RenderUtil.renderModel(SpecialModels.AR_15_CQB_STANDARD_FLASHLIGHT.getModel(), stack, matrices, renderBuffer, light, overlay);
-        }
+        }*/
 
         RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_BODY.getModel(), stack, matrices, renderBuffer, light, overlay);
 

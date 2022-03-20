@@ -64,9 +64,9 @@ public class MovementAdaptationsHandler
         if (!(event.getEntityLiving().getHeldItemMainhand().getItem() instanceof TimelessGunItem))
             return;
         if(speed < 0.077f)
-            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/2,event.getEntityLiving().getMotion().getY()/1.125,event.getEntityLiving().getMotion().getZ()/2);
+            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/2.5,event.getEntityLiving().getMotion().getY()/1.125,event.getEntityLiving().getMotion().getZ()/2.5);
         else if(speed < 0.9f)
-            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/1.5,event.getEntityLiving().getMotion().getY()/1.1125,event.getEntityLiving().getMotion().getZ()/1.5);
+            event.getEntityLiving().setMotion(event.getEntityLiving().getMotion().getX()/1.75,event.getEntityLiving().getMotion().getY(),event.getEntityLiving().getMotion().getZ()/1.75);
     }
 
     @SubscribeEvent//(priority = EventPriority.HIGH)

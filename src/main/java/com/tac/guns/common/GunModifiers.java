@@ -119,7 +119,7 @@ public class GunModifiers
             return speed * 0.625F;
         }
         @Override
-        public float additionalWeaponWeight() { return 1.1F; }
+        public float additionalWeaponWeight() { return 2.2F; }
     };
     public static final IGunModifier OLD_LONGRANGE_4x_SCOPE_ADS = new IGunModifier()
     {
@@ -129,7 +129,7 @@ public class GunModifiers
             return speed * 0.75F;
         }
         @Override
-        public float additionalWeaponWeight() { return 0.8F; }
+        public float additionalWeaponWeight() { return 1.2F; }
     };
 
     public static final IGunModifier MINI_DOT_ADS = new IGunModifier()

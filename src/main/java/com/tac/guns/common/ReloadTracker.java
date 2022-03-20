@@ -37,15 +37,12 @@ public class ReloadTracker
     private final ItemStack stack;
     private final Gun gun;
 
-    private final int preTicks;
-
     private ReloadTracker(PlayerEntity player)
     {
         this.startTick = player.ticksExisted;
         this.slot = player.inventory.currentItem;
         this.stack = player.inventory.getCurrentItem();
         this.gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
-        this.preTicks = gun.getReloads().getPreReloadPauseTicks();
     }
 
     /**
@@ -90,21 +87,21 @@ public class ReloadTracker
             if(this.isWeaponEmpty())
             {
                 int deltaTicks = player.ticksExisted - this.startTick;
-                int interval = gun.getReloads().getReloadMagTimer()+gun.getReloads().getAdditionalReloadEmptyMagTimer();//GunEnchantmentHelper.getReloadInterval(this.stack);
-                reload = deltaTicks > interval+this.preTicks; // deltaTicks > 0 &&
+                int interval = gun.getReloads().getReloadMagTimer()+gun.getReloads().getAdditionalReloadEmptyMagTimer()+this.gun.getReloads().getPreReloadPauseTicks();//GunEnchantmentHelper.getReloadInterval(this.stack);
+                reload = deltaTicks > interval; // deltaTicks > 0 &&
             }
             else
             {
                 int deltaTicks = player.ticksExisted - this.startTick;
-                int interval = gun.getReloads().getReloadMagTimer();//GunEnchantmentHelper.getReloadInterval(this.stack);
-                reload = deltaTicks > interval+this.preTicks; // deltaTicks > 0 &&
+                int interval = gun.getReloads().getReloadMagTimer()+this.gun.getReloads().getPreReloadPauseTicks();//GunEnchantmentHelper.getReloadInterval(this.stack);
+                reload = deltaTicks > interval; // deltaTicks > 0 &&
             }
         }
         else
         {
             int deltaTicks = player.ticksExisted - this.startTick;
-            int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
-            reload = deltaTicks > 0 && deltaTicks % interval == 0 && deltaTicks > this.preTicks;
+            int interval = 1;//GunEnchantmentHelper.getReloadInterval(this.stack);
+            reload = deltaTicks > 0 && deltaTicks % interval == 0;
         }
         return reload;
     }

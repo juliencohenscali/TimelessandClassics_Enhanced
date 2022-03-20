@@ -42,10 +42,10 @@ public class mk14_animation implements IOverrideModel {
             matrices.pop();
             return;
         }
-        if(Gun.getAttachment(IAttachment.Type.SIDE_RAIL, stack).getItem() == ModItems.STANDARD_FLASHLIGHT.orElse(ItemStack.EMPTY.getItem()))
+        /*if(Gun.getAttachment(IAttachment.Type.SIDE_RAIL, stack).getItem() == ModItems.STANDARD_FLASHLIGHT.orElse(ItemStack.EMPTY.getItem()))
         {
             RenderUtil.renderModel(SpecialModels.MK14_FLASHLIGHT.getModel(), stack, matrices, renderBuffer, light, overlay);
-        }
+        }*/
         RenderUtil.renderModel(SpecialModels.MK14_BODY.getModel(), stack, matrices, renderBuffer, light, overlay);
         matrices.push();
         CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();
