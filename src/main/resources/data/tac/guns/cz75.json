@@ -6,12 +6,12 @@
       1
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 5.25,
-    "horizontalRecoilAngle": 1.625,
-    "recoilKick": 2.00,
+    "recoilAngle": 7.25,
+    "horizontalRecoilAngle": 2.625,
+    "recoilKick": 2.20,
     "recoilAdsReduction": 0.45,
     "weaponRecoilDuration": 0.9315,
-    "cameraRecoilModifier": 1.775,
+    "cameraRecoilModifier": 1.975,
     "alwaysSpread": true,
     "spread": 3.675,
     "weightKilo": 1.1

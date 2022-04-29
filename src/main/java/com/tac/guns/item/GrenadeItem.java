@@ -19,12 +19,14 @@ public class GrenadeItem extends AmmoItem
 {
     protected int maxCookTime;
     private float power;
+    private float speed;
 
-    public GrenadeItem(Item.Properties properties, int maxCookTime, float power)
+    public GrenadeItem(Item.Properties properties, int maxCookTime, float power, float speed)
     {
         super(properties);
         this.maxCookTime = maxCookTime;
         this.power = power;
+        this.speed = speed;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class GrenadeItem extends AmmoItem
                 if(!(entityLiving instanceof PlayerEntity) || !((PlayerEntity) entityLiving).isCreative())
                     stack.shrink(1);
                 ThrowableGrenadeEntity grenade = this.create(worldIn, entityLiving, this.maxCookTime - duration);
-                grenade.func_234612_a_(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0.0F, Math.min(1.0F, duration / 20F), 1.0F);
+                grenade.func_234612_a_(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0.0F, Math.min(1.0F, duration / 20F)*this.speed, 1.5F);
                 worldIn.addEntity(grenade);
                 this.onThrown(worldIn, grenade);
             }

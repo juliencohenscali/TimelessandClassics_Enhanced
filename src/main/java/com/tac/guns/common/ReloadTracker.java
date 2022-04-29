@@ -1,6 +1,7 @@
 package com.tac.guns.common;
 
 import com.mrcrayfish.obfuscate.common.data.SyncedPlayerData;
+import com.sun.jna.platform.win32.WinNT;
 import com.tac.guns.Reference;
 import com.tac.guns.init.ModSyncedDataKeys;
 import com.tac.guns.item.GunItem;
@@ -9,6 +10,7 @@ import com.tac.guns.network.message.MessageGunSound;
 import com.tac.guns.util.GunEnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
@@ -75,7 +77,7 @@ public class ReloadTracker
 
     private boolean hasNoAmmo(PlayerEntity player)
     {
-        return Gun.findAmmo(player, this.gun.getProjectile().getItem()).isEmpty();
+        return Gun.findAmmo(player, this.gun.getProjectile().getItem())[0].isEmpty();
     }
 
     private boolean canReload(PlayerEntity player)
@@ -100,7 +102,7 @@ public class ReloadTracker
         else
         {
             int deltaTicks = player.ticksExisted - this.startTick;
-            int interval = 1;//GunEnchantmentHelper.getReloadInterval(this.stack);
+            int interval = GunEnchantmentHelper.getReloadInterval(this.stack);
             reload = deltaTicks > 0 && deltaTicks % interval == 0;
         }
         return reload;
@@ -108,7 +110,7 @@ public class ReloadTracker
 
     private void increaseAmmo(PlayerEntity player)
     {
-        ItemStack ammo = Gun.findAmmo(player, this.gun.getProjectile().getItem());
+        ItemStack ammo = Gun.findAmmo(player, this.gun.getProjectile().getItem())[0];
         if(!ammo.isEmpty())
         {
             CompoundNBT tag = this.stack.getTag();
@@ -128,13 +130,40 @@ public class ReloadTracker
             PacketHandler.getPlayChannel().send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), (player.getPosY() + 1.0), player.getPosZ(), 16.0, player.world.getDimensionKey())), message);
         }
     }
+
+    private int calcMaxReserveAmmo(ItemStack[] ammoStacks)
+    {
+        int result = 0;
+        for (ItemStack x: ammoStacks)
+            result+=x.getCount();
+        return result;
+    }
+
+    private void shrinkFromAmmoPool(ItemStack[] ammoStacks, int shrinkAmount)
+    {
+        int shrinkAmt = shrinkAmount;
+        for (ItemStack x: ammoStacks)
+        {
+            if(!x.isEmpty())
+            {
+                int max = shrinkAmt > x.getCount() ? x.getCount() : shrinkAmt;
+                x.shrink(max);
+                shrinkAmt-=max;
+            }
+            if(shrinkAmt==0)
+                return;
+        }
+    }
+
     private void increaseMagAmmo(PlayerEntity player)
     {
-        ItemStack ammo = Gun.findAmmo(player, this.gun.getProjectile().getItem());
-        if(!ammo.isEmpty())
+        ItemStack[] ammoStacks = Gun.findAmmo(player, this.gun.getProjectile().getItem());
+        int stackItor = 0;
+        //ItemStack ammo = Gun.findAmmo(player, this.gun.getProjectile().getItem());
+        if(ammoStacks.length > 0)
         {
             CompoundNBT tag = this.stack.getTag();
-            int ammoAmount = Math.min(ammo.getCount(), GunEnchantmentHelper.getAmmoCapacity(this.stack, this.gun));
+            int ammoAmount = Math.min(calcMaxReserveAmmo(ammoStacks), GunEnchantmentHelper.getAmmoCapacity(this.stack, this.gun));
             if (tag != null) {
                 int currentAmmo = tag.getInt("AmmoCount");
                 int maxAmmo = GunEnchantmentHelper.getAmmoCapacity(this.stack, this.gun);
@@ -143,21 +172,21 @@ public class ReloadTracker
                 {
                     if(ammoAmount < amount) {
                         tag.putInt("AmmoCount", ammoAmount);
-                        ammo.shrink(ammoAmount);
+                        this.shrinkFromAmmoPool(ammoStacks, ammoAmount);
                     }
                     else {
                         tag.putInt("AmmoCount", maxAmmo - 1);
-                        ammo.shrink(amount - 1);
+                        this.shrinkFromAmmoPool(ammoStacks, amount-1);
                     }
                 }
                 else {
                     if(ammoAmount < amount) {
                         tag.putInt("AmmoCount", ammoAmount);
-                        ammo.shrink(ammoAmount);
+                        this.shrinkFromAmmoPool(ammoStacks, ammoAmount);
                     }
                     else {
                         tag.putInt("AmmoCount", maxAmmo);
-                        ammo.shrink(amount);
+                        this.shrinkFromAmmoPool(ammoStacks, amount);//ammoStacks.shrink(amount);
                     }
                 }
             }

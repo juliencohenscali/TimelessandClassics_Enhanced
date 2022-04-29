@@ -29,7 +29,7 @@ public class TwoHandedPoseHighRes_bullpup extends TwoHandedPose {
 
 
 		int side = hand.opposite() == HandSide.RIGHT ? 1 : -1;
-		matrixStack.translate(8.5 * side * 0.0625, -1.015, -0.04);
+		matrixStack.translate(6.875 * side * 0.0625, -1.015, -0.04);
 		
 		if (Minecraft.getInstance().player.getSkinType().equals("slim") && hand.opposite() == HandSide.LEFT) {
 			matrixStack.translate(0.03125F * -side, 0, 0);
@@ -51,7 +51,7 @@ public class TwoHandedPoseHighRes_bullpup extends TwoHandedPose {
 			centerOffset += hand == HandSide.RIGHT ? 0.2 : 0.8;
 		}
 		centerOffset = hand == HandSide.RIGHT ? -centerOffset : centerOffset;
-		matrixStack.translate(centerOffset * 0.0405, -0.745, -1.075);
+		matrixStack.translate(centerOffset * 0.0135, -0.745, -1.075);
 		
 		matrixStack.rotate(Vector3f.XP.rotationDegrees(80F));
 		matrixStack.scale(1F, 1F, 1F);

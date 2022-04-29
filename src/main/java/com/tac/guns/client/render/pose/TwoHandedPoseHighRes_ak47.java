@@ -9,6 +9,8 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 
 /**
@@ -16,7 +18,9 @@ import net.minecraft.util.math.vector.Vector3f;
  */
 public class TwoHandedPoseHighRes_ak47 extends TwoHandedPose {
 	@Override
-	public void renderFirstPersonArms(ClientPlayerEntity player, HandSide hand, ItemStack stack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, float partialTicks) {
+	@OnlyIn(Dist.CLIENT)
+	public void renderFirstPersonArms(ClientPlayerEntity player, HandSide hand, ItemStack stack, MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, float partialTicks)
+	{
 
 		matrixStack.push();
 		GunAnimationController controller = GunAnimationController.fromItem(stack.getItem());
@@ -36,7 +40,8 @@ public class TwoHandedPoseHighRes_ak47 extends TwoHandedPose {
 		matrixStack.translate(8.5 * sideFloat * 0.0625, y, z);*/
 		int side = hand.opposite() == HandSide.RIGHT ? -1 : 1;
 		double translationSide = hand.opposite() == HandSide.RIGHT ? -1 : -1;
-		matrixStack.translate(8.5 * translationSide * 0.0625, -1.015, -0.04);
+		//matrixStack.translate(8.5 * translationSide * 0.0625, -1.015, -0.04);
+		matrixStack.translate(6.875 * translationSide * 0.0625, -1.015, -0.04);
 
 		if (Minecraft.getInstance().player.getSkinType().equals("slim") && hand.opposite() == HandSide.LEFT) {
 			matrixStack.translate(0.03125F * -side, 0, 0);
@@ -66,7 +71,7 @@ public class TwoHandedPoseHighRes_ak47 extends TwoHandedPose {
 		double translationSide = hand.opposite() == HandSide.RIGHT ? -1 : -1;
 		*/
 		centerOffset = hand == HandSide.RIGHT ? -centerOffset : centerOffset*-10.5;
-		matrixStack.translate(centerOffset * 0.0405, -0.745, -1.075);
+		matrixStack.translate(centerOffset * 0.0135, -0.745, -1.075);
 
 		matrixStack.rotate(Vector3f.XP.rotationDegrees(80F));
 		matrixStack.scale(1F, 1F, 1F);

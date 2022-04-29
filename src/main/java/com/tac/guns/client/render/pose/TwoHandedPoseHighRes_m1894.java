@@ -27,7 +27,7 @@ public class TwoHandedPoseHighRes_m1894 extends TwoHandedPose {
 		matrixStack.translate(reloadProgress * 1.5, -reloadProgress, -reloadProgress * 1.5);
 		
 		int side = hand.opposite() == HandSide.RIGHT ? 1 : -1;
-		matrixStack.translate(10.0 * side * 0.0625, -0.995, -0.2);
+		matrixStack.translate(7.0 * side * 0.0625, -0.995, -0.2);
 		
 		if (Minecraft.getInstance().player.getSkinType().equals("slim") && hand.opposite() == HandSide.LEFT) {
 			matrixStack.translate(0.03125F * -side, 0, 0);
@@ -48,7 +48,7 @@ public class TwoHandedPoseHighRes_m1894 extends TwoHandedPose {
 			centerOffset += hand == HandSide.RIGHT ? 0.2 : 0.8;
 		}
 		centerOffset = hand == HandSide.RIGHT ? -centerOffset : centerOffset;
-		matrixStack.translate(centerOffset * 0.0625, -0.4, -0.975);
+		matrixStack.translate(centerOffset * 0.0465, -0.4, -0.975);
 		
 		matrixStack.rotate(Vector3f.XP.rotationDegrees(80F));
 		matrixStack.scale(0.5F, 0.5F, 0.5F);

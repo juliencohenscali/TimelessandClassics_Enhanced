@@ -7,12 +7,12 @@
       2
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 4.325,
-    "horizontalRecoilAngle": 1.375,
+    "recoilAngle": 3.425,
+    "horizontalRecoilAngle": 2.52,
     "recoilKick": 1.2125,
     "recoilAdsReduction": 0.185,
     "weaponRecoilDuration": 0.9815,
-    "cameraRecoilModifier": 1.475,
+    "cameraRecoilModifier": 1.175,
     "alwaysSpread": true,
     "spread": 7.125,
     "weightKilo": 1.1
@@ -28,9 +28,9 @@
   "projectile": {
     "item": "tac:9mm_round",
     "visible": false,
-    "damage": 5.25,
+    "damage": 5,
     "size": 0.2,
-    "speed": 22.0,
+    "speed": 18.0,
     "life": 4
   },
   "sounds": {

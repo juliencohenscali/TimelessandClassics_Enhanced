@@ -46,15 +46,16 @@ public class MicroHoloSightModel implements IOverrideModel
             matrixStack.scale(1.0F, 1.0F, (float)zScale);
         }
 
-        GunItem gunItem = ((GunItem) parent.getItem());
-        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoOnSlideMovement())
-        {
-            //matrixStack.translate(0, 0, 0.025F);
-            matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement*0.505);
+        if(!parent.isEmpty()) {
+            GunItem gunItem = ((GunItem) parent.getItem());
+            if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoOnSlideMovement()) {
+                //matrixStack.translate(0, 0, 0.025F);
+                matrixStack.translate(0, 0, GunRenderingHandler.get().opticMovement * 0.505);
+            }
+            matrixStack.translate(0, 0.055, 0);
+            if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoRenderMount())
+                RenderUtil.renderModel(MICRO_HOLO_BASE.getModel(), parent, matrixStack, renderTypeBuffer, light, overlay);
         }
-        matrixStack.translate(0, 0.055, 0);
-        if (gunItem.getGun().getModules().getAttachments().getPistolScope().getDoRenderMount())
-            RenderUtil.renderModel(MICRO_HOLO_BASE.getModel(), parent, matrixStack, renderTypeBuffer, light, overlay);
         RenderUtil.renderModel(stack, parent, matrixStack, renderTypeBuffer, light, overlay);
         matrixStack.translate(0, -0.049, 0);
         matrixStack.pop();

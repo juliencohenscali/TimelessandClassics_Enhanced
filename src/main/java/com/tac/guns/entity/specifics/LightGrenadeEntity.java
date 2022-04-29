@@ -36,9 +36,9 @@ public class LightGrenadeEntity extends ThrowableGrenadeEntity
         super(ModEntities.THROWABLE_GRENADE.get(), world, entity);
         this.power = power;
         this.setShouldBounce(true);
-        this.setGravityVelocity(0.03F);
         this.setItem(new ItemStack(ModItems.LIGHT_GRENADE.get()));
         this.setMaxLife(timeLeft);
+        this.setGravityVelocity(0.0325F);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LightGrenadeEntity extends ThrowableGrenadeEntity
         double speed = this.getMotion().length();
         if (speed > 0.1)
         {
-            this.rotation += speed * 175;
+            this.rotation += speed * 325;
         }
         if (this.world.isRemote)
         {

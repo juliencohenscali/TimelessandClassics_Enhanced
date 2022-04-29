@@ -77,7 +77,7 @@ public class EotechShortSightModel implements IOverrideModel
                 IVertexBuilder builder;
                 matrixStack.translate(-0.04 * invertProgress, 0.01 * invertProgress, 0);
 
-                double scale = 4.25;
+                double scale = 3.75;
                 matrixStack.translate(size / 2, size / 2, 0);
                 matrixStack.translate(-(size / scale) / 2, -(size / scale) / 2, 0);
                 matrixStack.translate(0, 0, 0.0001);

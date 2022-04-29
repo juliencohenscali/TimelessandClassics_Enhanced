@@ -347,6 +347,8 @@ public enum SpecialModels
     FN_FAL_DEFAULT_STOCK("fn_fal_default_stock"),
     FN_FAL_STANDARD_BARREL("fn_fal_standard_barrel"),
     FN_FAL_EXTENDED_BARREL("fn_fal_extended_barrel"),
+    FN_FAL_TAC_GRIP("fn_fal_tactical_grip"),
+    FN_FAL_LIGHTWEIGHT_GRIP("fn_fal_lightweight_grip"),
     //Everything from this point on is all scope additions
     MINI_DOT_BASE("optics/mini_dot_base"),
     MICRO_HOLO_BASE("optics/micro_holo_base"),

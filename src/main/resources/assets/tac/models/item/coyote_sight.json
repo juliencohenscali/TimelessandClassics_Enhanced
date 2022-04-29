@@ -4,7 +4,7 @@
 		"3": "tac:items/vortex_green_glass",
 		"particle": "tac:items/glock_slide_17",
 		"1_1": "tac:items/glock_slide_17",
-		"1_2": "tac:items/shiny_brighter_color",
+		"1_2": "tac:items/ppsh_bolt",
 		"1_4": "tac:items/raythean"
 	},
 	"elements": [
@@ -1452,7 +1452,7 @@
 			"to": [8.57141, 9.67119, 7.00454],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.89989, 7.84562, 6.23735]},
 			"faces": {
-				"north": {"uv": [0, 0, 1.14281, 0.05715], "texture": "#3", "tintindex": 1}
+				"north": {"uv": [5, 6.5, 6.14281, 6.55715], "texture": "#3", "tintindex": 1}
 			}
 		},
 		{
@@ -1461,7 +1461,7 @@
 			"to": [8.58704, 8.69979, 7.00454],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.89989, 7.84562, 6.23735]},
 			"faces": {
-				"north": {"uv": [0.5, 3.75, 5.0712, 4.4356], "texture": "#3", "tintindex": 1}
+				"north": {"uv": [5.5, 10.25, 10.0712, 10.9356], "texture": "#3", "tintindex": 1}
 			}
 		},
 		{
@@ -1470,7 +1470,7 @@
 			"to": [8.4156, 8.52838, 7.00454],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.89989, 7.84562, 6.23735]},
 			"faces": {
-				"north": {"uv": [0, 2, 0.79996, 2.11428], "texture": "#3", "tintindex": 1}
+				"north": {"uv": [5, 8.5, 5.79996, 8.61428], "texture": "#3", "tintindex": 1}
 			}
 		},
 		{
@@ -1479,7 +1479,7 @@
 			"to": [8.74283, 9.61404, 7.00454],
 			"rotation": {"angle": 0, "axis": "y", "origin": [7.89989, 7.84562, 6.23735]},
 			"faces": {
-				"north": {"uv": [0, 0, 5.9428, 3.6568], "texture": "#3", "tintindex": 1}
+				"north": {"uv": [5, 6.5, 10.9428, 10.1568], "texture": "#3", "tintindex": 1}
 			}
 		}
 	],

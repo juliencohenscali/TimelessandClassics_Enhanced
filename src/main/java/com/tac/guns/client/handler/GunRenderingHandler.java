@@ -96,6 +96,8 @@ public class GunRenderingHandler {
     private float offhandTranslate;
     private float prevOffhandTranslate;
 
+    public float muzzleExtraOnEnch = 0f;
+
     private Field equippedProgressMainHandField;
     private Field prevEquippedProgressMainHandField;
 
@@ -508,7 +510,8 @@ public class GunRenderingHandler {
         this.kickReduction = 1.0F - GunModifierHelper.getKickReduction(item);
         this.recoilReduction = 1.0F - GunModifierHelper.getRecoilModifier(item);
         this.kick = gun.getGeneral().getRecoilKick() * 0.0625 * recoilNormal * RecoilHandler.get().getAdsRecoilReduction(gun);
-        this.recoilLift = ((float) (gun.getGeneral().getRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
+        //this.recoilLift = ((float) (gun.getGeneral().getRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
+        this.recoilLift = ((float) (RecoilHandler.get().getGunRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
         this.recoilSwayAmount = ((float) (2F + 1F * (1.0 - AimingHandler.get().getNormalisedAdsProgress())));// * 1.5f;
         this.recoilSway = ((float) ((RecoilHandler.get().getGunRecoilRandom() * this.recoilSwayAmount - this.recoilSwayAmount / 2F) * recoilNormal)) / 2;
         if (item.getTag().getInt("CurrentFireMode") == 1)
@@ -517,7 +520,8 @@ public class GunRenderingHandler {
             this.recoilSway *= 0.75;
             this.recoilLift *= 0.875;
         }
-        this.weaponsHorizontalAngle = ((float) (gun.getGeneral().getHorizontalRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
+    //    this.weaponsHorizontalAngle = ((float) (gun.getGeneral().getHorizontalRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
+        this.weaponsHorizontalAngle = ((float) (RecoilHandler.get().getGunHorizontalRecoilAngle() * recoilNormal) * (float) RecoilHandler.get().getAdsRecoilReduction(gun));
 
         matrixStack.translate(0, 0, this.kick * this.kickReduction);
         matrixStack.translate(0, 0, 0.35);
@@ -859,7 +863,11 @@ public class GunRenderingHandler {
 
         double displayX = muzzleFlash.getXOffset() * 0.0625;
         double displayY = muzzleFlash.getYOffset() * 0.0625;
-        double displayZ = muzzleFlash.getZOffset() * 0.0625;
+        double displayZ = (muzzleFlash.getZOffset()+this.muzzleExtraOnEnch) * 0.0625;
+
+        if(GunRenderingHandler.get().muzzleExtraOnEnch != 0)
+            this.muzzleExtraOnEnch = 0;
+
         matrixStack.translate(displayX, displayY, displayZ);
         matrixStack.translate(0, -0.5, 0);
 

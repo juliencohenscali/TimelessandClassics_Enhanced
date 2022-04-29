@@ -3227,10 +3227,10 @@
 			"scale": [0.35, 0.35, 0.35]
 		},
 		"firstperson_righthand": {
-			"translation": [-0.5, 0.5, -11]
+			"translation": [-0.5, 2.25, -9.75]
 		},
 		"firstperson_lefthand": {
-			"translation": [-0.5, 0.5, -11]
+			"translation": [-0.5, 2.25, -9.75]
 		},
 		"ground": {
 			"translation": [0, 5, 0],

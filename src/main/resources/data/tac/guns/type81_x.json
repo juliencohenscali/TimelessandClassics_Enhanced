@@ -4,16 +4,16 @@
     "rate": 3,
     "rateSelector": [0,1,2],
     "gripType":  "tac:two_handed_ak47",
-    "recoilAngle": 2.215,
+    "recoilAngle": 2.125,
     "horizontalRecoilAngle": 2.385,
     "recoilKick": 0.75,
     "recoilAdsReduction": 0.225,
     "weaponRecoilDuration": 0.925,
-    "cameraRecoilModifier": 2.0,
+    "cameraRecoilModifier": 1.725,
     "recoilDuration": 0.1825,
     "alwaysSpread": true,
     "spread": 3.075,
-    "weightKilo": 4.3
+    "weightKilo": 4.1
   },
   "projectile": {
     "item":  "tac:762x39",

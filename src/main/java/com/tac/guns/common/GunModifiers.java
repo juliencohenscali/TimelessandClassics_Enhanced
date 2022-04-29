@@ -335,19 +335,39 @@ public class GunModifiers
         }
 
         @Override
-        public float additionalHeadshotDamage() {return 1.3F;}
+        public float modifyProjectileSpread(float spread)
+        {
+            return spread * 0.95F;
+        }
+        /*@Override
+        public float additionalHeadshotDamage() {return 1.3F;}*/
 
         @Override
         public double modifyMuzzleFlashSize(double size)
         {
-            return size * 0.5F;
+            return size * 0F;
         }
 
         @Override
         public float additionalWeaponWeight() { return 0.5F; }
+
+        @Override
+        public double modifyAimDownSightSpeed(double speed) {
+            return speed*0.70;
+        }
     };
     public static final IGunModifier PISTOL_SILENCER = new IGunModifier()
     {
+        @Override
+        public double modifyAimDownSightSpeed(double speed) {
+            return speed*0.775;
+        }
+
+        @Override
+        public float modifyProjectileSpread(float spread)
+        {
+            return spread * 0.9125F;
+        }
         @Override
         public boolean silencedFire()
         {
@@ -366,13 +386,13 @@ public class GunModifiers
             return radius * 0.125;
         }
 
-        @Override
-        public float additionalHeadshotDamage() {return 1.55F;}
+        /*@Override
+        public float additionalHeadshotDamage() {return 1.55F;}*/
 
         @Override
         public double modifyMuzzleFlashSize(double size)
         {
-            return size * 0.0F;
+            return size * 0F;
         }
 
         @Override
@@ -386,11 +406,11 @@ public class GunModifiers
             return 0.775F;
         }
 
-        @Override
+        /*@Override
         public float modifyProjectileSpread(float spread)
         {
             return spread * 1.125F;
-        }
+        }*/
 
         @Override
         public float horizontalRecoilModifier()
@@ -427,11 +447,11 @@ public class GunModifiers
             return 1.075F;
         }
 
-        @Override
+        /*@Override
         public float modifyProjectileSpread(float spread)
         {
             return spread * 0.75F;
-        }
+        }*/
 
         @Override
         public float horizontalRecoilModifier()

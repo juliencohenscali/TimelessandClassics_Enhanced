@@ -26,9 +26,9 @@
     "item": "tac:rpg7_missile",
     "visible": true,
     "gravity": true,
-    "damage": 30,
+    "damage": 26,
     "size": 0.2,
-    "speed": 4.875,
+    "speed": 6.375,
     "life": 60,
     "damageReduceOverLife": false,
     "ricochet": false

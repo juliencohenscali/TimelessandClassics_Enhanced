@@ -171,19 +171,27 @@ public class RecoilHandler
 
         //boolean tooFast = modifiedGun.getGeneral().getRate() < 2;
 
-        if(cooldown >= modifiedGun.getGeneral().getWeaponRecoilDuration() && cooldown >= modifiedGun.getGeneral().getRecoilDuration())// || tooFast) // Actually have any visual recoil at Rate 1???
+        if(cooldown >= modifiedGun.getGeneral().getWeaponRecoilDuration())// || tooFast) // Actually have any visual recoil at Rate 1???
         {
             //float amount = 1.0F * ((1.0F - cooldown) / 0.2F);
-            float amount = 1F * ((1.0F - cooldown) / 0.5F);
+            float amount = 1F * ((1.0F - cooldown) / (1-modifiedGun.getGeneral().getWeaponRecoilDuration()));
             this.gunRecoilNormal = 1 - (--amount) * amount * amount * amount;
         }
         else
         {
-            //float amount = (cooldown / 0.8F);
-            float amount = (cooldown / 0.5F);
-            //this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
-            this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
-            //this.gunRecoilNormal*=1.2F;
+            /*if(modifiedGun.getGeneral().getRate() < 15)
+            {
+                //float amount = (cooldown / 0.8F);
+                float amount = (cooldown / modifiedGun.getGeneral().getWeaponRecoilDuration());
+                //this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
+                this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
+                //this.gunRecoilNormal*=1.2F;
+            }
+            else
+            {*/
+                float amount = ( (cooldown) / modifiedGun.getGeneral().getWeaponRecoilDuration() );
+                this.gunRecoilNormal = amount < 0.5 ? 2 * amount * amount : -1 + (4 - 2 * amount) * amount;
+            //}
         }
 
         this.gunRecoilAngle = modifiedGun.getGeneral().getRecoilAngle();

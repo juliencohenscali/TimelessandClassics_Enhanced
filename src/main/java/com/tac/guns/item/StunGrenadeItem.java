@@ -13,9 +13,9 @@ import net.minecraft.world.World;
  */
 public class StunGrenadeItem extends GrenadeItem
 {
-    public StunGrenadeItem(Item.Properties properties, int maxCookTime)
+    public StunGrenadeItem(Item.Properties properties, int maxCookTime, float speed)
     {
-        super(properties, maxCookTime, 1);
+        super(properties, maxCookTime, 1, speed);
     }
 
     @Override

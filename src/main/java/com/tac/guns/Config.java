@@ -91,16 +91,18 @@ public class Config
         public final WeaponTypeIcon weaponTypeIcon;
         public final WeaponFireMode weaponFireMode;
         public final WeaponAmmoCounter weaponAmmoCounter;
+        public final WeaponReloadTimer weaponReloadTimer;
 
         public WeaponGUI(ForgeConfigSpec.Builder builder)
         {
             builder.comment("Configuration for HUD additions").push("weaponGui");
             {
-                this.weaponGui = builder.comment("Show your ammunition as a number, weapon icon, and fire mode all on the HUD.").define("weaponGui", true);
+                this.weaponGui = builder.comment("Show your ammunition as numbers, reloading timer, weapon icon, and fire mode all on the HUD.").define("weaponGui", true);
 
                 this.weaponTypeIcon = new WeaponTypeIcon(builder);
                 this.weaponFireMode = new WeaponFireMode(builder);
                 this.weaponAmmoCounter = new WeaponAmmoCounter(builder);
+                this.weaponReloadTimer = new WeaponReloadTimer(builder);
             }
             builder.pop();
         }
@@ -120,8 +122,8 @@ public class Config
                 this.showWeaponIcon = builder.comment("Display the weapon type Icon on your HUD.").define("showWeaponIcon", true);
                 this.weaponIconSize = builder.comment("Size of the weapon type Icon on your HUD").defineInRange("weaponIconSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -3000d, 3000d);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -3000d, 3000d);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -500d, 500d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -500d, 500d);
             }
             builder.pop();
         }
@@ -142,8 +144,8 @@ public class Config
                 this.showWeaponAmmoCounter = builder.comment("Display the amount of ammunition your weapon holds and can hold on your HUD.").define("showWeaponAmmoCounter", true);
                 this.weaponAmmoCounterSize = builder.comment("Size of the weapon ammunition counter on your HUD").defineInRange("weaponAmmoCounterSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0,-3000d, 3000d);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0,-3000d, 3000d);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0,-500d, 500d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0,-500d, 500d);
             }
             builder.pop();
         }
@@ -163,8 +165,29 @@ public class Config
                 this.showWeaponFireMode = builder.comment("Display the weapon's fire mode on your HUD.").define("showWeaponFireMode", true);
                 this.weaponFireModeSize = builder.comment("Size of the weapon's fire mode on your HUD").defineInRange("weaponFireModeSize", 1.0, 0.01, 4.0);
 
-                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -3000d, 3000d);
-                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -3000d, 3000d);
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0, -500d, 500d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0, -500d, 500d);
+            }
+            builder.pop();
+        }
+    }
+    public static class WeaponReloadTimer
+    {
+        public final ForgeConfigSpec.BooleanValue showWeaponReloadTimer;
+        public final ForgeConfigSpec.DoubleValue weaponReloadTimerSize;
+
+        public final ForgeConfigSpec.DoubleValue x;
+        public final ForgeConfigSpec.DoubleValue y;
+
+        public WeaponReloadTimer(ForgeConfigSpec.Builder builder)
+        {
+            builder.comment("Configuration for HUD reloading timer bar").push("weaponReloadTimer");
+            {
+                this.showWeaponReloadTimer = builder.comment("Display the amount of ammunition your weapon holds and can hold on your HUD.").define("showWeaponAmmoCounter", true);
+                this.weaponReloadTimerSize = builder.comment("Size of the weapon ammunition counter on your HUD").defineInRange("weaponAmmoCounterSize", 1.0, 0.01, 4.0);
+
+                this.x = builder.comment("X Position on your HUD.").defineInRange("XLocation", 0,-500d, 500d);
+                this.y = builder.comment("Y Position on your HUD.").defineInRange("YLocation", 0,-500d, 500d);
             }
             builder.pop();
         }

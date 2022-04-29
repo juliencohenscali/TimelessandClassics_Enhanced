@@ -143,6 +143,24 @@
          { "name": "tac:item/mtar_fire_s" }
       ]
    },
+   "item.fal_fire": {
+      "subtitle": "subtitle.tac.fal_fire",
+      "sounds": [
+         { "name": "tac:item/fal_fire" }
+      ]
+   },
+   "item.mp5_fire": {
+      "subtitle": "subtitle.tac.mp5_fire",
+      "sounds": [
+         { "name": "tac:item/mp5_fire" }
+      ]
+   },
+   "item.mp5_fires": {
+      "subtitle": "subtitle.tac.mp5_fires",
+      "sounds": [
+         { "name": "tac:item/mp5s" }
+      ]
+   },
    "item.headshot": {
       "subtitle": "subtitle.tac.headshot",
       "sounds": [

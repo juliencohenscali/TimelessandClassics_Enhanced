@@ -6,10 +6,13 @@
       1
     ],
     "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 4.0,
-    "recoilKick": 1.15,
-    "horizontalRecoilAngle": 0.55,
-    "recoilAdsReduction": 0.65,
+    "recoilAngle": 3.275,
+    "recoilKick": 1.95,
+    "horizontalRecoilAngle": 0.125,
+    "recoilAdsReduction": 0.40,
+    "weaponRecoilDuration": 0.85,
+    "recoilDuration": 0.125,
+    "cameraRecoilModifier": 2.0,
     "alwaysSpread": true,
     "spread": 1.15,
     "weightKilo": 3.9

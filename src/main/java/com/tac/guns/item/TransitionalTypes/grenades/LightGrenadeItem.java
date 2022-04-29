@@ -21,9 +21,9 @@ import net.minecraft.world.World;
 public class LightGrenadeItem extends GrenadeItem
 {
     private float power;
-    public LightGrenadeItem(Item.Properties properties, int maxCookTime, float power)
+    public LightGrenadeItem(Item.Properties properties, int maxCookTime, float power, float speed)
     {
-        super(properties, maxCookTime, power);
+        super(properties, maxCookTime, power, speed);
         this.power = power;
     }
 

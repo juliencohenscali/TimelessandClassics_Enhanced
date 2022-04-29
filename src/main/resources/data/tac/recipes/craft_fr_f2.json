@@ -6,10 +6,10 @@
   "materials": [
     {
       "item": "minecraft:iron_ingot",
-      "count": 148
+      "count": 132
     },
     {
-      "item": "minecraft:oak_log",
+      "item": "minecraft:glass_pane",
       "count": 24
     }
   ]

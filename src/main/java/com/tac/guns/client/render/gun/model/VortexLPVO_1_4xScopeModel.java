@@ -64,7 +64,7 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
             float scopeSize = 1.13750F;
             float size = scopeSize / 16.0F;
             float reticleSize = scopePrevSize / 16.0F;
-            float crop = 0.4525F;
+            float crop = 0.4175F;
             Minecraft mc = Minecraft.getInstance();
             MainWindow window = mc.getMainWindow();
 
@@ -75,7 +75,7 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
                 Matrix4f matrix = matrixStack.getLast().getMatrix();
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
-                matrixStack.translate(-size / 2, 0.0685075 , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.4 * 0.0625 : 2.15 * 0.0625);
+                matrixStack.translate(-size / 2, 0.0685075 , Config.COMMON.gameplay.scopeDoubleRender.get() ? 4.65 * 0.0625 : 2.15 * 0.0625);
 
                 float color = (float) AimingHandler.get().getNormalisedAdsProgress() * 0.8F + 0.2F;
 
@@ -109,8 +109,8 @@ public class VortexLPVO_1_4xScopeModel implements IOverrideModel
 
                 alpha = (float) (1F * AimingHandler.get().getNormalisedAdsProgress());
 
-                matrixStack.scale(7.5f,7.5f,7.5f);
-                matrixStack.translate(-0.00335715, -0.003655, 0.0000);
+                matrixStack.scale(6f,6f,6f);
+                matrixStack.translate(-0.00327715, -0.003385, 0.0000);
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
                 // Walking bobbing
                 boolean aimed = false;

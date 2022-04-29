@@ -151,31 +151,31 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         this.blit(matrixStack, left, top, 0, 0, this.xSize, this.ySize);
 
         if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof ScopeItem))
-            for(int i = 0; i < IAttachment.Type.values().length-5; i++)
+            for(int i = 8; i < IAttachment.Type.values().length; i++)
             {
-                if(!this.container.getSlot(i+5).isEnabled() && i == 0)
+                if(i == 8 && !this.container.getSlot(i).isEnabled())
                 {
-                    this.blit(matrixStack, left + 70, top + 32 + (i+2) * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 70, top + 50 + (i-7) * 18, 176, 16, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 0)
+                else if(i == 8 && this.weaponInventory.getStackInSlot(i).isEmpty())
                 {
-                    this.blit(matrixStack, left + 70, top + 32 + (i+2) * 18, 176, 16 + i * 16, 16, 16);
+                    this.blit(matrixStack, left + 70, top + 50 + (i-7) * 18, 176, 16, 16, 16);
                 }
-                if(!this.container.getSlot(i+5).isEnabled() && i == 2)
+                if(i == 10 && !this.container.getSlot(i).isEnabled())
                 {
-                    this.blit(matrixStack, left + 40, top + 0 + (i-1) * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 40, top + 50 + (i-9) * 18, 176, 32, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 2)
+                else if(i == 10 && this.weaponInventory.getStackInSlot(i).isEmpty())
                 {
-                    this.blit(matrixStack, left + 10, top + 32 + (i) * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 10, top + 50 + (i-9) * 18, 176, 32, 16, 16);
                 }
-                if(!this.container.getSlot(i+5).isEnabled() && i == 1)
+                if(i == 9 && !this.container.getSlot(i).isEnabled())
                 {
-                    this.blit(matrixStack, left + 10, top + 32 + i * 18, 176, 0, 16, 16);
+                    this.blit(matrixStack, left + 10, top + 53 + (i-11) * 18, 176, 0, 16, 16);
                 }
-                else if(this.weaponInventory.getStackInSlot(i+5).isEmpty() && i == 1)
+                else if(i == 9 && this.weaponInventory.getStackInSlot(i).isEmpty())
                 {
-                    this.blit(matrixStack, left + 40, top - 1 + (i) * 18, 176, 16 + (i-1) * 16, 16, 16);
+                    this.blit(matrixStack, left + 40, top + 53 + (i-11) * 18, 176, 0, 16, 16);
                 }
                 /*if(!this.container.getSlot(i+5).isEnabled() && i == 3)
                 {
@@ -189,7 +189,7 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessOldRifleGunItem))
         {
             int iSkipper = 0;
-            for(int i = 1; i < IAttachment.Type.values().length-3; i++)
+            for(int i = 1; i < IAttachment.Type.values().length-6; i++)
             {
                 if(!this.container.getSlot(iSkipper).isEnabled())
                 {
@@ -205,7 +205,7 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         else if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof TimelessPistolGunItem))
         {
             int iSkipper = 0;
-            for(int i = 1; i < IAttachment.Type.values().length-5; i++)
+            for(int i = 1; i < IAttachment.Type.values().length-6; i++)
             {
                 if(!this.container.getSlot(iSkipper).isEnabled())
                 {
@@ -220,7 +220,7 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
             }
         }
         else
-            for(int i = 0; i < IAttachment.Type.values().length-6; i++)
+            for(int i = 0; i < IAttachment.Type.values().length-7; i++)
             {
                 if(!this.container.getSlot(i).isEnabled())
                 {

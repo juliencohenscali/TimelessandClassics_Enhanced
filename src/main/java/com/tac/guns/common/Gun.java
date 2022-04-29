@@ -1783,22 +1783,26 @@ public final class Gun implements INBTSerializable<CompoundNBT>
         return tag.getFloat("AdditionalDamage");
     }
 
-    public static ItemStack findAmmo(PlayerEntity player, ResourceLocation id)
+    public static ItemStack[] findAmmo(PlayerEntity player, ResourceLocation id) // Refactor to return multiple stacks, reload to take as much of value as required from hash
     {
+        ArrayList<ItemStack> stacks = new ArrayList<>();
+
         if(player.isCreative())
         {
             Item item = ForgeRegistries.ITEMS.getValue(id);
-            return item != null ? new ItemStack(item, Integer.MAX_VALUE) : ItemStack.EMPTY;
+            stacks.add(item != null ? new ItemStack(item, Integer.MAX_VALUE) : ItemStack.EMPTY);
+            return stacks.toArray(new ItemStack[]{});
+            //return item != null ? new ItemStack(item, Integer.MAX_VALUE) : ItemStack.EMPTY;
         }
         for(int i = 0; i < player.inventory.getSizeInventory(); ++i)
         {
             ItemStack stack = player.inventory.getStackInSlot(i);
             if(isAmmo(stack, id))
             {
-                return stack;
+                stacks.add(stack);
             }
         }
-        return ItemStack.EMPTY;
+        return stacks.toArray(new ItemStack[]{});
     }
 
     private static boolean isAmmo(ItemStack stack, ResourceLocation id)

@@ -7,13 +7,14 @@
       2
     ],
     "gripType": "tac:two_handed_m60",
-    "recoilAngle": 2.00,
-    "recoilKick": 0.925,
+    "recoilAngle": 1.75,
+    "recoilKick": 1.125,
     "horizontalRecoilAngle": 0.3625,
-    "recoilAdsReduction": 0.54,
+    "recoilAdsReduction": 0.34,
+    "cameraRecoilModifier": 1.05,
     "alwaysSpread": true,
-    "spread": 4.217,
-    "weightKilo": 9.25
+    "spread": 3.817,
+    "weightKilo": 9.75
   },
   "reloads": {
     "magFed": true,

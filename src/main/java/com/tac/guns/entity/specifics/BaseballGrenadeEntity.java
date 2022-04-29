@@ -34,7 +34,7 @@ public class BaseballGrenadeEntity extends ThrowableGrenadeEntity
         super(ModEntities.THROWABLE_GRENADE.get(), world, entity);
         this.power = power;
         this.setShouldBounce(true);
-        this.setGravityVelocity(0.055F);
+        this.setGravityVelocity(0.0425F);
         this.setItem(new ItemStack(ModItems.BASEBALL_GRENADE.get()));
         this.setMaxLife(timeLeft);
     }
@@ -47,7 +47,7 @@ public class BaseballGrenadeEntity extends ThrowableGrenadeEntity
         double speed = this.getMotion().length();
         if (speed > 0.085)
         {
-            this.rotation += speed * 115;
+            this.rotation += speed * 235;
         }
         if (this.world.isRemote)
         {

@@ -10,11 +10,13 @@
     "gripType": "tac:two_handed_ak47",
     "maxAmmo": 9,
     "reloadAmount": 1,
-    "recoilAngle": 3.5,
-    "horizontalRecoilAngle": 1.1,
+    "recoilAngle": 5.5,
+    "horizontalRecoilAngle": 1.8,
     "recoilKick": 1.455,
     "recoilAdsReduction": 0.275,
-    "recoilDuration": 0.225,
+    "weaponRecoilDuration": 0.865,
+    "recoilDuration": 0.185,
+    "cameraRecoilModifier": 1.15,
     "alwaysSpread": true,
     "spread": 12.15,
     "projectileAmount": 16,
@@ -56,7 +58,7 @@
     "zoom":[ {
       "fovModifier": 0.9,
       "yOffset": 16.18,
-      "zOffset": -1.2
+      "zOffset": -3.2
     }],
     "attachments": {
       "barrel": {

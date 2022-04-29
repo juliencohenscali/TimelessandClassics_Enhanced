@@ -27,7 +27,7 @@ import net.minecraft.util.math.vector.Vector3f;
 /**
  * Author: Mr. Pineapple
  */
-public class deagle_50_animation implements IOverrideModel {
+public class deagle_357_animation implements IOverrideModel {
 
     //The render method, similar to what is in DartEntity. We can render the item
     @Override

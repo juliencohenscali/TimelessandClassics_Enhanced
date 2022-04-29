@@ -239,9 +239,9 @@ public class ReloadHandler
             return;
         }
 
-        if(KeyBinds.KEY_RELOAD.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS && player.getHeldItemMainhand().getItem() instanceof GunItem)
+        ItemStack stack = player.getHeldItemMainhand();
+        if(KeyBinds.KEY_RELOAD.isKeyDown() && event.getAction() == GLFW.GLFW_PRESS && stack.getItem() instanceof GunItem)
         {
-            ItemStack stack = player.getHeldItemMainhand();
             if(!SyncedPlayerData.instance().get(player, ModSyncedDataKeys.RELOADING))
             {
                 this.setReloading(true);
@@ -257,7 +257,7 @@ public class ReloadHandler
                 PacketHandler.getPlayChannel().send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), (player.getPosY() + 1.0), player.getPosZ(), 16.0, player.world.getDimensionKey())), message);
             }
         }
-        if(KeyBinds.KEY_UNLOAD.isPressed() && event.getAction() == GLFW.GLFW_PRESS && player.getHeldItemMainhand().getItem() instanceof GunItem)
+        if(KeyBinds.KEY_UNLOAD.isPressed() && event.getAction() == GLFW.GLFW_PRESS)
         {
             this.setReloading(false);
             PacketHandler.getPlayChannel().sendToServer(new MessageUnload());
@@ -282,7 +282,7 @@ public class ReloadHandler
                         {
                             return;
                         }
-                        if(Gun.findAmmo(player, gun.getProjectile().getItem()).isEmpty())
+                        if(Gun.findAmmo(player, gun.getProjectile().getItem()).length < 1)
                         {
                             return;
                         }
@@ -317,7 +317,7 @@ public class ReloadHandler
                     Gun gun = ((GunItem) stack.getItem()).getModifiedGun(stack);
 
                     if (this.startUpReloadTimer == -1)
-                        this.startUpReloadTimer = 0; // gun.getReloads().getPreReloadPauseTicks();
+                        this.startUpReloadTimer = gun.getReloads().getPreReloadPauseTicks();
 
                     if (gun.getReloads().isMagFed())
                     {
@@ -418,7 +418,30 @@ public class ReloadHandler
         return this.startUpReloadTimer;
     }
 
+    public boolean isReloading()
+    {
+        return this.startReloadTick != -1;
+    }
+
     public float getReloadProgress(float partialTicks, ItemStack stack)
+    {
+        boolean isEmpty = false;
+        GunItem gunItem = (GunItem)stack.getItem();
+        CompoundNBT tag = stack.getTag();
+        if(tag != null)
+        {
+            isEmpty=tag.getInt("AmmoCount")<=0;
+        }
+        return this.startUpReloadTimer == 0 ?
+                (
+                        gunItem.getGun().getReloads().isMagFed() ?
+                                (isEmpty ? ((this.prevReloadTimer + ((this.reloadTimer - this.prevReloadTimer) * partialTicks) + this.startUpReloadTimer) / ((float) gunItem.getGun().getReloads().getReloadMagTimer() + gunItem.getGun().getReloads().getAdditionalReloadEmptyMagTimer())) : ((this.prevReloadTimer + ((this.reloadTimer - this.prevReloadTimer) * partialTicks) + this.startUpReloadTimer) / (float) gunItem.getGun().getReloads().getReloadMagTimer()))
+                                : ((this.prevReloadTimer + ((this.reloadTimer - this.prevReloadTimer) * partialTicks)) / ((float) gunItem.getGun().getReloads().getinterReloadPauseTicks()) )
+                )
+                : 1F;
+    }
+
+    /*public float getReloadProgress(float partialTicks, ItemStack stack)
     {
         boolean isEmpty = false;
         GunItem gunItem = (GunItem)stack.getItem();
@@ -434,10 +457,10 @@ public class ReloadHandler
                                 : ((this.prevReloadTimer + ((this.reloadTimer - this.prevReloadTimer) * partialTicks) + this.startUpReloadTimer) / ((float) gunItem.getGun().getReloads().getinterReloadPauseTicks()) )
                 )
                 : 1F;
-    }
+    }*/
 
-    public boolean isReloading()
-    {
-        return this.startReloadTick != -1;
-    }
+    //public boolean isReloading()
+    //{
+    //    return this.startReloadTick != -1;
+    //}
 }

@@ -64,7 +64,7 @@ public class OldLongRange4xScopeModel implements IOverrideModel
             float reticleSize = scopePrevSize / 16.0F;
 
 //            float crop = 0.4375F;
-            float crop = 0.445F;
+            float crop = 0.4325F; // 0.4285F
             Minecraft mc = Minecraft.getInstance();
             MainWindow window = mc.getMainWindow();
 
@@ -77,7 +77,7 @@ public class OldLongRange4xScopeModel implements IOverrideModel
                 Matrix3f normal = matrixStack.getLast().getNormal();
 
                 //matrixStack.translate(-size / 2, 0.0595 , 4.55 * 0.0625);
-                matrixStack.translate(-size / 2, 0.0888  , 2.745 * 0.0625);//4.815 * 0.0625);
+                matrixStack.translate(-size / 2, 0.0888  , 3.675 * 0.0625);//4.815 * 0.0625);
 
                 float color = (float) AimingHandler.get().getNormalisedAdsProgress() * 0.8F + 0.2F;
 
@@ -111,8 +111,8 @@ public class OldLongRange4xScopeModel implements IOverrideModel
 
                 alpha = (float) (1F * AimingHandler.get().getNormalisedAdsProgress());
 
-                matrixStack.scale(10.0f,10.0f,10.0f);
-                matrixStack.translate(-0.00455715, -0.00445, 0.0000);
+                matrixStack.scale(7.0f,7.0f,7.0f);
+                matrixStack.translate(-0.00438715, -0.004185, 0.0000);
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
                 // Walking bobbing
                 boolean aimed = false;
@@ -125,12 +125,11 @@ public class OldLongRange4xScopeModel implements IOverrideModel
                 matrixStack.rotate(Vector3f.ZN.rotationDegrees((float)(MathHelper.sin(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI) * GunRenderingHandler.get().walkingCameraYaw * 3.0F) * (float) invertZoomProgress));
                 matrixStack.rotate(Vector3f.XN.rotationDegrees((float)(Math.abs(MathHelper.cos(GunRenderingHandler.get().walkingDistance*GunRenderingHandler.get().walkingCrouch * (float) Math.PI - 0.2F) * GunRenderingHandler.get().walkingCameraYaw) * 5.0F) * (float) invertZoomProgress));
 
-                //matrixStack.translate(0, 0, (GunRenderingHandler.get().kick * -GunRenderingHandler.get().kickReduction)*0.75);
                 matrixStack.translate(0, 0, -0.35);
-                matrixStack.rotate(Vector3f.YN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().recoilReduction)*0.5F));
-                matrixStack.rotate(Vector3f.ZN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().weaponsHorizontalAngle * 0.65f * GunRenderingHandler.get().recoilReduction)*0.5F)); // seems to be interesting to increase the force of
+                matrixStack.rotate(Vector3f.YN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().recoilReduction)*0.075f));
+                matrixStack.rotate(Vector3f.ZN.rotationDegrees((GunRenderingHandler.get().recoilSway * GunRenderingHandler.get().weaponsHorizontalAngle * 0.65f * GunRenderingHandler.get().recoilReduction)*0.075f)); // seems to be interesting to increase the force of
                 //matrixStack.rotate(Vector3f.ZP.rotationDegrees(recoilSway * 2.5f * recoilReduction)); // seems to be interesting to increase the force of
-                matrixStack.rotate(Vector3f.XP.rotationDegrees((GunRenderingHandler.get().recoilLift * GunRenderingHandler.get().recoilReduction) * 0.75F));
+                matrixStack.rotate(Vector3f.XP.rotationDegrees((GunRenderingHandler.get().recoilLift * GunRenderingHandler.get().recoilReduction) * 0.0625F));
                 matrixStack.translate(0, 0, 0.35);
 
                 builder.pos(matrix, 0, (float) (reticleSize / scale), 0).color(red, green, blue, alpha).tex(0.0F, 0.9375F).overlay(overlay).lightmap(15728880).normal(normal, 0.0F, 1.0F, 0.0F).endVertex();

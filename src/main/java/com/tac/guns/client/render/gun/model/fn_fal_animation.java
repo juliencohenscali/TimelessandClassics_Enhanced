@@ -3,6 +3,7 @@ package com.tac.guns.client.render.gun.model;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tac.guns.Config;
 import com.tac.guns.client.SpecialModels;
+import com.tac.guns.client.handler.GunRenderingHandler;
 import com.tac.guns.client.render.gun.IOverrideModel;
 import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.util.RenderUtil;
@@ -102,12 +103,23 @@ public class fn_fal_animation implements IOverrideModel {
         if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.ACCELERATOR.get(), stack) > 0)
         {
             RenderUtil.renderModel(SpecialModels.FN_FAL_EXTENDED_BARREL.getModel(), stack, matrices, renderBuffer, light, overlay);
+            if(GunRenderingHandler.get().muzzleExtraOnEnch == 0 && entity.getHeldItemMainhand() == stack)
+                GunRenderingHandler.get().muzzleExtraOnEnch = -8.125f;
         }
         else
         {
             RenderUtil.renderModel(SpecialModels.FN_FAL_STANDARD_BARREL.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
         RenderUtil.renderModel(SpecialModels.FN_FAL.getModel(), stack, matrices, renderBuffer, light, overlay);
+
+        if(Gun.getAttachment(IAttachment.Type.UNDER_BARREL, stack).getItem() == ModItems.SPECIALISED_GRIP.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.FN_FAL_TAC_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        if(Gun.getAttachment(IAttachment.Type.UNDER_BARREL, stack).getItem() == ModItems.LIGHT_GRIP.orElse(ItemStack.EMPTY.getItem()))
+        {
+            RenderUtil.renderModel(SpecialModels.FN_FAL_LIGHTWEIGHT_GRIP.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
 
         matrices.push();
         CooldownTracker tracker = Minecraft.getInstance().player.getCooldownTracker();

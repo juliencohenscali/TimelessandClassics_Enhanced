@@ -113,7 +113,7 @@ public class OldLongRange8xScopeModel implements IOverrideModel
                 alpha = (float) (1F * AimingHandler.get().getNormalisedAdsProgress());
 
                 matrixStack.scale(10.0f,10.0f,10.0f);
-                matrixStack.translate(-0.00455715, -0.00445, 0.0000);
+                matrixStack.translate(-0.00455715, -0.004415, 0.0000);
                 builder = renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(RED_DOT_RETICLE));
                 // Walking bobbing
                 boolean aimed = false;

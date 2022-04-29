@@ -4616,7 +4616,7 @@
 			"scale": [0.55, 0.55, 0.55]
 		},
 		"firstperson_righthand": {
-			"translation": [-4, 3.5, 1.25]
+			"translation": [-4.5, 3, -1]
 		},
 		"firstperson_lefthand": {
 			"translation": [-4, 3.5, 1.25]

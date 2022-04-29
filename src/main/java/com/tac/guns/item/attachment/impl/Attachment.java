@@ -71,7 +71,7 @@ public abstract class Attachment
             List<ITextComponent> positivePerks = new ArrayList<>();
             List<ITextComponent> negativePerks = new ArrayList<>();
 
-            /* Test for fire sound volume */
+            /* Test for fire sound volume *//*
             float inputSound = 1.0F;
             float outputSound = inputSound;
             for (IGunModifier modifier : modifiers) {
@@ -82,7 +82,7 @@ public abstract class Attachment
             } else if (outputSound < inputSound) {
                 addPerk(negativePerks, "perk.tac.fire_volume.negative", new TranslationTextComponent("" + String.valueOf((1.0F - Math.round(outputSound)) * 100) + "% Volume").mergeStyle(TextFormatting.GREEN));
                 //addPerk(positivePerks, "perk.tac.fire_volume.positive", TextFormatting.GREEN, "-" + String.valueOf((1.0F - outputSound) * 100) + new TranslationTextComponent("perk.tac.vol"));
-            }
+            }*/
 
             /* Test for silenced */
             for (IGunModifier modifier : modifiers) {

@@ -13,9 +13,9 @@ import net.minecraft.world.World;
 public class BaseballGrenadeItem extends GrenadeItem
 {
     private float power;
-    public BaseballGrenadeItem(Properties properties, int maxCookTime, float power)
+    public BaseballGrenadeItem(Properties properties, int maxCookTime, float power, float speed)
     {
-        super(properties, maxCookTime, power);
+        super(properties, maxCookTime, power, speed);
         this.power = power;
     }
 

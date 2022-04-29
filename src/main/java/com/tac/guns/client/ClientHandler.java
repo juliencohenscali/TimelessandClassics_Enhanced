@@ -29,6 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.MouseSettingsScreen;
 import net.minecraft.client.gui.screen.VideoSettingsScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.list.OptionsRowList;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -36,6 +37,7 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
@@ -167,7 +169,6 @@ public class ClientHandler
             {
                 OptionsRowList list = (OptionsRowList) mouseOptionsField.get(screen);
                 list.addOption(GunOptions.ADS_SENSITIVITY, GunOptions.CROSSHAIR);
-
                 list.addOption(GunOptions.TOGGLE_ADS);
             }
             catch(IllegalAccessException e)
@@ -178,26 +179,12 @@ public class ClientHandler
         if(event.getGui() instanceof VideoSettingsScreen)
         {
             VideoSettingsScreen screen = (VideoSettingsScreen) event.getGui();
-            if(mouseOptionsField == null)
-            {
-                mouseOptionsField = ObfuscationReflectionHelper.findField(VideoSettingsScreen.class, "optionsRowList");
-                mouseOptionsField.setAccessible(true);
-            }
-            try
-            {
-                OptionsRowList list = (OptionsRowList) mouseOptionsField.get(screen);
-                list.addOption(GunOptions.X_FIREMODE_POS, GunOptions.Y_FIREMODE_POS);
-                list.addOption(GunOptions.SIZE_FIREMODE_POS);
-                list.addOption(GunOptions.X_AMMOCOUNTER_POS, GunOptions.Y_AMMOCOUNTER_POS);
-                list.addOption(GunOptions.SIZE_AMMOCOUNTER_POS);
-                list.addOption(GunOptions.X_Icon_POS, GunOptions.Y_Icon_POS);
-                list.addOption(GunOptions.SIZE_Icon_POS);
-            }
-            catch(IllegalAccessException e)
-            {
-                e.printStackTrace();
-            }
+
+            event.addWidget((new Button(screen.width / 2 - 215, 10, 75, 20, new TranslationTextComponent("tac.options.gui_settings"), (p_213126_1_) -> {
+                Minecraft.getInstance().displayGuiScreen(new TaCSettingsScreen(screen, Minecraft.getInstance().gameSettings));
+            })));
         }
+
     }
 
     @SubscribeEvent
@@ -214,10 +201,10 @@ public class ClientHandler
             {
                 PacketHandler.getPlayChannel().sendToServer(new MessageAttachments());
             }
-            else if(KeyBinds.COLOR_BENCH.isPressed())
+            /*else if(KeyBinds.COLOR_BENCH.isPressed())
             {
                 PacketHandler.getPlayChannel().sendToServer(new MessageColorBench());
-            }
+            }*/
             else if(KeyBinds.KEY_INSPECT.isPressed())
             {
                 PacketHandler.getPlayChannel().sendToServer(new MessageInspection());
