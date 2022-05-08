@@ -6,12 +6,12 @@
       1
     ],
     "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 2.125,
-    "horizontalRecoilAngle": 0.275,
+    "recoilAngle": 2.525,
+    "horizontalRecoilAngle": 0.675,
     "recoilKick": 2.375,
-    "recoilAdsReduction": 0.35,
+    "recoilAdsReduction": 0.275,
     "weaponRecoilDuration": 0.875,
-    "cameraRecoilModifier": 0.55,
+    "cameraRecoilModifier": 0.465,
     "alwaysSpread": true,
     "spread": 1.675,
     "weightKilo": 14.0
@@ -25,13 +25,13 @@
     "preReloadPauseTicks": 13
   },
   "projectile": {
-    "item": "tac:762x54",
+    "item": "tac:50bmg",
     "visible": false,
     "gravity": true,
     "damage": 36,
     "size": 0.2,
-    "speed": 36.0,
-    "life": 16
+    "speed": 72.0,
+    "life": 6
   },
   "sounds": {
     "fire": "tac:item.fire_mosin-nagant",

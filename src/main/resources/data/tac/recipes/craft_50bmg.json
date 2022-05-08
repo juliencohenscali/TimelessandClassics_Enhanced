@@ -1,17 +1,21 @@
 {
   "type": "tac:workbench",
   "result": {
-    "item": "tac:bullet_308",
-    "count": 12
+    "item": "tac:50bmg",
+    "count": 5
   },
   "materials": [
     {
       "item": "minecraft:iron_nugget",
-      "count": 22
+      "count": 32
     },
     {
       "item": "minecraft:gunpowder",
-      "count": 3
+      "count": 12
+    },
+    {
+      "item": "minecraft:netherite_scrap",
+      "count": 1
     }
   ]
 }

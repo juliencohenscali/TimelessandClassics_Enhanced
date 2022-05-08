@@ -84,14 +84,14 @@ public class AimingHandler
 */
         PlayerEntity player = event.player;
         AimTracker tracker = getAimTracker(player);
-        if(tracker != null)
-        {
+        if(tracker != null) {
             tracker.handleAiming(player, player.getHeldItem(Hand.MAIN_HAND));
-            if(!tracker.isAiming())
-            {
+            if (!tracker.isAiming()) {
                 this.aimingMap.remove(player);
             }
         }
+        if (this.aiming)
+            player.setSprinting(false);
     }
 
     @Nullable

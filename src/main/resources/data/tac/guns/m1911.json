@@ -18,7 +18,7 @@
   },
   "reloads": {
     "magFed": true,
-    "maxAmmo": 8,
+    "maxAmmo": 7,
     "reloadMagTimer": 38,
     "additionalReloadEmptyMagTimer": 6,
     "maxAdditionalAmmoPerOC": [5, 8, 13],
@@ -53,19 +53,6 @@
       "zOffset": -12.6
     }],
     "attachments":
-    {
-      "pistolBarrel": {
-        "yOffset": -100829.84,
-        "zOffset": -11.55,
-        "scale": 1.00
-      },
-      "pistolScope": {
-        "yOffset": 10.215,
-        "zOffset": 3.115,
-        "scale": 1.80,
-        "doRenderMount": true,
-        "doOnSlideMovement": true
-      }
-    }
+    {}
   }
 }
