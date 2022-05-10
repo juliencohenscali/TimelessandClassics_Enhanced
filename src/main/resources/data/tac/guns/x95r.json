@@ -24,7 +24,7 @@
     "maxAmmo": 30,
     "reloadMagTimer": 49,
     "additionalReloadEmptyMagTimer": 24,
-    "maxAdditionalAmmoPerOC": [10, 30, 45],
+    "maxAdditionalAmmoPerOC": [10, 20, 30],
     "preReloadPauseTicks": 12
   },
   "projectile": {

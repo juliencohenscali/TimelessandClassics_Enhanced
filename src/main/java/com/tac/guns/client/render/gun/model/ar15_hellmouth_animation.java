@@ -10,6 +10,7 @@ import com.tac.guns.client.render.gun.ModelOverrides;
 import com.tac.guns.client.screen.WorkbenchScreen;
 import com.tac.guns.client.util.RenderUtil;
 import com.tac.guns.common.Gun;
+import com.tac.guns.init.ModEnchantments;
 import com.tac.guns.init.ModItems;
 import com.tac.guns.item.attachment.IAttachment;
 import net.minecraft.block.Block;
@@ -21,6 +22,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -112,6 +114,19 @@ public class ar15_hellmouth_animation implements IOverrideModel {
         {
             RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_MUZZLE.getModel(), stack, matrices, renderBuffer, light, overlay);
         }*/
+
+        if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) == 3)
+        {
+            RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_DD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        else if(EnchantmentHelper.getEnchantmentLevel(ModEnchantments.OVER_CAPACITY.get(), stack) > 0)
+        {
+            RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_EXTENDED_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
+        else
+        {
+            RenderUtil.renderModel(SpecialModels.AR15_HELLMOUTH_STANDARD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+        }
 
         if(Gun.getAttachment(IAttachment.Type.BARREL, stack).getItem() == ModItems.SILENCER.orElse(ItemStack.EMPTY.getItem()))
         {
