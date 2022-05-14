@@ -12,7 +12,7 @@
     "cameraRecoilModifier": 1.125,
     "recoilDuration": 0.275,
     "alwaysSpread": true,
-    "spread": 4.325,
+    "spread": 3.025,
     "weightKilo": 3.6
   },
   "reloads": {
@@ -26,14 +26,14 @@
   "projectile": {
     "item": "tac:nato_556_bullet",
     "visible": true,
-    "damage": 6.25,
+    "damage": 6.5,
     "size": 0.1,
     "speed": 31.5,
     "life": 6,
     "ricochet": true
   },
   "sounds": {
-    "fire": "tac:item.fire_m16",
+    "fire": "tac:item.sig552",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m16s"

@@ -7,14 +7,14 @@
   "materials": [
     {
       "item": "minecraft:iron_nugget",
-      "count": 32
+      "count": 42
     },
     {
       "item": "minecraft:gunpowder",
       "count": 12
     },
     {
-      "item": "minecraft:netherite_scrap",
+      "item": "minecraft:diamond",
       "count": 1
     }
   ]
