@@ -36,7 +36,7 @@
     "life": 5
   },
   "sounds": {
-    "fire": "tac:item.remington_700",
+    "fire": "tac:item.ai_awp",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.remington_700s"

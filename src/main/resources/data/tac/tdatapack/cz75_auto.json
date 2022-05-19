@@ -8,11 +8,12 @@
     ],
     "gripType": "tac:one_handed_m1911",
     "recoilAngle": 3.425,
-    "horizontalRecoilAngle": 1.92,
-    "recoilKick": 1.2125,
+    "horizontalRecoilAngle": 2.52,
+    "recoilKick": 1.75,
     "recoilAdsReduction": 0.185,
     "weaponRecoilDuration": 0.9815,
-    "cameraRecoilModifier": 1.675,
+    "recoilDuration": 0.15,
+    "cameraRecoilModifier": 2.15,
     "alwaysSpread": true,
     "spread": 4.325,
     "weightKilo": 1.1
@@ -38,7 +39,7 @@
     "life": 4
   },
   "sounds": {
-    "fire": "tac:item.m45",
+    "fire": "tac:item.fire_m92fs",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m92fss"
@@ -56,7 +57,7 @@
       {
         "fovModifier": 0.9,
         "yOffset": 11.175,
-        "zOffset": -13.5
+        "zOffset": -12
       }
     ],
     "attachments": {

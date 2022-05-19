@@ -84,9 +84,9 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         int top = (this.height - this.ySize) / 2;
 
         if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof ScopeItem))
-            RenderUtil.scissor(left + 106, top + 16, 55, 66);
+            RenderUtil.scissor(left + 97, top + 17, 67, 67);
         else
-            RenderUtil.scissor(left + 26, top + 17, 142, 70);
+            RenderUtil.scissor(left + 26, top + 17, 123, 70);
         RenderSystem.pushMatrix();
         {
             RenderSystem.translatef(96, 50, 100);
@@ -111,12 +111,15 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
             IRenderTypeBuffer.Impl buffer = this.minecraft.getRenderTypeBuffers().getBufferSource();
             if(!(this.minecraft.player.getHeldItemMainhand().getItem() instanceof ScopeItem))
             {
+                matrixStack.translate(0.0,0.0,-0.4);
                 GunRenderingHandler.get().renderWeapon(this.minecraft.player, this.minecraft.player.getHeldItemMainhand(), ItemCameraTransforms.TransformType.GROUND, matrixStack, buffer, 15728880, 0F);
             }
             else
             {
-                matrixStack.translate(0.0,0.0,-0.4);
-                GunRenderingHandler.get().renderScope(this.minecraft.player, this.minecraft.player.getHeldItemMainhand(), ItemCameraTransforms.TransformType.GROUND, matrixStack, buffer, 15728880, 0F);
+                matrixStack.push();
+                matrixStack.scale(1.25f,1.25f,1.25f);
+                GunRenderingHandler.get().renderScope(this.minecraft.player, this.minecraft.player.getHeldItemMainhand(), ItemCameraTransforms.TransformType.FIXED, matrixStack, buffer, 15728880, 0F); // GROUND, matrixStack, buffer, 15728880, 0F);
+                matrixStack.pop();
             }
             buffer.finish();
 
@@ -274,7 +277,7 @@ public class AttachmentScreen extends ContainerScreen<AttachmentContainer>
         int startX = (this.width - this.xSize) / 2;
         int startY = (this.height - this.ySize) / 2;
         if((this.minecraft.player.getHeldItemMainhand().getItem() instanceof ScopeItem)) {
-            if (RenderUtil.isMouseWithin((int) mouseX, (int) mouseY, startX + 106, startY + 16, 55, 66)) {
+            if (RenderUtil.isMouseWithin((int) mouseX, (int) mouseY, startX + 93, startY + 18, 65, 67)) {
                 if (!this.mouseGrabbed && (button == GLFW.GLFW_MOUSE_BUTTON_LEFT || button == GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                     this.mouseGrabbed = true;
                     this.mouseGrabbedButton = button == GLFW.GLFW_MOUSE_BUTTON_RIGHT ? 1 : 0;

@@ -110,7 +110,6 @@
     "subtitle.tac.fire_m1851fire": "M1851 Fire Silenced",
     "subtitle.tac.fire_tompsonfire": "Thompson Fire",
     "subtitle.tac.fire_dbfire": "Shotgun Fire",
-
     "subtitle.tac.dmr_fire": "DMR Fire",
     "subtitle.tac.dmr_fire_s": "DMR Fire Silenced",
     "subtitle.tac.modern_sniper_fire": "Modern Marksman Rifle",
@@ -128,6 +127,16 @@
     "subtitle.tac.sig552": "SIG 552 Fire",
     "subtitle.tac.sig552s": "SIG 552 Fire Silenced",
     "subtitle.tac.p226": "P226 Fire",
+
+    "subtitle.tac.aa12": "AA12 Fire",
+    "subtitle.tac.ai_awp": "AI AWP Fire",
+    "subtitle.tac.hk416": "HK416 Fire",
+    "subtitle.tac.m24": "M24 Fire",
+    "subtitle.tac.m1928": "M1928 Fire",
+    "subtitle.tac.mk14": "MK14 Fire",
+    "subtitle.tac.rpg7": "RPG7 Fire",
+    "subtitle.tac.sten": "Sten Fire",
+    "subtitle.tac.vector": "Vector Fire",
 
     "info.tac.auto": "This weapon is automatic!",
     "info.tac.gun_safety_lock": "Firemode is on safe, press %s to switch modes",
@@ -149,7 +158,6 @@
     "item.tac.lpvo_1_6": "Vortex LPVO",
     "item.tac.aimpoint_t1": "Aimpoint T1",
     "item.tac.8x_scope": "Standard 8x Scope",
-    "item.tac.acog_4x_scope": "ACOG 4x",
     "item.tac.acog_4x_scope": "ACOG 4x",
 
     "item.tac.muzzle_brake": "Muzzle Brake",

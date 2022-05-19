@@ -37,7 +37,7 @@
     "life": 3
   },
   "sounds": {
-    "fire": "tac:item.mp5_fire",
+    "fire": "tac:item.vector",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m1911s"

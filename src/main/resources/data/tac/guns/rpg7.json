@@ -34,7 +34,7 @@
     "ricochet": false
   },
   "sounds": {
-    "fire": "tac:item.fire_mosin-nagant",
+    "fire": "tac:item.rpg7",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.assault_rifle.silenced_fire"

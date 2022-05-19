@@ -1,44 +1,44 @@
 {
   "general": {
-    "auto": true,
-    "rate": 2,
+    "rate": 3,
     "rateSelector": [
       0,
-      2
+      1
     ],
     "gripType": "tac:one_handed_m1911",
-    "recoilAngle": 3.425,
-    "horizontalRecoilAngle": 1.92,
-    "recoilKick": 1.2125,
-    "recoilAdsReduction": 0.185,
-    "weaponRecoilDuration": 0.9815,
-    "cameraRecoilModifier": 1.675,
+    "recoilAngle": 7.25,
+    "horizontalRecoilAngle": 2.625,
+    "recoilKick": 2.20,
+    "recoilAdsReduction": 0.45,
+    "weaponRecoilDuration": 0.9,
+    "recoilDuration": 0.25,
+    "cameraRecoilModifier": 4.25,
     "alwaysSpread": true,
-    "spread": 4.325,
+    "spread": 3.675,
     "weightKilo": 1.1
   },
   "reloads": {
     "magFed": true,
     "maxAmmo": 16,
     "reloadMagTimer": 42,
-    "additionalReloadEmptyMagTimer": -9,
+    "additionalReloadEmptyMagTimer": 12,
     "maxAdditionalAmmoPerOC": [
-      8,
-      14,
-      20
+      6,
+      10,
+      16
     ],
     "preReloadPauseTicks": 7
   },
   "projectile": {
     "item": "tac:9mm_round",
     "visible": false,
-    "damage": 5,
+    "damage": 5.75,
     "size": 0.2,
-    "speed": 18.0,
+    "speed": 22.0,
     "life": 4
   },
   "sounds": {
-    "fire": "tac:item.m45",
+    "fire": "tac:item.fire_m92fs",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m92fss"
@@ -56,7 +56,7 @@
       {
         "fovModifier": 0.9,
         "yOffset": 11.175,
-        "zOffset": -13.5
+        "zOffset": -12
       }
     ],
     "attachments": {

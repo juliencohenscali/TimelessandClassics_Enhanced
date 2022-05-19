@@ -32,7 +32,7 @@
     "ricochet": true
   },
   "sounds": {
-    "fire": "tac:item.dmr_fire",
+    "fire": "tac:item.mk14",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.dmr_fire_s"

@@ -40,7 +40,7 @@
     "ricochet": false
   },
   "sounds": {
-    "fire": "tac:item.saiga",
+    "fire": "tac:item.aa12",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m16s"

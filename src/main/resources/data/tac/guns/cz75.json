@@ -11,7 +11,8 @@
     "recoilKick": 2.20,
     "recoilAdsReduction": 0.45,
     "weaponRecoilDuration": 0.9315,
-    "cameraRecoilModifier": 1.975,
+    "cameraRecoilModifier": 2.275,
+    "recoilDuration": 0.15,
     "alwaysSpread": true,
     "spread": 3.675,
     "weightKilo": 1.1
@@ -37,7 +38,7 @@
     "life": 4
   },
   "sounds": {
-    "fire": "tac:item.p226",
+    "fire": "tac:item.m45",
     "reload": "tac:item.pistol.reload",
     "cock": "tac:item.pistol.cock",
     "silencedFire": "tac:item.fire_m92fss"

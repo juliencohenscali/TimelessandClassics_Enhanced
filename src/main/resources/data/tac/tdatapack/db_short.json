@@ -4,16 +4,16 @@
     "rateSelector": [
       1
     ],
-    "gripType": "tac:two_handed_mosin",
-    "recoilAngle": 6.085,
-    "recoilKick": 1.155,
+    "gripType": "tac:one_handed_m1911",
+    "recoilAngle": 11.385,
+    "recoilKick": 3.55,
     "recoilAdsReduction": 0.28,
-    "weaponRecoilDuration": 0.725,
-    "cameraRecoilModifier": 1.175,
+    "weaponRecoilDuration": 0.825,
+    "cameraRecoilModifier": 2.75,
     "alwaysSpread": true,
-    "spread": 11.25,
+    "spread": 18.25,
     "projectileAmount": 11,
-    "weightKilo": 3.0
+    "weightKilo": 2.1
   },
   "reloads": {
     "magFed": false,
@@ -26,10 +26,10 @@
   "projectile": {
     "item": "tac:10_gauge_round",
     "visible": false,
-    "damage": 26,
+    "damage": 24,
     "size": 1.0,
-    "speed": 16.5,
-    "life": 3,
+    "speed": 30.5,
+    "life": 1,
     "ricochet": false
   },
   "sounds": {
@@ -40,18 +40,23 @@
   },
   "display": {
     "flash": {
-      "yOffset": 5.75,
-      "zOffset": -23.55,
+      "yOffset": 5.45,
+      "zOffset": -12.55,
       "size": 1.70
     },
+    "hipfireScale": 0.15,
+    "hipfireMoveScale": 0.55,
+    "hipfireRecoilScale": 0.5,
     "weaponType": 3
   },
   "modules": {
-    "zoom": [{
-      "fovModifier": 0.8,
-      "yOffset": 8.18,
-      "zOffset": 1.2
-    }],
+    "zoom": [
+      {
+        "fovModifier": 0.9,
+        "yOffset": 8.18,
+        "zOffset": -4.6
+      }
+    ],
     "attachments": {}
   }
 }
