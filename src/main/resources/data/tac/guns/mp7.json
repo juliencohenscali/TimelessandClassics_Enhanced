@@ -10,6 +10,7 @@
     "recoilAdsReduction": 0.20,
     "weaponRecoilDuration": 0.935,
     "cameraRecoilModifier": 2.0,
+    "recoilDuration": 0.15,
     "alwaysSpread": true,
     "spread": 3.925,
     "weightKilo": 2.1

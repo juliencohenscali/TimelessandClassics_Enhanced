@@ -10,6 +10,7 @@
     "recoilAdsReduction": 0.28,
     "weaponRecoilDuration": 0.725,
     "cameraRecoilModifier": 1.175,
+    "recoilDuration": 0.16,
     "alwaysSpread": true,
     "spread": 11.25,
     "projectileAmount": 11,
@@ -21,6 +22,7 @@
     "reloadAmount": 1,
     "preReloadPauseTicks": 6,
     "interReloadPauseTicks": 14,
+    "maxAdditionalAmmoPerOC": [0, 0, 0],
     "openBolt": true
   },
   "projectile": {

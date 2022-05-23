@@ -1,6 +1,9 @@
 package com.tac.guns.enchantment;
 
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 /**
  * Author: Forked from MrCrayfish, continued by Timeless devs
@@ -21,7 +24,12 @@ public class TriggerFingerEnchantment extends GunEnchantment
     @Override
     public int getMinEnchantability(int level)
     {
-        return 15 + (level - 1) * 10;
+        return 0;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return false;
     }
 
     @Override

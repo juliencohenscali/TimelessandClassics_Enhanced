@@ -9,13 +9,13 @@
     "recoilAngle": 2.225,
     "horizontalRecoilAngle": 1.325,
     "recoilKick": 2.825,
-    "recoilAdsReduction": 0.28,
+    "recoilAdsReduction": 0.22,
     "alwaysSpread": true,
     "spread": 8.5,
     "projectileAmount": 9,
-    "weaponRecoilDuration": 0.75,
-    "cameraRecoilModifier": 0.55,
-    "recoilDuration": 0.15,
+    "weaponRecoilDuration": 0.985,
+    "cameraRecoilModifier": 0.375,
+    "recoilDuration": 0.115,
     "weightKilo": 4.75
   },
   "reloads": {

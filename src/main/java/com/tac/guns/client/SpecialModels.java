@@ -277,6 +277,7 @@ public enum SpecialModels
     HK416_A5_DEFAULT_MUZZLE("hk416_a5_default_muzzle"),
     GLOCK_17_SUPPRESSOR("glock_17_suppressor"),
     STI2011_SUPPRESSOR("sti2011_suppressor"),
+    STI2011_EXTENDED_MAG("sti2011_extended_mag"),
     M92FS_SUPPRESSOR("m92fs_suppressor"),
     M1911_SUPPRESSOR("m1911_suppressor"),
     TYPE81_X("type81_x"),

@@ -42,8 +42,8 @@
   },
   "display": {
     "flash": {
-      "yOffset": 8.1,
-      "zOffset": -22.80,
+      "yOffset": 7.65,
+      "zOffset": -24.80,
       "size": 1.05
     },
     "weaponType": 5

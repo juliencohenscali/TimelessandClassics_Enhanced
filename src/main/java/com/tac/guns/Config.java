@@ -78,7 +78,7 @@ public class Config
                 this.oldAnimations = builder.comment("If true, uses the old animation poses for weapons. This is only for nostalgic reasons and not recommended to switch back.").define("oldAnimations", false);
                 this.crosshair = builder.comment("The custom crosshair to use for weapons. Go to (Options > Controls > Mouse Settings > Crosshair) in game to change this!").define("crosshair", Crosshair.DEFAULT.getLocation().toString());
 
-                this.weaponAmmoBar = builder.comment("Show % of your ammo in your gun via a colored durability bar!, Set to false to remove bar entirely for more realistic gameplay!").define("weaponAmmoBar", true);
+                this.weaponAmmoBar = builder.comment("Show % of your ammo in your gun via a colored durability bar!, Set to false to remove bar entirely for more realistic gameplay!").define("weaponAmmoBar", false);
             }
             builder.pop();
         }

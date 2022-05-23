@@ -79,12 +79,12 @@ public class ppsh_41_animation implements IOverrideModel {
         //Always pop
         matrices.pop();
 
-        matrices.push();
+        /*matrices.push();
         {
             controller.applySpecialModelTransform(SpecialModels.PPSH_41.getModel(), Ppsh41AnimationController.INDEX_MAGAZINE, transformType, matrices);
-            RenderUtil.renderModel(SpecialModels.PPSH_41_STANDARD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
+            //RenderUtil.renderModel(SpecialModels.PPSH_41_STANDARD_MAG.getModel(), stack, matrices, renderBuffer, light, overlay);
         }
-        matrices.pop();
+        matrices.pop();*/
     }
 
      

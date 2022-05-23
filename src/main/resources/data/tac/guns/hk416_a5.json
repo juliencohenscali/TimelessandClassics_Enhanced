@@ -10,7 +10,7 @@
     "recoilAdsReduction": 0.2925,
     "weaponRecoilDuration": 0.878,
     "cameraRecoilModifier": 1.125,
-    "recoilDuration": 0.275,
+    "recoilDuration": 0.2375,
     "alwaysSpread": true,
     "spread": 3.025,
     "weightKilo": 3.6
@@ -41,7 +41,7 @@
   "display": {
     "flash": {
       "yOffset": 9.35,
-      "zOffset": -11.55,
+      "zOffset": -13.325,
       "size": 1.10
     },
     "hipfireScale": 0.75,

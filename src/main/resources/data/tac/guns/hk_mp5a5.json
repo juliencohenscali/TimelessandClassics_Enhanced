@@ -8,7 +8,7 @@
     "horizontalRecoilAngle": 1.75,
     "recoilKick": 1.155,
     "recoilAdsReduction": 0.375,
-    "weaponRecoilDuration": 0.375,
+    "weaponRecoilDuration": 0.55,
     "cameraRecoilModifier": 1.1,
     "recoilDuration": 0.275,
     "alwaysSpread": true,
@@ -40,8 +40,8 @@
   },
   "display": {
     "flash": {
-      "yOffset": 9.35,
-      "zOffset": -12.55,
+      "yOffset": 10.75,
+      "zOffset": -10.525,
       "size": 0.38
     },
     "hipfireScale": 0.70,

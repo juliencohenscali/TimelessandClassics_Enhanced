@@ -39,8 +39,8 @@
   },
   "display": {
     "flash": {
-      "yOffset": 9.45,
-      "zOffset": -22.75,
+      "yOffset": 8.75,
+      "zOffset": -24.115,
       "size": 0.755
     },
     "hipfireScale": 1.275,
