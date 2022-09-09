@@ -39,7 +39,7 @@ public class MouseHelperMixin
                         float newFov = modifiedGun.getModules().getZoom().getFovModifier();
 
                         Scope scope = Gun.getScope(heldItem);
-                        if (scope != null) {
+                        if (scope != null && !scope.getTagName().equals("tac:coyote_sight")) {
                             newFov -= scope.getAdditionalZoom().getFovZoom();// * (Config.COMMON.gameplay.scopeDoubleRender.get() ? 1:1.25);
 
                             additionalAdsSensitivity = MathHelper.clamp(1.0F - (1.0F / newFov) / 10F, 0.0F, 1.0F) * ((Config.COMMON.gameplay.scopeDoubleRender.get() && scope.getAdditionalZoom().getFovZoom() > -1) || scope.getAdditionalZoom().getFovZoom() == 0 ? 1F:0.7F);

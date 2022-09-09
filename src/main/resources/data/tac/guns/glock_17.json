@@ -15,7 +15,7 @@
     "recoilDuration": 0.15,
     "alwaysSpread": true,
     "spread": 4.62,
-    "weightKilo": 0.9
+    "weightKilo": 0.5
   },
   "reloads": {
     "magFed": true,
